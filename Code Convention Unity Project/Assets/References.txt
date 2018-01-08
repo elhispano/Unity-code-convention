@@ -1,0 +1,2 @@
+https://msdn.microsoft.com/en-us/library/4xhs4564(v=vs.71).aspx
+Code Complete Second Edition
