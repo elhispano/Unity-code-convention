@@ -78,13 +78,40 @@ public class CodeConventionForUnity {
             // *************************
 
             // NOTES:
-            // (1) We don't need to differentiate between local vars and class vars because we usually has different names. In case you need it you always can use this.varName 
-            // to differentiate between two vars.
+            // (1) We don't need to differentiate between local vars and class vars because we usually has different names. You can always can use this.varName 
+            // to differentiate between two vars with the same name is needed
         }
     }
 
     public class ClassConventions
     {
+        #region CLASS ORDER
+        /* Within a class, struct, or interface, elements must be positioned in the following order:
+        Constant Fields
+        Fields
+        Constructors
+        Finalizers (Destructors)
+        Delegates
+        Events
+        Enums
+        Interfaces
+        Properties
+        Indexers
+        Methods
+        Structs
+        Classes 
+
+        Within each of these groups order by access:
+
+        public
+        internal
+        protected internal
+        protected
+        private
+        */
+        #endregion
+        public string CONSTANT_FIELD = "All constants go first";
+
         public void ClassOrder()
         {
 
