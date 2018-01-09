@@ -49,7 +49,7 @@ public class CodeConventionForUnity {
             // localVariable: Local variables are in mixed uppercase and lowercase with an initial lowercase letter.The name should be independent
             // of the underlying data type and should refer to whatever the variable represents.
 
-            // classVariable: Member variables that are available to multiple routines within a class (1)(2)
+            // classVariable: Member variables that are available to multiple routines within a class (1)
 
             // _routineParameter: Routine parameters are formatted the same as local variables but they are preceded with an under slash
 
@@ -57,13 +57,11 @@ public class CodeConventionForUnity {
 
             // CONSTANT_VAR: Named constants are in ALL_CAPS.
 
-            // readonly STATIC_VAR: Sometimes we need to use readonly static instead of constant when the initialization of the var requires an operation. 
-            // in this case we use the same convention as constants vars
-
-            // TODO: Share this with others programers, i have never use something like this but i whink is a good idea.
-            // staticVarName: we use static prefix to make it clear the variable is static.
+            // STATIC_VAR: Named statics are in ALL_CAPS.
 
             // PropertyName: Because properties are indeed methods, we use the same convention
+
+            // OnEventTriggered: Events names are in mixed uppercase and lowecase with an initial capital letter. All events should have a verb or verb phrase.
 
             // **** UNITY SPECIFICS ****
 
@@ -81,40 +79,114 @@ public class CodeConventionForUnity {
             // (1) We don't need to differentiate between local vars and class vars because we usually has different names. You can always can use this.varName 
             // to differentiate between two vars with the same name is needed
         }
+
+        public void ClassOrder()
+        {
+            /* Within a class, struct, or interface, elements must be positioned in the following order:
+            
+            1 - Constant Fields
+            2 - Fields
+            3 - Constructors
+            4 - Finalizers (Destructors)
+            5 - Delegates
+            6 - Events
+            7 - Enums
+            8 - Interfaces
+            9 - Properties
+            10 - Indexers
+            11 - Methods
+            12 - Structs
+            13 - Classes 
+
+            Within each of these groups order by access:
+
+            public
+            internal
+            protected internal
+            protected
+            private
+
+            Within  each of the access groups, order by static, then non-static:
+
+            static
+            non-static
+
+            Within each of the static/non-static groups of fields, order by readonly, then non-readonly : (SA1214 and SA1215)
+            readonly
+            non-readonly
+
+            Unrolled example:
+
+            public static methods
+            public methods
+            internal static methods
+            internal methods
+            protected internal static methods
+            protected internal methods
+            protected static methods
+            protected methods
+            private static methods
+            private methods
+
+            */
+        }
     }
 
     public class ClassConventions
     {
         #region CLASS ORDER
-        /* Within a class, struct, or interface, elements must be positioned in the following order:
-        Constant Fields
-        Fields
-        Constructors
-        Finalizers (Destructors)
-        Delegates
-        Events
-        Enums
-        Interfaces
-        Properties
-        Indexers
-        Methods
-        Structs
-        Classes 
+ 
+        // Here there is an example of a class in the propper order
 
-        Within each of these groups order by access:
+        // 1 - Constatns
+        public const string CONSTANT_FIELD = "All constants go first";
 
-        public
-        internal
-        protected internal
-        protected
-        private
-        */
+        private const string CONSTANT_FIELD_PRIVATE = "Private goes always after public :P";
+
+        // 2 - Fields
+
+        public static readonly int[] STATIC_WITH_READONLY_TABLE = new int[] {1,1,2,3,5,8};
+
+        public static string STATIC_STRING = "";
+
+        private static string HIDDEN_STATIC_STRING = "";
+
+        // NOTE: As you already know ;), is not a good practice to use public fields, you must use accesor methods (get/set)
+        public int examplePublicField = 0;
+
+        private int privateField = 0;
+
+        protected int protectedField = 0;
+
+        // 3 - Constructors 
+        public ClassConventions()
+        {
+            
+        }
+
+        // 4 - Destructors 
+        ~ClassConventions()
+        {
+            
+        }
+
+        // 5 - Delegates
+        public delegate void ButtonClickHandler(GameObject _target);
+        public delegate void WindowClosedHandler(MonoBehaviour _window);
+
+        // 6 - Events
+        // TODO: Meter mas caña a los eventos con la guia de microsoft
+        // https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/names-of-type-members
+        // en esta guia tb habla de propiedades 
+        public event ButtonClickHandler OnClicked;
+
+
+
         #endregion
-        public string CONSTANT_FIELD = "All constants go first";
 
         public void ClassOrder()
         {
-
+            
         }
 
         #region TEST
