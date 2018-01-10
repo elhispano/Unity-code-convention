@@ -2,3 +2,5 @@ https://msdn.microsoft.com/en-us/library/4xhs4564(v=vs.71).aspx
 Code Complete Second Edition
 http://stylecop.soyuz5.com/SA1201.html
 https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/names-of-type-members
+https://es.wikipedia.org/wiki/Ley_de_Demeter
+https://msdn.microsoft.com/en-us/library/x2dbyw72(v=vs.71).aspx
