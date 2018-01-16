@@ -4,3 +4,6 @@ http://stylecop.soyuz5.com/SA1201.html
 https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/names-of-type-members
 https://es.wikipedia.org/wiki/Ley_de_Demeter
 https://msdn.microsoft.com/en-us/library/x2dbyw72(v=vs.71).aspx
+https://docs.unity3d.com/ScriptReference/Assertions.Assert.html
+https://softwareengineering.stackexchange.com/questions/327723/what-should-be-the-ideal-length-of-a-variable-name-in-java
+https://docs.microsoft.com/es-es/dotnet/csharp/programming-guide/strings/how-to-concatenate-multiple-strings

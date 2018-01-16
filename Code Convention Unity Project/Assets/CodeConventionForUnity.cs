@@ -263,14 +263,14 @@ namespace CodeConventions
 
             // 12 - Classes
 
-            public class NestedClass
+            private class NestedClass
             {
                 public int exampleInt = 0;
             }
             #endregion
 
             #region TEST
-            public void ClassNames()
+            private void ClassNames()
             {
                 // 1 - Use Pascal case
 
@@ -285,64 +285,378 @@ namespace CodeConventions
             }
             #endregion
 
-            public void ClassConsiderations()
+            private void ClassConsiderations()
             {
-                // 1
-                // Provide services in pairs with their opposites
+                // Provide services in pairs with their opposites (Open & Close, OnEnable & OnDisable, Enter & Exit, etc)
 
-                // 2
                 // Move unrelated information to another class
 
-                // 3
                 // Don’t expose member data in public
 
-                // 4
                 // Minimize accessibility of classes and members (hide as much information as possible)
 
-                // 5
                 // Keep the number of routines in a class as small as possible
 
-                // 6
                 // Avoid deep inheritance trees
 
-                // 7
                 // Try to preserve the Law of Demeter which helps to keep low the coupling of the class with other classes:
                 // Each unit should have only limited knowledge about other units: only units "closely" related to the current unit.
                 // Following this principle implies avoiding this kind of lines: otherClass.otherComponent.whateverThing.transform.position
             }
         }
 
-
-        public class VariableConventions
+        private class VariableConventions
         {
-            public void VariableNames()
+            private void VariableDeclarations()
             {
+                // 1- Initialize all variables
 
+                // DO: int myInt = 0;
+                // DO NOT: int myInt;
+                // DO: string name = null;
+                // DO NOT: string name;
+
+                // 2 - Initialize each variable close to where it's firts used,
+                // this will preserve the Principle of Proximity: keep related actions together
+
+                // DO:
+                // string address = null;
+                // adress = GetAdress(userId);
+                //
+                // string phoneNumber = null;
+                // phoneNumber = GetPhoneNumber(userId);
+
+                // 3 - If possible, declare and define each variavle where it's first used:
+                // CONSIDER:
+                // string address = GetAdress(userId);;
+
+                // DO NOT:
+                // string address = null;
+                // string phoneNumber = null;
+                //
+                // adress = GetAdress(userId);
+                // phoneNumber = GetPhoneNumber(userId);
+
+                // 4 - Check input paramaters before assignation
+                // Before assigning an input paramaters, makre sure that the values are reasonable (1)
+
+                // 5 - Group related statements
+
+                // DO
+                // GetNewData(bewData);
+                // var totalNewData = Sum(newData);
+                // GetOldData(oldData);
+                // var totalOldData = Sum(oldData);
+
+                // DO NOT:
+                // GetOldData(oldData);
+                // GetNewData(bewData);
+                // var totalOldData = Sum(oldData);
+                // var totalNewData = Sum(newData);
+
+                // 6 - Use each variable for one purpose only to improve readibility
+
+                // DO:
+                // var score = CalculateScore();
+                // ShowScore(score);
+                // var health = CalculateCombatHealth();
+                // ApplyHealth(health)
+
+                // DO NOT:
+                // var temp = CalculateScore();
+                // ShowScore(temp);
+                // temp = CalculateCombatHealth();
+                // ApplyHealth(temp)
+
+                // 7 - Avoid variables with hidden meanings to avoid "hybrid coupling"
+
+                // DO NOT:
+                // int lives = GetAvailableLives()
+                // if(lives == -1)
+                // {
+                //   ShowError(ERROR_GETTING_LIVES);
+                // }
+                // else
+                // {
+                //   ConfigureLivesCounter(lives);
+                // }
+                // In this case, the variable lives has two meanings: the quantity of lives of the player AND a boolean to indicates than an error has occurred.
+
+                // 8 - Make sure all declared variables are used.
+                // You can see Warnings in the console to remove unused variables.
+                
+                // 9 - Use 'var' keyword in variable declarations
+                // - Code maintenance is improved
+                // - Code readability is improved 
+
+                // DO:
+                // var player = Game.GetPlayer();
+
+                // DO NOT:
+                // Player player = Game.GetPlayer();
+
+                // Note (1): If you are concerned about performance, you can use Assertions (Unity Debug.Assert)
+            }
+
+            private void VariableNames()
+            {
+                // 1 - Try to avoid computer related terms and use problem domain terms.
+
+                // DO:
+                // playerSaveGame
+
+                // DO NOT:
+                // diskFile
+
+                // 2 - Optimum name length:
+                // - Avoid too short, too long, hard to type, hard to pronounce variable names
+                // - Desired variable name length: Between 8 and 20 characters
+
+                // 3 - If the variable has a qualifer like: Total, Sum, Average, Max, Min, Record, String, Pointer, etc
+                // put it at the end of the name
+
+                // DO:
+                // scoreTotal
+                // healthAverage
+                // playerNameLabel
+
+                // 4 - CONSIDER using more descriptive names for loops indexs to improve readibility
+
+                // 5 - Use more detailed index names for nested loops to avoid index corss-talk errors (saying i when you mean j and vice versa)
+
+                // DO:
+                //for (teamIndex = 0; teamIndex < teamCount; teamIndex++)
+                //{
+                //    for (eventIndex = 0; eventIndex < eventCount[teamIndex]; eventIndex++)
+                //    {
+                //        score[teamIndex][eventIndex] = 0;
+                //    }
+                //}
+
+                // 6 - Give boolean variables names that imply true or false as: done, error, found, success, ok, etc.
+
+                // 7 -  Use positive boolean variable names:
+
+                // DO:
+                // found
+
+                // DO NOT:
+                // notFound
+
+
+                // 8 - Avoid using names with similar meanings
+
+                // DO NOT:
+                // var fileNumber
+                // var fileIndex
+
+
+                // 9 - Avoid using similar names in variables with different meaning
+
+                // DO: 
+                // var screenArea
+                // var screenResolution
+
+                // DO NOT:
+                // var screenRect
+                // var screenRes
+
+                // 10 - Avoid names that sound similar
+
+                // 11 - Avoid numerals in names. If you feel you need numerals probably you need a different data type as an array
+            }
+
+            public void NumericVariablesConsiderations()
+            {
+                // 1 - Avoid magic numbers
+
+                // DO:
+                // var fallSpeed = initialSpeed + GRAVITY_ACCELERATION*time;
+                // DO NOT:
+                // var fallSpeed = initialSpeed + 9.8f*time;
+
+                // 2 - Anticipate divide-by-zero errors
+
+                // 3 - Make data type conversions explicit in mathematical operations
+
+                // DO:
+                // y = x + (float)i;
+
+                // DO NOT:
+                // y = x + i;
+
+                // 4 - Avoid midex-type comparitons
+
+                // DO:
+                // if (i == (int)x)
+
+                // DO NOT:
+                // if(i == x)
+
+                // 5 - Be careful with integer divisions
+                // 10 * (7/10)  will return 0 in C#
+
+                // 6 - Be careful with integer overflow, you should think about the largest value your expression can assume.
+
+                // 7 - Avoid add/substract on numbers that have greatly different magnitudes with float numbers
+                // 1,000,000.00 + 0.1 can have a result of 1,000,000.00
+
+                // 8 - Avoid equality comparisons in floating-point numbers
+
+                // DO:
+                // if(maximumSpeed - speed < MAX_SPEED_DELTA)
+
+                // DO NOT:
+                // if(speed == maximumSpeed)
+            }
+
+            public void CharacterAndStringsConsiderations()
+            {
+                // 1 - Avoid magic strings
+
+                // DO:
+                // titleLabel.text = LocalizationSystem.GetText(WINDOW_TITLE_KEY);
+
+                // DO NOT:
+                // titleLabel.text = LocalizationSystem.GetText("Window title key");
+
+                // 2 - Use string.Format() to compose strings
+
+                // DO:
+                // ShowMessage(string.Format("You have won {0} points",score));
+
+                // DO NOT:
+                // ShowMessage("You have won "+score+" points");
+
+                // 3 - Use string.IsNullOrEmpty to check for empty/null strings
+
+                // DO:
+                // if(string.IsNullOrEmpty(userName))
+
+                // DO NOT:
+                // if(userName == null || userName == "")
+
+                // 4 - Consider using the StringBuilder class if you need to work with long strings to reduce the impact on performance
+                //string text = null;
+
+                // DO:
+                // System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                // for (int i = 0; i < 100; i++)
+                // {
+                //     sb.AppendLine(i.ToString());
+                // }
+
+                // DO NOT:
+                // string text = null;
+                // for (int i = 0; i < 100; i++)
+                // {
+                //     text += i.ToString();
+                // }
             }
 
             public void BooleansConsiderations()
             {
+                // 1 - Use boolean variables to increase readibility and maintenance in logic expressions 
 
+                // DO:
+                // var finished = (( elementIndex < 0 ) || ( MAX_ELEMENTS < elementIndex ));
+                // var repeatedEntry = repeatedEntry = ( elementIndex == lastElementIndex );
+                // if(finished || repeatedEntry)
+
+                // DO NOT:
+                // if ((elementIndex < 0) || (MAX_ELEMENTS < elementIndex) || (elementIndex == lastElementIndex))
+            }
+
+            public void EnumeratedTypesConsiderations()
+            {
+                // 1 - Define always the first value in an enum for an "invalid" value
+
+                // DO:
+                // enum GameModes
+                // {
+                //      None,
+                //      DeathMatch,
+                //      TeamDeathMatch,
+                //      CaptureTheFlag
+                // }
+
+                // **** UNITY SPECIFICS ****
+
+                // 2 - Avoid adding new enum values in the middle of the enum, this will change the value of serializable variables in the Unity Inspector
+
+                // *************************
+
+                // 3 - Try to use the same enum values in external services to avoid name conversions
+
+                // DO: 
+                // GameMode gameMode = (GameMode)GetGameModeFromServer();
+                // if(gameMode == GameModes.DeathMatch)
+
+                // DO NOT:
+                // string gameModeString = GetGameModeFromServer();
+                // GameMode gameMode = GameMode.None;
+                // 
+                // if(gameModeString == "DEATH_MATCH")
+                // {
+                //      gameMode = GameMode.DeathMatch;
+                // }
+            }
+
+            public void ArraysConsiderations()
+            {
+                // 1 - Check that array indexes are within the bounds of the array
+
+                // 2 - Use lists if you don't know the size of the array, in other case, use arrays
             }
         }
 
         public class EventConventions
         {
-            // TODO: Meter mas caña a los eventos con la guia de microsoft
-            // https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/names-of-type-members
-            // en esta guia tb habla de propiedades 
+            // 1 - Because the events always refer to some action, use verbs to name events. You should use the verb tense to indicate the time the event is raised. PascalCasing
+
+            // DO:
+            // Clicked, Painting, DroppedDown
+
+            // DO:
+            // Closing (before the window is closed)
+            // Closed (the window is already closed)
+
+            // DO NOT:
+            // Close
+            // BeforeClose
+            // AfterClose
+
+            // 2 - Call event handlers with the "EventHandler" suffix
+
+            // DO: 
+            // public delegate void ClickedEventHandler
         }
 
         public class PropertiesConventions
         {
-            // TODO: Meter mas caña a los eventos con la guia de microsoft
-            // https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/names-of-type-members
-            // en esta guia tb habla de propiedades 
+            // 1 - Because properties refers to data, we should use noun phrase or adjective names, use PascalCasing
+
+            // DO: 
+            // public Player PlayerData {get; private set;}
+
+            // DO NOT: 
+            // public Player GetPlayerData {get; private set;}
+
+            // 2 - Use plural if the property refers to a collection 
+
+            // DO:
+            // public List<Color> HairColors {get; set;}
+
+            // 3 - Name boolean properties with affirmative phrases or add a prefix as "Is", "Can" or "Has"
+
+            // DO:
+            // public bool HasConnection {get; private set;}
+            // public bool CanJump {get; private set;}
         }
 
         public class RoutineConventions
         {
-
+            // Pagina 161
         }
 
         public class StatementsConventions
@@ -366,6 +680,19 @@ namespace CodeConventions
             {
 
             }
+
+        }
+
+        private class UnityConventions
+        {
+            private void Coroutines()
+            {
+                // https://unity3d.com/es/learn/tutorials/topics/performance-optimization/optimizing-garbage-collection-unity-games?playlist=44069
+
+                // Super interesante en esa guía se explica que las coroutinas allocan memoria en cada iteracion de un loop mientras esperamos
+                // - Poner ejemplos
+                // - Comentar que podemos esperar un frame con yield return null
+            }
         }
 
         public class Comments
@@ -376,6 +703,8 @@ namespace CodeConventions
         private class GeneralConsiderations
         {
             // Favor read-time convenience to write-time convenience
+
+            // Principle of Proximity: keep related actions together
         }
     }
 }
