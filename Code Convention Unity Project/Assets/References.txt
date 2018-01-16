@@ -7,3 +7,4 @@ https://msdn.microsoft.com/en-us/library/x2dbyw72(v=vs.71).aspx
 https://docs.unity3d.com/ScriptReference/Assertions.Assert.html
 https://softwareengineering.stackexchange.com/questions/327723/what-should-be-the-ideal-length-of-a-variable-name-in-java
 https://docs.microsoft.com/es-es/dotnet/csharp/programming-guide/strings/how-to-concatenate-multiple-strings
+https://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two

@@ -41,8 +41,8 @@ using UnityEngine;
 
 namespace CodeConventions
 { 
-    public class CodeConventionForUnity {
-
+    public class CodeConventionForUnity
+    {
         public class ConventionsSummary
         {
             public void NamingConvention()
@@ -138,6 +138,29 @@ namespace CodeConventions
                 private methods
 
                 */
+            }
+
+            public void ValidOpposites()
+            {
+                // To help consistency (and readability) you should use this kind of opposites precisely
+
+                //add - remove 
+                //increment - decrement 
+                //open - close
+                //begin - end
+                //insert - delete
+                //show - hide
+
+                //create - destroy
+                //lock- unlock
+                //source - target
+                //first - last
+                //min - max
+                //start - stop
+                //current - next - previous
+                //up - down
+                //get - set
+                //old - new
             }
         }
 
@@ -385,7 +408,7 @@ namespace CodeConventions
                 // 8 - Make sure all declared variables are used.
                 // You can see Warnings in the console to remove unused variables.
                 
-                // 9 - Use 'var' keyword in variable declarations
+                // 9 - Use 'var' keyword in variable declarations except for numeric variables
                 // - Code maintenance is improved
                 // - Code readability is improved 
 
@@ -394,6 +417,11 @@ namespace CodeConventions
 
                 // DO NOT:
                 // Player player = Game.GetPlayer();
+
+                // DO NOT:
+                // var max = GetMax();
+                // var result = current / max;
+                // If we use var, we can't see of there is an error due to the type of the operators, in this example, result can be 0 if max is an int
 
                 // Note (1): If you are concerned about performance, you can use Assertions (Unity Debug.Assert)
             }
@@ -654,9 +682,99 @@ namespace CodeConventions
             // public bool CanJump {get; private set;}
         }
 
-        public class RoutineConventions
+        private class MethodsConventions
         {
             // Pagina 161
+            CodeConventionContentForExamples examples = new CodeConventionContentForExamples();
+            CodeConventionContentForExamples.MethodExamples examples2 = new CodeConventionContentForExamples.MethodExamples();
+
+            private void MethodsConciserations()
+            {
+                // DO: Routines must have a single purpose
+
+                // DO: Try to avoid routines over 200 lines of code (comments and blank lines are excluded). There are a lot of studies with different results 
+                // so there is not an official standard in the industry. Try to avoid large routines because usually, they are consequences of bad programming practices
+                // but you can always write routines over 200 lines if you need it and they are simple enough to be readable, maintenable and undertestanable.
+            }
+
+            private void MethodsNamesConsiderations()
+            {
+                // DO: A routine name must describe everything the routine does
+
+                // DO NOT: Use meaningless, vague or wishy-washy verbs
+
+                // BAD
+                examples2.ComputeScore();
+
+                // GOOD
+                examples2.ComputeGameOverScore();
+
+                // DO NOT: Don't use numbers to differentiate routine names
+
+                // DO: Make names of routines as long as neccesary 
+
+                // DO: If the function returns a value, to name a function use a description of the value (only when it returns a single value)
+
+                // DO: Use verbs for routine names
+
+                // BAD
+                examples2.Score();
+
+                // GOOD
+                examples2.GetScore();
+
+                // DO: Stablish conventions for common operations
+
+                // BAD:
+                examples2.GetId();
+                examples2.Id();
+                var id = examples2.ID;
+            }
+
+            private void RoutineParameters()
+            {
+                // DO: Put parameters in input-modify-output-
+                // in the output parameters, put error/status order last
+
+                // GOOD
+                GameObject mainWeapon = null;
+                GameObject instantiatedPlayer = null;
+                bool skinConfigurationError = false;
+                examples2.ConfigurePlayerSkin(true, ref instantiatedPlayer, out mainWeapon, out skinConfigurationError);
+
+                // DO: If similar routines use similar parameters, put the similar parameters in a consistent order
+
+                // DO: Use all the parameters, remove unused parameters
+
+                // DO NOT: Don't use routine parameters as working variables, use local variables instead
+
+                // BAD
+                // void MathOperationExample(int _value)
+                // {
+                //      _value *= CONST;
+
+                //      return _value;
+                // }
+
+                // DO: Limit the number of routine's parameters to about seven. If you need more parameters probably you need
+                // a new class/struct to represent that data
+
+                // DO: Pass the variables or objects that the routine needs to maintain its interface abstraction
+
+                // GOOD:
+                examples2.MethodWithGoodParameters(examples.dummyInt, examples.dummyString);
+
+                // BAD:
+                examples2.MethodWithBadParameters(examples.DummyObject);
+
+                // DO: Use named parameters in lambda expresions and auto-generated delegates
+            }
+
+            public void MethodReturnsValues()
+            {
+                // 182
+                // hablar aqui de tener un solo punto de salida
+            }
         }
 
         public class StatementsConventions
