@@ -770,23 +770,184 @@ namespace CodeConventions
                 // DO: Use named parameters in lambda expresions and auto-generated delegates
             }
 
-            public void MethodReturnsValues()
+            // ###################################################################
+            // METHODS RETURN VALUE
+            // ###################################################################
+
+            // DO: Have a single return point in your method, this will help to maintain and debug your code
+
+            // GOOD:
+            public int ExampleMethod1()
             {
-                // 182
-                // hablar aqui de tener un solo punto de salida
+                // DO: Initialize the return value at the beggining of the function to a default value
+                int returnValueExample = 0;
+
+                bool condition1 = false;
+                bool condition2 = false;
+
+                if (condition1)
+                {
+                    returnValueExample = 1;
+                }
+                else if (condition2)
+                {
+                    returnValueExample = 2;
+                }
+
+                return returnValueExample;
+            }
+
+            // BAD:
+            public int ExampleMethod2()
+            {
+                bool condition1 = false;
+                bool condition2 = false;
+
+                if (condition1)
+                {
+                    return 1;
+                }
+                else if (condition2)
+                {
+                    return 2;
+                }
+
+                return 0;
             }
         }
 
-        public class StatementsConventions
-        {
-            public void Conditionals()
-            {
+        // ###################################################################
+        // STATEMENTS
+        // ###################################################################
 
+        private class StatementsConventions
+        {
+            // ###################################################################
+            // Conditionals
+            // ###################################################################
+
+            private CodeConventionContentForExamples example = new CodeConventionContentForExamples();
+
+            private void Conditionals()
+            {
+                // DO: Write the nominal path through the code first, then write unusual cases. This improves readability and performance
+
+                // DO: Write errors case outside the conditional where you are taking the decissions
+
+                // GOOD:
+                bool error = false;
+
+                if(error)
+                {
+                    Debug.LogError("Notify of error");
+                    return;
+                }
+
+                bool condition1 = false;
+
+                if (condition1)
+                {
+                    // Do something
+                }
+
+                // BAD:
+                if (error)
+                {
+                    Debug.LogError("Notify of error");
+                }
+                else
+                {
+                    if (condition1)
+                    {
+                        // Do something
+                    }
+                }
+
+                // DO: Put the normal case after the if rather than after the else
+
+                // GOOD:
+                if (example.Status == CodeConventionContentForExamples.StatusEnum.Ok)
+                {
+                    // Normal case
+                }
+                else
+                {
+
+                }
+
+                // BAD:
+                if (example.Status != CodeConventionContentForExamples.StatusEnum.Ok)
+                {
+                    
+                }
+                else
+                {
+                    // Normal case
+                }
+
+                // CONSIDER: Consider to weite the else clause to make clear to other programmers that you have considered that case
+
+                // GOOD: 
+                bool validID = !string.IsNullOrEmpty(example.DummyObject.ID);
+                if (validID)
+                {
+                    // Normal case
+                }
+                else
+                {
+                    // If the id is not valid, do nothing
+                }
+
+                // BAD: 
+                if (validID)
+                {
+                    // Normal case
+                }
+
+                // DO: Simplify complicated tests with boolean functions calls
+
+                // GOOD:
+                bool statusIsOk = example.Status == CodeConventionContentForExamples.StatusEnum.Ok;
+                if(validID && statusIsOk)
+                {
+                    // Do somethinf
+                }
+
+                // BAD:
+                if (!string.IsNullOrEmpty(example.DummyObject.ID) && example.Status == CodeConventionContentForExamples.StatusEnum.Ok)
+                {
+                    // Do somethinf
+                }
+
+                // DO: In several if/else if statements, start always for the most frequent cases first
+
+                // GOOD:
+                char inputChar = ' ';
+                if (example.IsLetter(inputChar))
+                {
+                    // Do something with letter
+                }
+                else if(example.IsNumber(inputChar))
+                {
+                    // Do something with number
+                }
+                else if(example.IsPunctiation(inputChar))
+                {
+                    // Do something with punctuations
+                }
+                else
+                {
+                    Debug.LogErrorFormat("Unrecognized char: {0}", inputChar);
+                }
             }
+
+            // ###################################################################
+            // Loops
+            // ###################################################################
 
             public void Loops()
             {
-
+                // 368
             }
 
             public void UnusualCOntrolStructures()

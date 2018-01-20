@@ -6,12 +6,21 @@ namespace CodeConventions
 {
     public class CodeConventionContentForExamples
     {
+        public enum StatusEnum
+        {
+            Undefined,
+            Ok,
+            Error,
+            Interrupted
+        }
         public class DummyClass
         {
-
+            public string ID { get; private set; }
         }
 
         public DummyClass DummyObject { get; private set; }
+
+        public StatusEnum Status { get; private set; }
 
         public int dummyInt;
 
@@ -73,6 +82,20 @@ namespace CodeConventions
             {
 
             }
+        }
+
+        public bool IsLetter(char _char)
+        {
+            return true;
+        }
+
+        public bool IsNumber(char _char)
+        {
+            return true;
+        }
+        public bool IsPunctiation(char _char)
+        {
+            return true;
         }
     }
 }
