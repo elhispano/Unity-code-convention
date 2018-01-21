@@ -947,17 +947,87 @@ namespace CodeConventions
 
             public void Loops()
             {
-                // 368
+                // DO: Put initialization code directly before the loop
+
+                // DO: Prefer for loops instead of foreach loops if possible. For loops ar faster in Unity that foreach loops
+
+                // DO NOT: Use a for loop when a while loop is more appropriate
+
+                // DO: Use { and } to enclose statements in a loop always to prevent errors when code is modified.
+
+                // GOOD:
+                for(int i = 0; i < 100; i++)
+                {
+                    Debug.Log(i);
+                }
+
+                // BAD:
+                for (int i = 0; i < 100; i++)
+                    Debug.Log(i);
+
+                // DO: Keep loop-housekeeping chores at either the beginning or the end of the loop
+
+                // DO: Make each loop perform only one function. Loops should be like routines. 
+                // An exception of this rule it is in places where performance is critical
+
+                // DO: Make sure the loop ends. This is specially important in some while loops that are potentially dangerous as infinite loops
+
+                // GOOD:
+                float securityTimer = 0f;
+                while (example.Status != CodeConventionContentForExamples.StatusEnum.Ok && securityTimer < 10f)
+                {
+                    // Do something 
+
+                    securityTimer += Time.deltaTime;
+                }
+
+                if(securityTimer >= 10f)
+                {
+                    Debug.Log("TimeOut");
+                }
+
+                // BAD:
+                while (example.Status != CodeConventionContentForExamples.StatusEnum.Ok)
+                {
+
+                }
+
+                // DO: If you need to use continue in a for loop, do it at the top of the loop
+
+                // GOOD:
+                for(int i = 0; i < 100; i++)
+                {
+                    if (example.Status != CodeConventionContentForExamples.StatusEnum.Ok)
+                        continue;
+                }
+
+                // DO: Use meaningful variable names to make nested loops readable
+
+                // GOOD:
+                for(int month = 0; month < 12; month++)
+                {
+                    for(int day = 0; day < 31; day++)
+                    {
+
+                    }
+                }
+
+                // BAD:
+                for (int i = 0; i < 12; i++)
+                {
+                    for (int j = 0; j < 31; j++)
+                    {
+
+                    }
+                }
+
+                // DO: Limit nesting of loop to three levels. Break the loops into routines if you need it to avoid this
+
+                // DO: Make long loops specially clear
             }
-
-            public void UnusualCOntrolStructures()
-            {
-
-            }
-
             public void ArrayMethods()
             {
-
+                // 411
             }
 
         }
