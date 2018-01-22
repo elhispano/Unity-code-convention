@@ -1025,22 +1025,110 @@ namespace CodeConventions
 
                 // DO: Make long loops specially clear
             }
-            public void ArrayMethods()
-            {
-                // 411
-            }
-
         }
 
         private class UnityConventions
         {
-            private void Coroutines()
-            {
-                // https://unity3d.com/es/learn/tutorials/topics/performance-optimization/optimizing-garbage-collection-unity-games?playlist=44069
+            CodeConventionContentForExamples example = new CodeConventionContentForExamples();
 
-                // Super interesante en esa guía se explica que las coroutinas allocan memoria en cada iteracion de un loop mientras esperamos
-                // - Poner ejemplos
-                // - Comentar que podemos esperar un frame con yield return null
+            private MonoBehaviour dummyComponent = null;
+
+            // ###################################################################
+            // Loops
+            // ###################################################################
+
+            // DO: If you have to wait for one frame, and you are not working with graphic stuff, use "yield return null" instead of "yield return new WaitForEndOfFrame()"
+            // doing this you will avoid memory allocation in each execution of the loop
+
+            // Note: It's important to know that  yield return null is not evaluated in the same moment than WaitForEndOfFrame(); 
+            // https://answers.unity.com/questions/755196/yield-return-null-vs-yield-return-waitforendoffram.html
+
+            // GOOD:
+            IEnumerator WaitOneFrameGood()
+            {
+                while(true)
+                {
+                    yield return null;
+                }
+            }
+
+            // BAD:
+            IEnumerator WaitOneFrameBad()
+            {
+                while (true)
+                {
+                    yield return new WaitForEndOfFrame();
+                }
+            }
+
+            // DO: Be aware of living coroutines when you exit from a scene or a game section
+
+            void Open()
+            {
+                example.DummyGameObject.GetComponent<MonoBehaviour>().StartCoroutine(LivingCoroutine());
+            }
+
+            void Close()
+            {
+                // NOTE that the LivingCoroutine is using this.example object
+                this.example = null;
+            }
+
+            IEnumerator LivingCoroutine()
+            {
+                // IF Close is called this coroutine will keep being called because it was launched in another GameObject (can happen with a singleton for example)
+                while(true)
+                {
+                    // CRASH!! This will crash after Close() was called
+                    Debug.Log(this.example.DummyGameObject.name);
+                }
+            }
+
+            // DO: Launch coroutines using method references instead of method names so we can always search for refences
+
+            void LaunchCoroutineExample()
+            {
+                // GOOD:
+                dummyComponent.StartCoroutine(CoroutineExample());
+
+                // BAD:
+                dummyComponent.StartCoroutine("CoroutineExample");
+            }
+
+
+            IEnumerator CoroutineExample()
+            {
+                yield return null;
+            }
+
+            // DO: Stop coroutines using the coroutine reference not the coroutine name
+
+            void StopCoroutineExample()
+            {
+                var dummyCoroutine = dummyComponent.StartCoroutine(CoroutineExample());
+
+                // GOOD:
+                dummyComponent.StopCoroutine(dummyCoroutine);
+
+                // BAD:
+                dummyComponent.StopCoroutine("CoroutineExample");
+            }
+
+            // DO: If your project rely on a heavy use of coroutines, consider doing a coroutine manager 
+            // Here is one example: https://assetstore.unity.com/packages/tools/coroutine-manager-pro-53120
+
+            // DO: If you have to start a coroutine frome more than one place or from other class, create a private method to start the coroutine
+            // doing this we avoid calling by accident the coroutine method WITHOUT StartCoroutine which causes a silent error in Unity
+
+            // GOOD:
+            public void RequestDataFromServer()
+            {
+                dummyComponent.StartCoroutine(RequestDataFromServerCoroutine());
+            }
+
+            IEnumerator RequestDataFromServerCoroutine()
+            {
+                yield return null;
             }
         }
 

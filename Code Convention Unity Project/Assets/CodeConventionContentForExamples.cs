@@ -20,6 +20,8 @@ namespace CodeConventions
 
         public DummyClass DummyObject { get; private set; }
 
+        public GameObject DummyGameObject { get; private set; }
+
         public StatusEnum Status { get; private set; }
 
         public int dummyInt;
