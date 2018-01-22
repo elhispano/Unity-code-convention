@@ -1132,9 +1132,105 @@ namespace CodeConventions
             }
         }
 
-        public class Comments
+        private class Comments
         {
+            private CodeConventionContentForExamples example = new CodeConventionContentForExamples();
 
+            // DO: Write code that is enough clear to be a "self-documenting" code. If you have to write a comment just because the code is so complicated, 
+            // it is better to improve the code that write the comment
+
+            // DO NOT: Write comments that repeats what the code does
+
+            // DO: Do write comments that summary the code to help other programmers at reading the code
+
+            // DO: Write comments to describe the code's intent. Use always vocabulary in the domain of the problem instead of triying to describe the solution
+
+            // GOOD:
+            // get current employee information
+
+            // BAD:
+            // update employeeRecord object
+
+            // DO NOT: Leave big regions of code commented when you commit to developer. Use the version repository to see old code.
+
+            // DO NOT: Leave code until the end. You need to integrate commenting into your development style. This will help others in code reviews and also will help you
+            // to think more about the problem you are triying yo solve
+
+            // DO NOT: Use endline comments (except for data declarations or end of blocks)
+
+            // GOOD
+
+            /// <summary>
+            /// Explain what this method does
+            /// </summary>
+            private void ExampleMetho1d()
+            {
+
+            }
+
+            // BAD
+            private void ExampleMethod2() // Explain what this method does
+            {
+
+            }
+
+            // DO: Use endline comment to annotate data declarations
+
+            // GOOD
+            private int playerIndex = 0; // Index of the player in the list of players of this lobby
+
+            // DO: Use endline comments to mark end of blocks
+
+            // GOOD
+
+            private void ExampleMethod3()
+            {
+                if(example.Status == CodeConventionContentForExamples.StatusEnum.Ok)
+                {
+                    // JUST IMAGINE A VERY LARGE IF BLOCK
+                    // ...
+                    // ...
+                    // ...
+                    // ...
+                    // ...  
+                    
+                } // End of STatus == Ok condition
+            }
+
+            // DO: Use comment to justify violations of good programming style
+
+            // DO: Use comments to explain optimizations or to explain why you have used a more complicated approach to solve a problem instead of a more straighforward one
+
+            // DO: Comment units of numeric data (no matter if the unity of the data form part of the variable name)
+
+            // DO: Comment the gange of allowable numeric values
+
+            // GOOD:
+
+            /// <summary>
+            /// Player normalized progress in this level between 0 and 1
+            /// </summary>
+            public float normalizedProgress = 0f;
+
+            // CONSIDER: Commenting enums values if they are not obvious
+
+
+            // WHAT TO COMMENT:
+
+            // Fields: because class fields are protected or private, you should only comment fields that aren't clear enough with the field name
+            // Public: Methods/Properties should be commented. Be aware of methods with more than two lines of comment, they can be a synthom of a design problem
+
+            // 806
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="_param1"></param>
+            /// <returns></returns>
+            public int Method1(int _param1)
+            {
+                return 0;
+            }
         }
 
         private class GeneralConsiderations
