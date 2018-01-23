@@ -15,6 +15,7 @@ using UnityEngine;
 // Fields conventions
 // Methods/Properties conventions
 // Statements conventions
+// Layout and Style
 // Commenting conventions
 
 // How to use it:
@@ -1140,7 +1141,82 @@ namespace CodeConventions
             }
         }
 
-        private class Comments
+        // ###################################################################
+        // Layout & Style conventions
+        // ###################################################################
+
+        private class LayoutConventions
+        {
+            private CodeConventionContentForExamples example = new CodeConventionContentForExamples();
+
+            public void Parentheses()
+            {
+                // DO: Use parentheses to clarify expresions that involve more than two terms
+
+                // GOOD:
+                int result1 = 5 * (6 + 4);
+
+                // BAD:
+                int result2 = 5 * 6 + 4;
+            }
+
+            public void CodeBlocks()
+            {
+                // DO: Add a blank line for the begin brace
+
+                // GOOD:
+                if (example != null)
+                {
+                    Debug.Log(example);
+                }
+
+                // BAD:
+                if (example != null) {
+                    Debug.Log(example);
+                }
+
+                // BAD:
+                // This inline method make difficulty to debug because you can't add a breakpoint inside the if
+                if (example != null) { Debug.Log(example); }
+
+                // DO: Use begin-end pairs ALWAYS to designate block boundaries. This will avoid bugs related with incorrect modifications
+
+                // GOOD:
+                if (example != null)
+                {
+                    Debug.Log(example);
+                }
+
+                // BAD:
+                if (example != null)
+                    Debug.Log(example);
+
+                // DO: Use a new line in statements with complex expressions
+
+                // GOOD:
+                char inputChar = ' ';
+                if ((('0' <= inputChar) && (inputChar <= '9')) ||
+                    (('a' <= inputChar && inputChar <= 'z')) || 
+                    (('A' <= inputChar && inputChar <= 'Z')))
+                {
+
+                }
+            }
+
+            private void IndividualStatements()
+            {
+                // 753
+            }
+
+            // Spaces?
+            // Tabs?
+        }
+
+        // ###################################################################
+        // Comments conventions
+        // ###################################################################
+
+        private class CommentsConventions
         {
             private CodeConventionContentForExamples example = new CodeConventionContentForExamples();
 
