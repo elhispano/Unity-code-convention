@@ -4,15 +4,23 @@ using UnityEngine;
 
 #pragma warning disable
 
-// This file is organized in different classes, each class is a collection of guidelines.
+// Summary:
+// This file is organized in different classes, each class is a collection of guidelines with examples.
+// Some guidelines are more concrete and other are general ideas that improve code quality.
+
 // The file has a top-down organization from more general to more concrete things
-// Summary - quick overview of conventions
-// Class conventions
+// General conventions
+// Classes conventions
 // Events conventions
-// Variable conventions
-// Routine conventions
+// Fields conventions
+// Methods/Properties conventions
 // Statements conventions
 // Commenting conventions
+
+// How to use it:
+// The idea is to include this file and the example file in your Unity project
+// so you can open it quickly in order to check anything.
+// Discuss with your team this guide and modify it so that everyone feels happy with the result before start to code
 
 // In order to work with Unity, some special considerations are present in this guide.
 
@@ -43,30 +51,30 @@ namespace CodeConventions
 { 
     public class CodeConventionForUnity
     {
-        public class ConventionsSummary
+        public class GeneralConventions
         {
             public void NamingConvention()
             {
-                // ClassName: Class names are in mixed uppercase and lowercase with an initial capital letter.   
+                // ClassName: Class names are in mixed uppercase and lowercase with an initial capital letter. Never use plural in class names.  
 
                 // TypeName: Type definitions, including enumerated types and typedefs, use mixed uppercase and lowercase with an initial capital letter.
 
                 // EnumeratedTypes: In addition to the rule above, enumerated types are always stated in the plural form.
 
                 // localVariable: Local variables are in mixed uppercase and lowercase with an initial lowercase letter.The name should be independent
-                // of the underlying data type and should refer to whatever the variable represents.
+                // of the underlying data type and should refer to whatever the variable represents. Use plural for collections.
 
-                // classVariable: Member variables that are available to multiple routines within a class (1)
+                // classVariable: Member variables that are available to multiple routines within a class (1). Use plural for collections.
 
                 // _routineParameter: Routine parameters are formatted the same as local variables but they are preceded with an under slash
 
-                // RoutineName(): Routines are in mixed uppercase and lowercase.
+                // RoutineName(): Routines are in mixed uppercase and lowercase. Use plural if the routine returns a collection.
 
                 // CONSTANT_VAR: Named constants are in ALL_CAPS.
 
                 // STATIC_VAR: Named statics are in ALL_CAPS.
 
-                // PropertyName: Because properties are indeed methods, we use the same convention
+                // PropertyName: Because properties are indeed methods, we use the same convention as methods.
 
                 // OnEventTriggered: Events names are in mixed uppercase and lowecase with an initial capital letter. All events should have a verb or verb phrase.
 
@@ -78,7 +86,7 @@ namespace CodeConventions
                 // varNameTemplate: When a variable is a reference to some component in the hierachy with the intention of being copied using Instantiate(varNameTemplate),
                 // we add Template keyword at the end, with this we can see quickly if we are doing an invalid operation against a template (like destroying it!)
 
-                // cachedComponentName: Use this to cached unity components like cachedTransform, cachedAnimator, etc.  
+                // cachedComponentName: Use this to cached Unity components like cachedTransform, cachedAnimator, etc.  
 
                 // *************************
 
@@ -1215,22 +1223,29 @@ namespace CodeConventions
             // CONSIDER: Commenting enums values if they are not obvious
 
 
-            // WHAT TO COMMENT:
+            // DO: When commenting class members as methods, fields and properties, use the default format in c# (automatically generated if you write ///)
 
-            // Fields: because class fields are protected or private, you should only comment fields that aren't clear enough with the field name
-            // Public: Methods/Properties should be commented. Be aware of methods with more than two lines of comment, they can be a synthom of a design problem
-
-            // 806
+            // GOOD:
 
             /// <summary>
-            /// 
+            /// Summary of the method here
             /// </summary>
-            /// <param name="_param1"></param>
-            /// <returns></returns>
+            /// <param name="_param1"> Describe the parameter, describe expected values, units, etc</param>
+            /// <returns> Describe the return value </returns>
             public int Method1(int _param1)
             {
                 return 0;
             }
+
+            // Because to much comments decrease code readability, we should rely in clean code, small & simple classes instead of commenting everything.
+            // in order to know what to comment, follow the next guide:
+
+            // Fields: because class fields are protected or private, you should only comment fields that aren't clear enough with the field name
+            // Public Methods/Properties: THey should be commented. Be aware of methods with more than two lines of comment, they can be a synthom of a design problem
+            // Private methods/properties: They only should be commented if their purpose isn't clear
+
+            // DO: Comment classes describing their design approach, limitations, usage assumptions and so on
+
         }
 
         private class GeneralConsiderations
