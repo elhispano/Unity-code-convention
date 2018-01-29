@@ -9,14 +9,16 @@ using UnityEngine;
 // Some guidelines are more concrete and other are general ideas that improve code quality.
 
 // The file has a top-down organization from more general to more concrete things
+
 // General conventions
+// Layout and Style
+// Commenting conventions
 // Classes conventions
 // Events conventions
 // Fields conventions
 // Methods/Properties conventions
 // Statements conventions
-// Layout and Style
-// Commenting conventions
+
 
 // How to use it:
 // The idea is to include this file and the example file in your Unity project
@@ -52,13 +54,17 @@ namespace CodeConventions
 { 
     public class CodeConventionForUnity
     {
+        // ###################################################################
+        // General Conventions
+        // ###################################################################
+
         public class GeneralConventions
         {
             public void NamingConvention()
             {
                 // ClassName: Class names are in mixed uppercase and lowercase with an initial capital letter. Never use plural in class names.  
 
-                // TypeName: Type definitions, including enumerated types and typedefs, use mixed uppercase and lowercase with an initial capital letter.
+                // TypeName: Type definitions, including enumerated types, use mixed uppercase and lowercase with an initial capital letter.
 
                 // EnumeratedTypes: In addition to the rule above, enumerated types are always stated in the plural form.
 
@@ -129,7 +135,7 @@ namespace CodeConventions
                 static
                 non-static
 
-                Within each of the static/non-static groups of fields, order by readonly, then non-readonly : (SA1214 and SA1215)
+                Within each of the static/non-static groups of fields, order by readonly, then non-readonly:
                 readonly
                 non-readonly
 
@@ -173,10 +179,180 @@ namespace CodeConventions
             }
         }
 
+
+        // ###################################################################
+        // Layout & Style conventions
+        // ###################################################################
+
+        // TODO: Seguir revisando por aqui.
+
+        private class LayoutConventions
+        {
+            private const int END_VALUE = 99;
+
+            private delegate void ExampleHandlerEvent();
+            private event ExampleHandlerEvent OnExampleEvent1;
+            private event ExampleHandlerEvent OnExampleEventWithLongerName;
+            private event ExampleHandlerEvent OnExampleEvent3;
+
+            private CodeConventionContentForExamples example = new CodeConventionContentForExamples();
+            private CodeConventionContentForExamples.MethodExamples methodsExamples = new CodeConventionContentForExamples.MethodExamples();
+
+            public void Parentheses()
+            {
+                // DO: Use parentheses to clarify expresions that involve more than two terms
+
+                // GOOD:
+                int result1 = 5 * (6 + 4);
+
+                // BAD:
+                int result2 = 5 * 6 + 4;
+            }
+
+            public void CodeBlocks()
+            {
+                // DO: Add a blank line for the begin brace
+
+                // GOOD:
+                if (example != null)
+                {
+                    Debug.Log(example);
+                }
+
+                // BAD:
+                if (example != null)
+                {
+                    Debug.Log(example);
+                }
+
+                // BAD:
+                // This inline method make difficulty to debug because you can't add a breakpoint inside the if
+                if (example != null) { Debug.Log(example); }
+
+                // DO: Use begin-end pairs ALWAYS to designate block boundaries. This will avoid bugs related with incorrect modifications
+
+                // GOOD:
+                if (example != null)
+                {
+                    Debug.Log(example);
+                }
+
+                // BAD:
+                if (example != null)
+                    Debug.Log(example);
+
+                // DO: Use a new line in statements with complex expressions
+
+                // GOOD:
+                char inputChar = ' ';
+                if ((('0' <= inputChar) && (inputChar <= '9')) ||
+                    (('a' <= inputChar && inputChar <= 'z')) ||
+                    (('A' <= inputChar && inputChar <= 'Z')))
+                {
+
+                }
+            }
+
+            private void IndividualStatements()
+            {
+                // DO: Break large statements in several lines making obvious the incompleteness of the statement.
+                // If you have operators, put them at the beggining of the new line so all of them stay aligned
+
+                // GOOD: 
+                int arrayIndex1 = 0;
+                int arrayIndex2 = 0;
+                int[] exampleArray1 = new int[10];
+                int[] exampleArray2 = new int[10];
+
+                if (exampleArray1[arrayIndex1] == 0
+                    || exampleArray2[arrayIndex2] == 0
+                    || exampleArray1[arrayIndex1] == END_VALUE
+                    || exampleArray2[arrayIndex2] == END_VALUE)
+                {
+
+                }
+
+                // BAD: 
+                if (exampleArray1[arrayIndex1] == 0 || exampleArray2[arrayIndex2] == 0 || exampleArray1[arrayIndex1] == END_VALUE || exampleArray2[arrayIndex2] == END_VALUE)
+                {
+
+                }
+
+                // DO: Break methods with lot of parameters in several lines
+                Vector3 rayOrigin = Vector3.zero;
+                Vector3 direction = Vector3.up;
+                RaycastHit raycastHit = new RaycastHit();
+                float maxDistance = 99f;
+                int layerMask = LayerMask.GetMask("Default");
+
+                // GOOD: 
+                bool hit = Physics.Raycast(rayOrigin,
+                    direction,
+                    out raycastHit,
+                    maxDistance,
+                    layerMask);
+
+                // BAD: 
+                bool hit1 = Physics.Raycast(rayOrigin, direction, out raycastHit, maxDistance, layerMask);
+
+                // DO: Align right sides of assigment statements (1*)
+
+                // GOOD: 
+                int variableName1 = 0;
+                int variableNameWithMoreLength = 0;
+
+                OnExampleEvent1 += LayoutConventions_OnExampleEvent1;
+                OnExampleEventWithLongerName += LayoutConventions_OnExampleEvent2;
+                OnExampleEvent3 += LayoutConventions_OnExampleEvent3;
+
+                // (1*): Despite knowing it is not a recommended guidline because it increases the cost to maintain the code when you rename variables
+                // i beleieve that the advantages of improved readibility and the slightly chance of catching some errors make this rule worth it.
+
+                // DO: Use only one data declaration per line
+
+                // GOOD:
+                int thisIsAnInt = 0;
+                int thisIsAnotherInt = 0;
+
+                // BAD:
+                string firstName = null, lastName = null;
+
+                // DO: Order declarations by type
+
+                // GOOD:
+                Vector3 velocity = Vector3.zero;
+                Vector3 acceleration = Vector3.zero;
+                float maxSpeedInKmH = 120;
+
+                // BAD:
+                Vector3 velocity1 = Vector3.zero;
+                float maxSpeedInKmH1 = 120;
+                Vector3 acceleration1 = Vector3.zero;
+            }
+
+            private void LayoutConventions_OnExampleEvent1()
+            {
+                throw new System.NotImplementedException();
+            }
+
+            private void LayoutConventions_OnExampleEvent2()
+            {
+                throw new System.NotImplementedException();
+            }
+
+            private void LayoutConventions_OnExampleEvent3()
+            {
+                throw new System.NotImplementedException();
+            }
+
+        }
+
+        // ###################################################################
+        // Class Conventions
+        // ###################################################################
+
         public class ClassConventions
         {
-            #region CLASS ORDER
- 
             // Here there is an example of a class in the propper order
 
             // 1 - Constatns
@@ -299,9 +475,7 @@ namespace CodeConventions
             {
                 public int exampleInt = 0;
             }
-            #endregion
 
-            #region TEST
             private void ClassNames()
             {
                 // 1 - Use Pascal case
@@ -315,7 +489,6 @@ namespace CodeConventions
                 // Use reasonable judgment in applying this rule. For example, Button is an appropriate name for a class derived from Control. 
                 // Although a button is a kind of control, making Control a part of the class name would lengthen the name unnecessarily.
             }
-            #endregion
 
             private void ClassConsiderations()
             {
@@ -336,6 +509,10 @@ namespace CodeConventions
                 // Following this principle implies avoiding this kind of lines: otherClass.otherComponent.whateverThing.transform.position
             }
         }
+
+        // ###################################################################
+        // Variable Conventions
+        // ###################################################################
 
         private class VariableConventions
         {
@@ -647,6 +824,10 @@ namespace CodeConventions
             }
         }
 
+        // ###################################################################
+        // Event Conventions
+        // ###################################################################
+
         public class EventConventions
         {
             // 1 - Because the events always refer to some action, use verbs to name events. You should use the verb tense to indicate the time the event is raised. PascalCasing
@@ -669,6 +850,10 @@ namespace CodeConventions
             // public delegate void ClickedEventHandler
         }
 
+        // ###################################################################
+        // Properties Conventions
+        // ###################################################################
+
         public class PropertiesConventions
         {
             // 1 - Because properties refers to data, we should use noun phrase or adjective names, use PascalCasing
@@ -690,6 +875,10 @@ namespace CodeConventions
             // public bool HasConnection {get; private set;}
             // public bool CanJump {get; private set;}
         }
+
+        // ###################################################################
+        // Methods Conventions
+        // ###################################################################
 
         private class MethodsConventions
         {
@@ -1142,170 +1331,6 @@ namespace CodeConventions
         }
 
         // ###################################################################
-        // Layout & Style conventions
-        // ###################################################################
-
-        private class LayoutConventions
-        {
-            private const int END_VALUE = 99;
-
-            private delegate void ExampleHandlerEvent();
-            private event ExampleHandlerEvent OnExampleEvent1;
-            private event ExampleHandlerEvent OnExampleEventWithLongerName;
-            private event ExampleHandlerEvent OnExampleEvent3;
-
-            private CodeConventionContentForExamples example = new CodeConventionContentForExamples();
-            private CodeConventionContentForExamples.MethodExamples methodsExamples = new CodeConventionContentForExamples.MethodExamples();
-
-            public void Parentheses()
-            {
-                // DO: Use parentheses to clarify expresions that involve more than two terms
-
-                // GOOD:
-                int result1 = 5 * (6 + 4);
-
-                // BAD:
-                int result2 = 5 * 6 + 4;
-            }
-
-            public void CodeBlocks()
-            {
-                // DO: Add a blank line for the begin brace
-
-                // GOOD:
-                if (example != null)
-                {
-                    Debug.Log(example);
-                }
-
-                // BAD:
-                if (example != null) {
-                    Debug.Log(example);
-                }
-
-                // BAD:
-                // This inline method make difficulty to debug because you can't add a breakpoint inside the if
-                if (example != null) { Debug.Log(example); }
-
-                // DO: Use begin-end pairs ALWAYS to designate block boundaries. This will avoid bugs related with incorrect modifications
-
-                // GOOD:
-                if (example != null)
-                {
-                    Debug.Log(example);
-                }
-
-                // BAD:
-                if (example != null)
-                    Debug.Log(example);
-
-                // DO: Use a new line in statements with complex expressions
-
-                // GOOD:
-                char inputChar = ' ';
-                if ((('0' <= inputChar) && (inputChar <= '9')) ||
-                    (('a' <= inputChar && inputChar <= 'z')) || 
-                    (('A' <= inputChar && inputChar <= 'Z')))
-                {
-
-                }
-            }
-
-            private void IndividualStatements()
-            {
-                // DO: Break large statements in several lines making obvious the incompleteness of the statement.
-                // If you have operators, put them at the beggining of the new line so all of them stay aligned
-
-                // GOOD: 
-                int arrayIndex1 = 0;
-                int arrayIndex2 = 0;
-                int[] exampleArray1 = new int[10];
-                int[] exampleArray2 = new int[10];
-
-                if(exampleArray1[arrayIndex1] == 0 
-                    || exampleArray2[arrayIndex2] == 0
-                    || exampleArray1[arrayIndex1] == END_VALUE
-                    || exampleArray2[arrayIndex2] == END_VALUE)
-                {
-                    
-                }
-
-                // BAD: 
-                if (exampleArray1[arrayIndex1] == 0 || exampleArray2[arrayIndex2] == 0 || exampleArray1[arrayIndex1] == END_VALUE || exampleArray2[arrayIndex2] == END_VALUE)
-                {
-
-                }
-
-                // DO: Break methods with lot of parameters in several lines
-                Vector3 rayOrigin       = Vector3.zero;
-                Vector3 direction       = Vector3.up;
-                RaycastHit raycastHit   = new RaycastHit();
-                float maxDistance       = 99f;
-                int layerMask           = LayerMask.GetMask("Default");
-
-                // GOOD: 
-                bool hit = Physics.Raycast(rayOrigin, 
-                    direction,
-                    out raycastHit,
-                    maxDistance,
-                    layerMask);
-
-                // BAD: 
-                bool hit1 = Physics.Raycast(rayOrigin,direction,out raycastHit,maxDistance,layerMask);
-
-                // DO: Align right sides of assigment statements (1*)
-
-                // GOOD: 
-                int variableName1               = 0;
-                int variableNameWithMoreLength  = 0;
-
-                OnExampleEvent1                 += LayoutConventions_OnExampleEvent1;
-                OnExampleEventWithLongerName    += LayoutConventions_OnExampleEvent2;
-                OnExampleEvent3                 += LayoutConventions_OnExampleEvent3;
-
-                // (1*): Despite knowing it is not a recommended guidline because it increases the cost to maintain the code when you rename variables
-                // i beleieve that the advantages of improved readibility and the slightly chance of catching some errors make this rule worth it.
-
-                // DO: Use only one data declaration per line
-
-                // GOOD:
-                int thisIsAnInt = 0;
-                int thisIsAnotherInt = 0;
-
-                // BAD:
-                string firstName = null, lastName = null;
-
-                // DO: Order declarations by type
-
-                // GOOD:
-                Vector3 velocity        = Vector3.zero;
-                Vector3 acceleration    = Vector3.zero;
-                float maxSpeedInKmH     = 120;
-
-                // BAD:
-                Vector3 velocity1       = Vector3.zero;
-                float maxSpeedInKmH1    = 120;
-                Vector3 acceleration1   = Vector3.zero;
-            }
-
-            private void LayoutConventions_OnExampleEvent1()
-            {
-                throw new System.NotImplementedException();
-            }
-
-            private void LayoutConventions_OnExampleEvent2()
-            {
-                throw new System.NotImplementedException();
-            }
-
-            private void LayoutConventions_OnExampleEvent3()
-            {
-                throw new System.NotImplementedException();
-            }
-
-        }
-
-        // ###################################################################
         // Comments conventions
         // ###################################################################
 
@@ -1362,7 +1387,7 @@ namespace CodeConventions
 
             private void ExampleMethod3()
             {
-                if(example.Status == CodeConventionContentForExamples.StatusEnum.Ok)
+                if (example.Status == CodeConventionContentForExamples.StatusEnum.Ok)
                 {
                     // JUST IMAGINE A VERY LARGE IF BLOCK
                     // ...
@@ -1370,7 +1395,7 @@ namespace CodeConventions
                     // ...
                     // ...
                     // ...  
-                    
+
                 } // End of STatus == Ok condition
             }
 
@@ -1417,11 +1442,5 @@ namespace CodeConventions
 
         }
 
-        private class GeneralConsiderations
-        {
-            // Favor read-time convenience to write-time convenience
-
-            // Principle of Proximity: keep related actions together
-        }
     }
 }
