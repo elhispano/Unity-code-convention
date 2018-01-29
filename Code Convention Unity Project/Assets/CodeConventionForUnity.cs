@@ -1147,7 +1147,15 @@ namespace CodeConventions
 
         private class LayoutConventions
         {
+            private const int END_VALUE = 99;
+
+            private delegate void ExampleHandlerEvent();
+            private event ExampleHandlerEvent OnExampleEvent1;
+            private event ExampleHandlerEvent OnExampleEventWithLongerName;
+            private event ExampleHandlerEvent OnExampleEvent3;
+
             private CodeConventionContentForExamples example = new CodeConventionContentForExamples();
+            private CodeConventionContentForExamples.MethodExamples methodsExamples = new CodeConventionContentForExamples.MethodExamples();
 
             public void Parentheses()
             {
@@ -1205,11 +1213,96 @@ namespace CodeConventions
 
             private void IndividualStatements()
             {
-                // 753
+                // DO: Break large statements in several lines making obvious the incompleteness of the statement.
+                // If you have operators, put them at the beggining of the new line so all of them stay aligned
+
+                // GOOD: 
+                int arrayIndex1 = 0;
+                int arrayIndex2 = 0;
+                int[] exampleArray1 = new int[10];
+                int[] exampleArray2 = new int[10];
+
+                if(exampleArray1[arrayIndex1] == 0 
+                    || exampleArray2[arrayIndex2] == 0
+                    || exampleArray1[arrayIndex1] == END_VALUE
+                    || exampleArray2[arrayIndex2] == END_VALUE)
+                {
+                    
+                }
+
+                // BAD: 
+                if (exampleArray1[arrayIndex1] == 0 || exampleArray2[arrayIndex2] == 0 || exampleArray1[arrayIndex1] == END_VALUE || exampleArray2[arrayIndex2] == END_VALUE)
+                {
+
+                }
+
+                // DO: Break methods with lot of parameters in several lines
+                Vector3 rayOrigin       = Vector3.zero;
+                Vector3 direction       = Vector3.up;
+                RaycastHit raycastHit   = new RaycastHit();
+                float maxDistance       = 99f;
+                int layerMask           = LayerMask.GetMask("Default");
+
+                // GOOD: 
+                bool hit = Physics.Raycast(rayOrigin, 
+                    direction,
+                    out raycastHit,
+                    maxDistance,
+                    layerMask);
+
+                // BAD: 
+                bool hit1 = Physics.Raycast(rayOrigin,direction,out raycastHit,maxDistance,layerMask);
+
+                // DO: Align right sides of assigment statements (1*)
+
+                // GOOD: 
+                int variableName1               = 0;
+                int variableNameWithMoreLength  = 0;
+
+                OnExampleEvent1                 += LayoutConventions_OnExampleEvent1;
+                OnExampleEventWithLongerName    += LayoutConventions_OnExampleEvent2;
+                OnExampleEvent3                 += LayoutConventions_OnExampleEvent3;
+
+                // (1*): Despite knowing it is not a recommended guidline because it increases the cost to maintain the code when you rename variables
+                // i beleieve that the advantages of improved readibility and the slightly chance of catching some errors make this rule worth it.
+
+                // DO: Use only one data declaration per line
+
+                // GOOD:
+                int thisIsAnInt = 0;
+                int thisIsAnotherInt = 0;
+
+                // BAD:
+                string firstName = null, lastName = null;
+
+                // DO: Order declarations by type
+
+                // GOOD:
+                Vector3 velocity        = Vector3.zero;
+                Vector3 acceleration    = Vector3.zero;
+                float maxSpeedInKmH     = 120;
+
+                // BAD:
+                Vector3 velocity1       = Vector3.zero;
+                float maxSpeedInKmH1    = 120;
+                Vector3 acceleration1   = Vector3.zero;
             }
 
-            // Spaces?
-            // Tabs?
+            private void LayoutConventions_OnExampleEvent1()
+            {
+                throw new System.NotImplementedException();
+            }
+
+            private void LayoutConventions_OnExampleEvent2()
+            {
+                throw new System.NotImplementedException();
+            }
+
+            private void LayoutConventions_OnExampleEvent3()
+            {
+                throw new System.NotImplementedException();
+            }
+
         }
 
         // ###################################################################
