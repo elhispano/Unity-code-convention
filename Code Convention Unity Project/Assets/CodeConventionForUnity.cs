@@ -183,9 +183,7 @@ namespace CodeConventions
         // ###################################################################
         // Layout & Style conventions
         // ###################################################################
-
-        // TODO: Seguir revisando por aqui.
-
+        
         private class LayoutConventions
         {
             private const int END_VALUE = 99;
@@ -220,8 +218,7 @@ namespace CodeConventions
                 }
 
                 // BAD:
-                if (example != null)
-                {
+                if (example != null){
                     Debug.Log(example);
                 }
 
@@ -245,9 +242,9 @@ namespace CodeConventions
 
                 // GOOD:
                 char inputChar = ' ';
-                if ((('0' <= inputChar) && (inputChar <= '9')) ||
-                    (('a' <= inputChar && inputChar <= 'z')) ||
-                    (('A' <= inputChar && inputChar <= 'Z')))
+                if ((('0' <= inputChar) && (inputChar <= '9'))
+                    || (('a' <= inputChar && inputChar <= 'z'))
+                    || (('A' <= inputChar && inputChar <= 'Z')))
                 {
 
                 }
@@ -279,11 +276,12 @@ namespace CodeConventions
                 }
 
                 // DO: Break methods with lot of parameters in several lines
-                Vector3 rayOrigin = Vector3.zero;
-                Vector3 direction = Vector3.up;
-                RaycastHit raycastHit = new RaycastHit();
-                float maxDistance = 99f;
-                int layerMask = LayerMask.GetMask("Default");
+                // TODO: Decide with the team the limit of parameters to use line breaks
+                Vector3 rayOrigin       = Vector3.zero;
+                Vector3 direction       = Vector3.up;
+                RaycastHit raycastHit   = new RaycastHit();
+                float maxDistance       = 99f;
+                int layerMask           = LayerMask.GetMask("Default");
 
                 // GOOD: 
                 bool hit = Physics.Raycast(rayOrigin,
@@ -295,19 +293,17 @@ namespace CodeConventions
                 // BAD: 
                 bool hit1 = Physics.Raycast(rayOrigin, direction, out raycastHit, maxDistance, layerMask);
 
-                // DO: Align right sides of assigment statements (1*)
+                // DO: Align right sides of assigment statements that belong to a same code block (1*)
+                // TODO: Discuss this with the team to decide if we keep doing this or not
 
                 // GOOD: 
-                int variableName1 = 0;
-                int variableNameWithMoreLength = 0;
+                int variableName1               = 0;
+                int variableNameWithMoreLength  = 0;
 
-                OnExampleEvent1 += LayoutConventions_OnExampleEvent1;
-                OnExampleEventWithLongerName += LayoutConventions_OnExampleEvent2;
-                OnExampleEvent3 += LayoutConventions_OnExampleEvent3;
-
-                // (1*): Despite knowing it is not a recommended guidline because it increases the cost to maintain the code when you rename variables
-                // i beleieve that the advantages of improved readibility and the slightly chance of catching some errors make this rule worth it.
-
+                OnExampleEvent1                 += LayoutConventions_OnExampleEvent1;
+                OnExampleEventWithLongerName    += LayoutConventions_OnExampleEvent2;
+                OnExampleEvent3                 += LayoutConventions_OnExampleEvent3;
+                
                 // DO: Use only one data declaration per line
 
                 // GOOD:
@@ -320,14 +316,18 @@ namespace CodeConventions
                 // DO: Order declarations by type
 
                 // GOOD:
-                Vector3 velocity = Vector3.zero;
-                Vector3 acceleration = Vector3.zero;
-                float maxSpeedInKmH = 120;
+                Vector3 velocity        = Vector3.zero;
+                Vector3 acceleration    = Vector3.zero;
+                float maxSpeedInKmH     = 120;
 
                 // BAD:
-                Vector3 velocity1 = Vector3.zero;
-                float maxSpeedInKmH1 = 120;
-                Vector3 acceleration1 = Vector3.zero;
+                Vector3 velocity1       = Vector3.zero;
+                float maxSpeedInKmH1    = 120; // <-- float is in the middle of two vector3
+                Vector3 acceleration1   = Vector3.zero;
+
+                // Additional notes
+                // (1*): Despite knowing it is not a recommended guidline because it increases the cost to maintain the code when you rename variables
+                // i beleieve that the advantages of improved readibility and the slightly chance of catching some errors make this rule worth it.
             }
 
             private void LayoutConventions_OnExampleEvent1()
@@ -351,12 +351,13 @@ namespace CodeConventions
         // Class Conventions
         // ###################################################################
 
-        public class ClassConventions
+        private class ClassConventions
         {
-            // Here there is an example of a class in the propper order
+            // DO: Use the same order of class members in every class
 
             // 1 - Constatns
             public const string CONSTANT_FIELD = "All constants go first";
+
 
             private const string CONSTANT_FIELD_PRIVATE = "Private goes always after public :P";
 
@@ -364,25 +365,36 @@ namespace CodeConventions
 
             public static readonly int[] STATIC_WITH_READONLY_TABLE = new int[] {1,1,2,3,5,8};
 
-            public static string STATIC_STRING = "";
 
-            private static string HIDDEN_STATIC_STRING = "";
+            public static string STATIC_STRING = "";
 
             // NOTE: As you already know ;), is not a good practice to use public fields, you must use accesor methods (get/set)
             public int examplePublicField = 0;
 
+
             protected int protectedField = 0;
+
+
+            private static string HIDDEN_STATIC_STRING = "";
+
 
             private int[] privateArray = new int[] { 0, 1, 2, 3, 4 };
 
+
             // **** UNITY SPECIFICS ****
-            // If you need a field to the Unity inspector avoiding the violation of the encapsulation principle we can use:
+            // If you need a field to the Unity inspector and avoid the violation of the encapsulation principle we can use [SerializeField] attribute:
             [SerializeField]
             private int thisIntMustBeSerializable = 0;
             // *************************
 
 
             // 3 - Constructors 
+
+            // **** UNITY SPECIFICS ****
+            // If your class is inheriting from Monobehaviour, you should know that the default constructor (constructor without parameters)
+            // is used by the Unity serializer and you can't acces Unity objects from this constructor. Consider using Awake/Start for initialization purposes
+            // *************************
+
             public ClassConventions()
             {
             
@@ -399,7 +411,6 @@ namespace CodeConventions
             public delegate void WindowClosedHandler(MonoBehaviour _window);
 
             // 6 - Events
-       
             public event ButtonClickHandler OnClicked;
 
             // 7 - Enums
@@ -420,6 +431,8 @@ namespace CodeConventions
                 set { privateArray[_index] = value; }
             }
 
+            // 10 - Methods
+
             // 10.1 - Unity Methods
 
             void Awake()
@@ -427,7 +440,7 @@ namespace CodeConventions
 
             }
 
-            // Note: Provide services in pairs with their opposites
+            // DO: Provide services in pairs with their opposites
             void OnEnable()
             {
                 OnClicked += ClassConventions_OnClicked;
@@ -478,33 +491,72 @@ namespace CodeConventions
 
             private void ClassNames()
             {
-                // 1 - Use Pascal case
+                // DO: Use Pascal case for class names
 
-                // 2 - Use noun or noun phrase to name a class
+                // DO: Use noun or noun phrase to name a class
 
-                // 3 - Use abbreviations sparingly.
+                // DO: Use abbreviations sparingly.
 
-                // Where appropriate, use a compound word to name a derived class. The second part of the derived class's name should be the name of the base class. 
+                // CONSIDER: Using a compound word to name a derived class. The second part of the derived class's name should be the name of the base class. 
                 // For example, ApplicationException is an appropriate name for a class derived from a class named Exception, because ApplicationException is a kind of Exception. 
                 // Use reasonable judgment in applying this rule. For example, Button is an appropriate name for a class derived from Control. 
                 // Although a button is a kind of control, making Control a part of the class name would lengthen the name unnecessarily.
             }
 
-            private void ClassConsiderations()
+            private class ClassConsiderations
             {
-                // Provide services in pairs with their opposites (Open & Close, OnEnable & OnDisable, Enter & Exit, etc)
+                // DO: Provide services in pairs with their opposites (Open & Close, OnEnable & OnDisable, Enter & Exit, etc)
 
-                // Move unrelated information to another class
+                // GOOD:
+                public void Enter()
+                {
 
-                // Don’t expose member data in public
+                }
 
-                // Minimize accessibility of classes and members (hide as much information as possible)
+                public void Exit()
+                {
 
-                // Keep the number of routines in a class as small as possible
+                }
 
-                // Avoid deep inheritance trees
+                public void Update()
+                {
 
-                // Try to preserve the Law of Demeter which helps to keep low the coupling of the class with other classes:
+                }
+
+                // BAD:
+                public void Enter1()
+                {
+
+                }
+
+                public void Update1()
+                {
+
+                }
+
+                public void Exit1()
+                {
+
+                }
+
+                // DO: Move unrelated information to another class
+
+                // DO: Don’t expose member data in public
+
+                // GOOD:
+                [SerializeField]
+                private GameObject explosionPrefab = null;
+
+                // BAD:
+                public GameObject deadParticlesPrefab = null;
+
+                // DO: Minimize accessibility of classes and members (hide as much information as possible)
+
+                // DO: Keep the number of routines in a class as small as possible. Consider creating new clasess to keep each class small
+
+                // DO: Avoid deep inheritance trees
+
+                // DO: Preserve the Law of Demeter which helps to keep low the coupling of the class with other classes:
                 // Each unit should have only limited knowledge about other units: only units "closely" related to the current unit.
                 // Following this principle implies avoiding this kind of lines: otherClass.otherComponent.whateverThing.transform.position
             }
@@ -516,98 +568,123 @@ namespace CodeConventions
 
         private class VariableConventions
         {
+            private CodeConventionContentForExamples example = new CodeConventionContentForExamples();
+
             private void VariableDeclarations()
             {
-                // 1- Initialize all variables
+                // DO: Initialize all variables
 
-                // DO: int myInt = 0;
-                // DO NOT: int myInt;
-                // DO: string name = null;
-                // DO NOT: string name;
+                // GOOD: 
+                int myInt = 0;
+                GameObject myGameObject = null;
 
-                // 2 - Initialize each variable close to where it's firts used,
-                // this will preserve the Principle of Proximity: keep related actions together
+                // BAD:
+                int anotherInt;
+                GameObject targetGameobject;
 
-                // DO:
-                // string address = null;
-                // adress = GetAdress(userId);
-                //
-                // string phoneNumber = null;
-                // phoneNumber = GetPhoneNumber(userId);
 
-                // 3 - If possible, declare and define each variavle where it's first used:
-                // CONSIDER:
-                // string address = GetAdress(userId);;
+                // DO: Initialize each variable close to where it's firts used to
+                // preserve the Principle of Proximity: keep related actions together
 
-                // DO NOT:
-                // string address = null;
-                // string phoneNumber = null;
-                //
-                // adress = GetAdress(userId);
-                // phoneNumber = GetPhoneNumber(userId);
+                // GOOD:
+                string id = example.DummyObject.ID;
+                Debug.LogFormat("Id: {0}",id);
 
-                // 4 - Check input paramaters before assignation
-                // Before assigning an input paramaters, makre sure that the values are reasonable (1)
+                string secondID = example.DummyObject.ID;
+                Debug.LogFormat("secondID: {0}", secondID);
 
-                // 5 - Group related statements
 
-                // DO
-                // GetNewData(bewData);
-                // var totalNewData = Sum(newData);
-                // GetOldData(oldData);
-                // var totalOldData = Sum(oldData);
+                // BAD:
+                string sourceId = example.DummyObject.ID;
+                string targetId = example.DummyObject.ID;
 
-                // DO NOT:
-                // GetOldData(oldData);
-                // GetNewData(bewData);
-                // var totalOldData = Sum(oldData);
-                // var totalNewData = Sum(newData);
+                Debug.LogFormat("SourceId: {0}", sourceId);
+                Debug.LogFormat("TargetId: {0}", targetId);
 
-                // 6 - Use each variable for one purpose only to improve readibility
+                // CONSIDER: declaring and defining each variable where it's first used:
 
-                // DO:
-                // var score = CalculateScore();
-                // ShowScore(score);
-                // var health = CalculateCombatHealth();
-                // ApplyHealth(health)
+                // GOOD:
+                CodeConventionContentForExamples.StatusEnum status1 = example.Status;
+
+                // BAD:
+                CodeConventionContentForExamples.StatusEnum status2 = CodeConventionContentForExamples.StatusEnum.Undefined;
+                status2 = example.Status;
+
+                // DO: Group related statements
+
+                // GOOD:
+                var dummyObject             = example.DummyObject; // <-- Dummy Object
+                bool dummyObjectOK          = example.DoOperations(dummyObject); // <-- Operate over Dummy Object
+                var oldDummyObject          = example.OldDummyObject; // <-- Old Dummy Object
+                bool oldDummyObjectOK       = example.DoOperations(oldDummyObject); // <-- Operate over Old dummy object
+
 
                 // DO NOT:
-                // var temp = CalculateScore();
-                // ShowScore(temp);
-                // temp = CalculateCombatHealth();
-                // ApplyHealth(temp)
+                var dummyObject1             = example.DummyObject; // <-- Dummy Object
+                var oldDummyObject1          = example.OldDummyObject; // <-- Old Dummy Object
+                bool oldDummyObjectOK1       = example.DoOperations(oldDummyObject1); // <-- Operate over Old dummy object
+                bool dummyObjectOK1          = example.DoOperations(dummyObject1); // <-- Operate over Dummy Object
 
-                // 7 - Avoid variables with hidden meanings to avoid "hybrid coupling"
+                // DO: Use each variable for one purpose only to improve readibility
 
-                // DO NOT:
-                // int lives = GetAvailableLives()
-                // if(lives == -1)
-                // {
-                //   ShowError(ERROR_GETTING_LIVES);
-                // }
-                // else
-                // {
-                //   ConfigureLivesCounter(lives);
-                // }
-                // In this case, the variable lives has two meanings: the quantity of lives of the player AND a boolean to indicates than an error has occurred.
+                // GOOD:
+                int randomIndex = example.GetRandomInt();
+                Debug.LogFormat("Random Index: {0}", randomIndex);
 
-                // 8 - Make sure all declared variables are used.
+                int score = example.CalculateScore();
+                Debug.LogFormat("Score: {0}", score);
+
+                // BAD:
+                int tempValue = example.GetRandomInt();
+                Debug.LogFormat("Random Index: {0}", tempValue);
+
+                tempValue = example.CalculateScore();
+                Debug.LogFormat("Score: {0}", tempValue);
+
+
+                // DO NOT: Set variables with hidden meanings to avoid "hybrid coupling"
+
+                // GOOD:
+                var status = example.Status;
+                if(status == CodeConventionContentForExamples.StatusEnum.Ok)
+                {
+                    int finalScore = example.CalculateScore();
+                }
+                else
+                {
+                    Debug.LogError("Some error occured. The game doesn't ended well");
+                }
+
+                // BAD:
+                int gameOverScore = example.CalculateScore();
+                if(gameOverScore == -1) // Two meanings for gameOverScore: game score & error 
+                {
+                    Debug.LogError("Some error occured. The game doesn't ended well");
+                }
+
+
+                // DO: Make sure all declared variables are used.
                 // You can see Warnings in the console to remove unused variables.
-                
-                // 9 - Use 'var' keyword in variable declarations except for numeric variables
+
+
+                // DO: Use 'var' keyword in variable declarations except for numeric variables
                 // - Code maintenance is improved
                 // - Code readability is improved 
+                // TODO: Discuss this with the team
 
-                // DO:
-                // var player = Game.GetPlayer();
+                // GOOD:
+                var target = example.DummyGameObject;
 
-                // DO NOT:
-                // Player player = Game.GetPlayer();
+                // BAD:
+                GameObject source = example.DummyGameObject;
 
-                // DO NOT:
-                // var max = GetMax();
-                // var result = current / max;
-                // If we use var, we can't see of there is an error due to the type of the operators, in this example, result can be 0 if max is an int
+                // With numeric values:
+
+                // BAD:
+                var totalPlays      = 5;
+                var totalScore      = example.CalculateScore();
+                var averageScore    = totalScore / totalPlays; // <-- we can have errors because we don't know the type of the variables (float, int, etc)
+
 
                 // Note (1): If you are concerned about performance, you can use Assertions (Unity Debug.Assert)
             }
@@ -886,7 +963,7 @@ namespace CodeConventions
             CodeConventionContentForExamples examples = new CodeConventionContentForExamples();
             CodeConventionContentForExamples.MethodExamples examples2 = new CodeConventionContentForExamples.MethodExamples();
 
-            private void MethodsConciserations()
+            private void MethodsConsiderations()
             {
                 // DO: Routines must have a single purpose
 
@@ -966,6 +1043,8 @@ namespace CodeConventions
                 examples2.MethodWithBadParameters(examples.DummyObject);
 
                 // DO: Use named parameters in lambda expresions and auto-generated delegates
+
+                // DO: Check input paramaters before assignation. Make sure that the values are reasonable (1)
             }
 
             // ###################################################################

@@ -20,6 +20,8 @@ namespace CodeConventions
 
         public DummyClass DummyObject { get; private set; }
 
+        public DummyClass OldDummyObject { get; private set; }
+
         public GameObject DummyGameObject { get; private set; }
 
         public StatusEnum Status { get; private set; }
@@ -27,6 +29,21 @@ namespace CodeConventions
         public int dummyInt;
 
         public string dummyString;
+
+        public bool DoOperations(DummyClass _dummyObject)
+        {
+            return true;
+        }
+
+        public int GetRandomInt()
+        {
+            return 0;
+        }
+
+        public int CalculateScore()
+        {
+            return 0;
+        }
 
         public class MethodExamples
         {
