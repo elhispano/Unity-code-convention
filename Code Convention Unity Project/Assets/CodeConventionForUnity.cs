@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 #pragma warning disable
 
@@ -177,6 +179,15 @@ namespace CodeConventions
                 //get - set
                 //old - new
             }
+
+            public void ProjectAbrevations()
+            {
+                // Put here your project abreviations
+
+                // Idx for Index
+                // SO for ScriptableObject: buildingSO, levelRewardsSO
+                // SZ for classes that are serializable in Unity: buildingSZ, levelRewardsSZ
+            }
         }
 
 
@@ -193,8 +204,8 @@ namespace CodeConventions
             private event ExampleHandlerEvent OnExampleEventWithLongerName;
             private event ExampleHandlerEvent OnExampleEvent3;
 
-            private CodeConventionContentForExamples example = new CodeConventionContentForExamples();
-            private CodeConventionContentForExamples.MethodExamples methodsExamples = new CodeConventionContentForExamples.MethodExamples();
+            private Example example = new Example();
+            private Example.MethodExamples methodsExamples = new Example.MethodExamples();
 
             public void Parentheses()
             {
@@ -568,7 +579,7 @@ namespace CodeConventions
 
         private class VariableConventions
         {
-            private CodeConventionContentForExamples example = new CodeConventionContentForExamples();
+            private Example example = new Example();
 
             private void VariableDeclarations()
             {
@@ -604,10 +615,10 @@ namespace CodeConventions
                 // CONSIDER: declaring and defining each variable where it's first used:
 
                 // GOOD:
-                CodeConventionContentForExamples.StatusEnum status1 = example.Status;
+                Example.StatusEnum status1 = example.Status;
 
                 // BAD:
-                CodeConventionContentForExamples.StatusEnum status2 = CodeConventionContentForExamples.StatusEnum.Undefined;
+                Example.StatusEnum status2 = Example.StatusEnum.Undefined;
                 status2 = example.Status;
 
                 // DO: Group related statements
@@ -646,7 +657,7 @@ namespace CodeConventions
 
                 // GOOD:
                 var status = example.Status;
-                if(status == CodeConventionContentForExamples.StatusEnum.Ok)
+                if(status == Example.StatusEnum.Ok)
                 {
                     int finalScore = example.CalculateScore();
                 }
@@ -691,213 +702,327 @@ namespace CodeConventions
 
             private void VariableNames()
             {
-                // 1 - Try to avoid computer related terms and use problem domain terms.
+                // DO: Try to avoid computer related terms and use problem domain terms.
 
-                // DO:
-                // playerSaveGame
+                // GOOD:
+                System.Object playerSaveGame = new System.Object();
 
-                // DO NOT:
-                // diskFile
+                // BAD:
+                System.Object savedData = new System.Object();
 
-                // 2 - Optimum name length:
-                // - Avoid too short, too long, hard to type, hard to pronounce variable names
-                // - Desired variable name length: Between 8 and 20 characters
+                // DO NOT: Use too short, too long, hard to type, hard to pronounce variable names
 
-                // 3 - If the variable has a qualifer like: Total, Sum, Average, Max, Min, Record, String, Pointer, etc
+                // CONSIDER: Using variables with a name length: Between 8 and 20 characters
+                // ABCDEFGH <-- 8 characters
+                // ABCDEFGHIJKLMNOPQRST <-- 20 characters
+
+                // DO: If the variable has a qualifer like: Total, Sum, Average, Max, Min, Record, String, Pointer, etc
                 // put it at the end of the name
 
-                // DO:
-                // scoreTotal
-                // healthAverage
-                // playerNameLabel
+                // GOOD:
+                int scoreTotal = 0;
+                float healthAverage = 0;
+                Text titleLabel = null;
 
-                // 4 - CONSIDER using more descriptive names for loops indexs to improve readibility
+                // CONSIDER: Using more descriptive names for loops indexs to improve readibility
 
-                // 5 - Use more detailed index names for nested loops to avoid index corss-talk errors (saying i when you mean j and vice versa)
+                // GOOD:
+                System.Object[] clamMembers = new System.Object[10];
 
-                // DO:
-                //for (teamIndex = 0; teamIndex < teamCount; teamIndex++)
-                //{
-                //    for (eventIndex = 0; eventIndex < eventCount[teamIndex]; eventIndex++)
-                //    {
-                //        score[teamIndex][eventIndex] = 0;
-                //    }
-                //}
+                for (int clanMemberIdx = 0; clanMemberIdx < clamMembers.Length; clanMemberIdx++)
+                {
 
-                // 6 - Give boolean variables names that imply true or false as: done, error, found, success, ok, etc.
+                }
 
-                // 7 -  Use positive boolean variable names:
+                // BAD:
+                for (int i = 0; i < clamMembers.Length; i++)
+                {
 
-                // DO:
-                // found
+                }
 
-                // DO NOT:
-                // notFound
+                // DO: Use more detailed index names for nested loops to avoid index corss-talk errors (saying i when you mean j and vice versa)
+
+                // GOOD:
+                int[,] scores = new int[5,5];
+                int teamCount = 5;
+                int eventCount = 5;
+                for (int teamIndex = 0; teamIndex < teamCount; teamIndex++)
+                {
+                    for (int eventIndex = 0; eventIndex < eventCount; eventIndex++)
+                    {
+                        scores[teamIndex,eventIndex] = 0;
+                    }
+                }
+
+                // DO: Give boolean variables names that imply true or false as: 
+                // done, error, found, success, ok
+
+                // DO: Use positive boolean variable names:
+
+                // GOOD:
+                bool found = false;
+
+                // BAD:
+                bool notFound = true;
 
 
-                // 8 - Avoid using names with similar meanings
+                // DO NOT: Use names with similar meanings
 
-                // DO NOT:
-                // var fileNumber
-                // var fileIndex
+                // GOOD:
+                int fileCount = 0;
+                int fileIndex = 1;
+
+                // BAD:
+                int fileNumber = 0;
+                int fileIndex1 = 0;
 
 
-                // 9 - Avoid using similar names in variables with different meaning
+                // DO NOT: Use similar names in variables with different meaning
 
-                // DO: 
-                // var screenArea
-                // var screenResolution
+                // GOOD: 
+                Rect screenArea = new Rect();
+                Vector2 screenResolution = new Vector2();
 
-                // DO NOT:
-                // var screenRect
-                // var screenRes
+                // BAD:
+                Rect screenRect = new Rect();
+                Vector2 screenRes = new Vector2();
 
-                // 10 - Avoid names that sound similar
+                // DO: Avoid names that sound similar
 
-                // 11 - Avoid numerals in names. If you feel you need numerals probably you need a different data type as an array
+                // DO NOT: Use numerals in names. If you feel you need numerals probably you need a different data type as an array
+
+                // GOOD: 
+                GameObject[] itemSlots = null;
+
+                // BAD:
+                GameObject itemSlot1 = null;
+                GameObject itemSlot2 = null;
             }
 
-            public void NumericVariablesConsiderations()
+            private void NumericVariablesConsiderations()
             {
-                // 1 - Avoid magic numbers
+                // DO: Avoid magic numbers
 
-                // DO:
-                // var fallSpeed = initialSpeed + GRAVITY_ACCELERATION*time;
-                // DO NOT:
-                // var fallSpeed = initialSpeed + 9.8f*time;
+                // GOOD:
+                float initialSpeed  = 10f;
+                float timeInSeconds = 60f;
+                float fallSpeed     = initialSpeed + Example.GRAVITY_ACCELERATION * timeInSeconds;
 
-                // 2 - Anticipate divide-by-zero errors
+                // BAD:
+                float fallSpeed1 = initialSpeed + 9.8f * timeInSeconds;
 
-                // 3 - Make data type conversions explicit in mathematical operations
+                // DO: Anticipate divide-by-zero errors
 
-                // DO:
-                // y = x + (float)i;
+                // DO: Make data type conversions explicit in mathematical operations. 
 
-                // DO NOT:
-                // y = x + i;
+                // GOOD:
+                float x = 0f;
+                int i   = 0;
+                float y = x + (float)i;
 
-                // 4 - Avoid midex-type comparitons
+                // BAD:
+                float w = x + i;
 
-                // DO:
-                // if (i == (int)x)
+                // DO NOT: Use mixed-type comparisons
 
-                // DO NOT:
-                // if(i == x)
+                // GOOD:
+                if (i == (int)x)
+                {
 
-                // 5 - Be careful with integer divisions
-                // 10 * (7/10)  will return 0 in C#
+                }
 
-                // 6 - Be careful with integer overflow, you should think about the largest value your expression can assume.
+                // BAD:
+                if(i == x)
+                {
 
-                // 7 - Avoid add/substract on numbers that have greatly different magnitudes with float numbers
-                // 1,000,000.00 + 0.1 can have a result of 1,000,000.00
+                }
 
-                // 8 - Avoid equality comparisons in floating-point numbers
+                // DO: Be careful with integer divisions
+                float result = 10f * (7 / 10);  // <-- will return 0 in C#
 
-                // DO:
-                // if(maximumSpeed - speed < MAX_SPEED_DELTA)
+                // CONSIDER: Integer overflow, you should think about the largest value your expression can assume.
 
-                // DO NOT:
-                // if(speed == maximumSpeed)
+                // DO NOT: add/substract on numbers that have greatly different magnitudes with float numbers
+                float result1 = 1000000.00f + 0.1f; // <--  can have a result of 1,000,000.00
+
+                // DO NOT: Use equality comparisons in floating-point numbers
+
+                // GOOD:
+                float maximumSpeed = 0f;
+                float speed = 0f;
+                if (maximumSpeed - speed < Example.SPEED_MAX_DELTA)
+                {
+
+                }
+
+                // BAD:
+                if(speed == maximumSpeed)
+                {
+
+                }
             }
 
-            public void CharacterAndStringsConsiderations()
+            private void CharacterAndStringsConsiderations()
             {
-                // 1 - Avoid magic strings
+                // DO: Avoid magic strings
 
-                // DO:
-                // titleLabel.text = LocalizationSystem.GetText(WINDOW_TITLE_KEY);
+                // GOOD:
+                string localizedTitle = example.GetLocalizedText(Example.LOCALIZED_TITLE);
 
-                // DO NOT:
-                // titleLabel.text = LocalizationSystem.GetText("Window title key");
+                // BAD:
+                string localizedTitle1 = example.GetLocalizedText("TITLE_KEY");
 
-                // 2 - Use string.Format() to compose strings
+                // DO: Use string.Format() to compose strings
 
-                // DO:
-                // ShowMessage(string.Format("You have won {0} points",score));
+                // GOOD:
+                int score = 0;
+                string finalText1 = string.Format("You have won {0} points",score);
 
-                // DO NOT:
-                // ShowMessage("You have won "+score+" points");
-
-                // 3 - Use string.IsNullOrEmpty to check for empty/null strings
-
-                // DO:
-                // if(string.IsNullOrEmpty(userName))
-
-                // DO NOT:
-                // if(userName == null || userName == "")
-
-                // 4 - Consider using the StringBuilder class if you need to work with long strings to reduce the impact on performance
-                //string text = null;
-
-                // DO:
-                // System.Text.StringBuilder sb = new System.Text.StringBuilder();
-                // for (int i = 0; i < 100; i++)
-                // {
-                //     sb.AppendLine(i.ToString());
-                // }
-
-                // DO NOT:
-                // string text = null;
-                // for (int i = 0; i < 100; i++)
-                // {
-                //     text += i.ToString();
-                // }
-            }
-
-            public void BooleansConsiderations()
-            {
-                // 1 - Use boolean variables to increase readibility and maintenance in logic expressions 
-
-                // DO:
-                // var finished = (( elementIndex < 0 ) || ( MAX_ELEMENTS < elementIndex ));
-                // var repeatedEntry = repeatedEntry = ( elementIndex == lastElementIndex );
-                // if(finished || repeatedEntry)
-
-                // DO NOT:
-                // if ((elementIndex < 0) || (MAX_ELEMENTS < elementIndex) || (elementIndex == lastElementIndex))
-            }
-
-            public void EnumeratedTypesConsiderations()
-            {
-                // 1 - Define always the first value in an enum for an "invalid" value
-
-                // DO:
-                // enum GameModes
-                // {
-                //      None,
-                //      DeathMatch,
-                //      TeamDeathMatch,
-                //      CaptureTheFlag
-                // }
+                // BAD:
+                string finalText2 = "You have won " +score+" points";
 
                 // **** UNITY SPECIFICS ****
 
-                // 2 - Avoid adding new enum values in the middle of the enum, this will change the value of serializable variables in the Unity Inspector
+                // DO: Use Debug.LogFormat, Debug.LogErrorFormat & Debug.LogWarningFormat to print logs with composes messages
 
                 // *************************
 
-                // 3 - Try to use the same enum values in external services to avoid name conversions
+                // DO: Use string.IsNullOrEmpty to check for empty/null strings
 
-                // DO: 
-                // GameMode gameMode = (GameMode)GetGameModeFromServer();
-                // if(gameMode == GameModes.DeathMatch)
+                // GOOD:
+                string userName = "";
+                if(string.IsNullOrEmpty(userName))
+                {
 
-                // DO NOT:
-                // string gameModeString = GetGameModeFromServer();
-                // GameMode gameMode = GameMode.None;
-                // 
-                // if(gameModeString == "DEATH_MATCH")
-                // {
-                //      gameMode = GameMode.DeathMatch;
-                // }
+                }
+
+                // BAD:
+                if(userName == null || userName == "")
+                {
+
+                }
+
+                // DO: Consider using the StringBuilder class if you need to work with long strings to reduce the impact on performance
+                
+                // GOOD:
+                string text = null;
+                System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                for (int i = 0; i < 100; i++)
+                {
+                    sb.AppendLine(i.ToString());
+                }
+
+                // BAD:
+                for (int i = 0; i < 100; i++)
+                {
+                    text += i.ToString();
+                }
+            }
+
+            private void BooleansConsiderations()
+            {
+                // DO: Use boolean variables to increase readibility and maintenance in logic expressions 
+
+                // GOOD:
+                int elementIndex        = 0;
+                int lastElementIndex    = 0;
+
+                bool finished        = ((elementIndex < 0) || (Example.MAX_ELEMENTS < elementIndex));
+                bool repeatedEntry   = (elementIndex == lastElementIndex);
+
+                if (finished || repeatedEntry)
+                {
+
+                }
+
+                // BAD:
+                if ((elementIndex < 0) || (Example.MAX_ELEMENTS < elementIndex) || (elementIndex == lastElementIndex))
+                {
+
+                }
+            }
+
+            // ###################################################################
+            // Enumerated Types Considerations
+            // ###################################################################
+
+            // DO: Define always the first value in an enum for an "invalid" value and the last value to use it to iterate over all enum values
+
+            // GOOD:
+            public enum GameModes
+            {
+                None,
+                DeathMatch,
+                TeamDeathMatch,
+                CaptureTheFlag,
+                End,
+            }
+
+            // **** UNITY SPECIFICS ****
+
+            // DO NOT: Add new enum values in the middle of the enum, this will change the value of a serializable field in the Unity Inspector
+
+            // GOOD:
+            private enum GameModes1
+            {
+                None,
+                DeathMatch,
+                TeamDeathMatch,
+                CaptureTheFlag,
+                NewGameMode, // <-- Added at the end (before Final)
+                Final,
+            }
+
+            // BAD:
+            private enum GameModes2
+            {
+                None,
+                DeathMatch,
+                NewGameMode, // <-- Added in the middle, now the seralizable fields with the value of TeamDeatchMatch will have NewGameMode assigned
+                TeamDeathMatch,
+                CaptureTheFlag,
+                Final,
+            }
+
+            // *************************
+
+            private void EnumeratedTypesConsiderations()
+            {
+                // DO: Try to use the same enum values in external services to avoid name conversions
+
+                // GOOD: 
+                string gameModeString           = example.GetGameModeFromServer();
+                GameModes gameModeFromServer    = (GameModes)Enum.Parse(typeof(GameModes), gameModeString);
+                if(gameModeFromServer == GameModes.DeathMatch)
+                {
+
+                }
+
+                // BAD:
+                string gameModeString1 = example.GetGameModeFromServer();
+
+                if(gameModeString1 == "DEATH_MATCH")
+                {
+                    gameModeFromServer = GameModes.DeathMatch;
+                }
             }
 
             public void ArraysConsiderations()
             {
-                // 1 - Check that array indexes are within the bounds of the array
+                // DO: Check that array indexes are within the bounds of the array
 
-                // 2 - Use lists if you don't know the size of the array, in other case, use arrays
+                // GOOD:
+                GameObject[] exampleArray = new GameObject[5];
+                int index = 0;
+                int maxLength = exampleArray.Length;
+
+                if(index >= maxLength)
+                {
+                    Debug.LogErrorFormat("Array out of range. Index: {0} Max: {1}",index,maxLength);
+                    index = maxLength;
+                }
+
+                // DO: Use lists if you don't know the size of the array, in other case, use arrays
             }
         }
 
@@ -960,8 +1085,8 @@ namespace CodeConventions
         private class MethodsConventions
         {
             // Pagina 161
-            CodeConventionContentForExamples examples = new CodeConventionContentForExamples();
-            CodeConventionContentForExamples.MethodExamples examples2 = new CodeConventionContentForExamples.MethodExamples();
+            Example examples = new Example();
+            Example.MethodExamples examples2 = new Example.MethodExamples();
 
             private void MethodsConsiderations()
             {
@@ -1103,7 +1228,7 @@ namespace CodeConventions
             // Conditionals
             // ###################################################################
 
-            private CodeConventionContentForExamples example = new CodeConventionContentForExamples();
+            private Example example = new Example();
 
             private void Conditionals()
             {
@@ -1143,7 +1268,7 @@ namespace CodeConventions
                 // DO: Put the normal case after the if rather than after the else
 
                 // GOOD:
-                if (example.Status == CodeConventionContentForExamples.StatusEnum.Ok)
+                if (example.Status == Example.StatusEnum.Ok)
                 {
                     // Normal case
                 }
@@ -1153,7 +1278,7 @@ namespace CodeConventions
                 }
 
                 // BAD:
-                if (example.Status != CodeConventionContentForExamples.StatusEnum.Ok)
+                if (example.Status != Example.StatusEnum.Ok)
                 {
                     
                 }
@@ -1184,14 +1309,14 @@ namespace CodeConventions
                 // DO: Simplify complicated tests with boolean functions calls
 
                 // GOOD:
-                bool statusIsOk = example.Status == CodeConventionContentForExamples.StatusEnum.Ok;
+                bool statusIsOk = example.Status == Example.StatusEnum.Ok;
                 if(validID && statusIsOk)
                 {
                     // Do somethinf
                 }
 
                 // BAD:
-                if (!string.IsNullOrEmpty(example.DummyObject.ID) && example.Status == CodeConventionContentForExamples.StatusEnum.Ok)
+                if (!string.IsNullOrEmpty(example.DummyObject.ID) && example.Status == Example.StatusEnum.Ok)
                 {
                     // Do somethinf
                 }
@@ -1251,7 +1376,7 @@ namespace CodeConventions
 
                 // GOOD:
                 float securityTimer = 0f;
-                while (example.Status != CodeConventionContentForExamples.StatusEnum.Ok && securityTimer < 10f)
+                while (example.Status != Example.StatusEnum.Ok && securityTimer < 10f)
                 {
                     // Do something 
 
@@ -1264,7 +1389,7 @@ namespace CodeConventions
                 }
 
                 // BAD:
-                while (example.Status != CodeConventionContentForExamples.StatusEnum.Ok)
+                while (example.Status != Example.StatusEnum.Ok)
                 {
 
                 }
@@ -1274,7 +1399,7 @@ namespace CodeConventions
                 // GOOD:
                 for(int i = 0; i < 100; i++)
                 {
-                    if (example.Status != CodeConventionContentForExamples.StatusEnum.Ok)
+                    if (example.Status != Example.StatusEnum.Ok)
                         continue;
                 }
 
@@ -1306,7 +1431,7 @@ namespace CodeConventions
 
         private class UnityConventions
         {
-            CodeConventionContentForExamples example = new CodeConventionContentForExamples();
+            Example example = new Example();
 
             private MonoBehaviour dummyComponent = null;
 
@@ -1415,7 +1540,7 @@ namespace CodeConventions
 
         private class CommentsConventions
         {
-            private CodeConventionContentForExamples example = new CodeConventionContentForExamples();
+            private Example example = new Example();
 
             // DO: Write code that is enough clear to be a "self-documenting" code. If you have to write a comment just because the code is so complicated, 
             // it is better to improve the code that write the comment
@@ -1466,7 +1591,7 @@ namespace CodeConventions
 
             private void ExampleMethod3()
             {
-                if (example.Status == CodeConventionContentForExamples.StatusEnum.Ok)
+                if (example.Status == Example.StatusEnum.Ok)
                 {
                     // JUST IMAGINE A VERY LARGE IF BLOCK
                     // ...
@@ -1522,4 +1647,140 @@ namespace CodeConventions
         }
 
     }
+
+    #region Example class, ignore it
+    public class Example
+    {
+        public const float GRAVITY_ACCELERATION = 9.8f;
+
+        public const float SPEED_MAX_DELTA = 0.1f;
+
+        public const int MAX_ELEMENTS = 99;
+
+        public const string LOCALIZED_TITLE = "TITLE_KEY";
+
+        public enum StatusEnum
+        {
+            Undefined,
+            Ok,
+            Error,
+            Interrupted
+        }
+
+        public DummyClass DummyObject { get; private set; }
+
+        public DummyClass OldDummyObject { get; private set; }
+
+        public GameObject DummyGameObject { get; private set; }
+
+        public StatusEnum Status { get; private set; }
+
+        public int dummyInt;
+
+        public string dummyString;
+
+        public bool DoOperations(DummyClass _dummyObject)
+        {
+            return true;
+        }
+
+        public int GetRandomInt()
+        {
+            return 0;
+        }
+
+        public int CalculateScore()
+        {
+            return 0;
+        }
+
+        public bool IsLetter(char _char)
+        {
+            return true;
+        }
+
+        public bool IsNumber(char _char)
+        {
+            return true;
+        }
+        public bool IsPunctiation(char _char)
+        {
+            return true;
+        }
+
+        public string GetLocalizedText(string _textKey)
+        {
+            return "";
+        }
+
+        public string GetGameModeFromServer()
+        {
+            return "";
+        }
+
+        public class DummyClass
+        {
+            public string ID { get; private set; }
+        }
+
+        public class MethodExamples
+        {
+            // Vague routine name
+            public void ComputeScore()
+            {
+
+            }
+
+            // Good routine name
+            public void ComputeGameOverScore()
+            {
+
+            }
+
+            // Routine name without verb
+            public void Score()
+            {
+
+            }
+
+            public void GetScore()
+            {
+
+            }
+
+            // Bad examples
+            public string GetId()
+            {
+                return "";
+            }
+
+            public string Id()
+            {
+                return "";
+            }
+
+            public string ID { get; private set; }
+
+            // Parameters order
+
+            public void ConfigurePlayerSkin(bool _premiumSkins, ref GameObject _instantiatedPlayer, out GameObject _mainWeapon, out bool _error)
+            {
+                _error = false;
+                _mainWeapon = new GameObject();
+            }
+
+            // Examples of methods to pass variables to maintain interface abstraction
+            public void MethodWithGoodParameters(int _intParameter, string _stringParameter)
+            {
+
+            }
+
+            public void MethodWithBadParameters(DummyClass _dummyObject)
+            {
+
+            }
+        }
+
+    }
+    #endregion
 }
