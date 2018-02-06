@@ -6,21 +6,43 @@ using UnityEngine.UI;
 
 #pragma warning disable
 
+// Author: Adrian Mesa Pachon 
+// ContactInfo: 
+
 // Summary:
 // This file is organized in different classes, each class is a collection of guidelines with examples.
 // Some guidelines are more concrete and other are general ideas that improve code quality.
 
 // The file has a top-down organization from more general to more concrete things
 
-// General conventions
-// Layout and Style
-// Commenting conventions
-// Classes conventions
-// Events conventions
-// Fields conventions
-// Methods/Properties conventions
-// Statements conventions
+// 1 - General conventions
+//  1.1 - Naming Conventions
+//  1.2 - Class order
+//  1.3 - Valid Opposites
+//  1.4 - Project Abrevations
 
+// 2 - Layout and Style
+
+// 3 - Classes conventions
+//  3.1 - Class Order
+//  3.2 - Class Names
+//  3.3 - Class Considerations
+
+// 4 - Events conventions
+
+// 5 - Properties conventions
+
+// 6 - Methods/Properties conventions
+//  6.1 Methods Naming Conventions
+//  6.2 - Routine Parameters Conventions
+//  6.3 - Methods return value conventions
+//  6.4 - Methods considerations
+
+
+// 7 - Variables conventions
+
+// 8 - Statements conventions 
+// 9 - Commenting conventions
 
 // How to use it:
 // The idea is to include this file and the example file in your Unity project
@@ -57,11 +79,15 @@ namespace CodeConventions
     public class CodeConventionForUnity
     {
         // ###################################################################
-        // General Conventions
+        // 1 - General Conventions
         // ###################################################################
 
         public class GeneralConventions
         {
+            // =============================
+            // 1.1 - Naming Conventions
+            // =============================
+
             public void NamingConvention()
             {
                 // ClassName: Class names are in mixed uppercase and lowercase with an initial capital letter. Never use plural in class names.  
@@ -103,6 +129,10 @@ namespace CodeConventions
                 // (1) We don't need to differentiate between local vars and class vars because we usually has different names. You can always can use this.varName 
                 // to differentiate between two vars with the same name is needed
             }
+
+            // =============================
+            // 1.2 - Class order
+            // =============================
 
             public void ClassOrder()
             {
@@ -157,6 +187,10 @@ namespace CodeConventions
                 */
             }
 
+            // =============================
+            // 1.3 - Valid Opposites
+            // =============================
+
             public void ValidOpposites()
             {
                 // To help consistency (and readability) you should use this kind of opposites precisely
@@ -180,6 +214,10 @@ namespace CodeConventions
                 //old - new
             }
 
+            // =============================
+            // 1.4 - Project Abrevations
+            // =============================
+
             public void ProjectAbrevations()
             {
                 // Put here your project abreviations
@@ -192,21 +230,11 @@ namespace CodeConventions
 
 
         // ###################################################################
-        // Layout & Style conventions
+        // 2 - Layout & Style conventions
         // ###################################################################
         
         private class LayoutConventions
         {
-            private const int END_VALUE = 99;
-
-            private delegate void ExampleHandlerEvent();
-            private event ExampleHandlerEvent OnExampleEvent1;
-            private event ExampleHandlerEvent OnExampleEventWithLongerName;
-            private event ExampleHandlerEvent OnExampleEvent3;
-
-            private Example example = new Example();
-            private Example.MethodExamples methodsExamples = new Example.MethodExamples();
-
             public void Parentheses()
             {
                 // DO: Use parentheses to clarify expresions that involve more than two terms
@@ -356,23 +384,38 @@ namespace CodeConventions
                 throw new System.NotImplementedException();
             }
 
+            #region For examples
+            private const int END_VALUE = 99;
+
+            private delegate void ExampleHandlerEvent();
+            private event ExampleHandlerEvent OnExampleEvent1;
+            private event ExampleHandlerEvent OnExampleEventWithLongerName;
+            private event ExampleHandlerEvent OnExampleEvent3;
+
+            private Example example = new Example();
+            private Example.MethodExamples methodsExamples = new Example.MethodExamples();
+            #endregion
         }
 
         // ###################################################################
-        // Class Conventions
+        // 3 - Class Conventions
         // ###################################################################
 
         private class ClassConventions
         {
+            // =============================
+            // 3.1 - Class Order
+            // =============================
+
             // DO: Use the same order of class members in every class
 
-            // 1 - Constatns
+            // 1º - Constatns
             public const string CONSTANT_FIELD = "All constants go first";
 
 
             private const string CONSTANT_FIELD_PRIVATE = "Private goes always after public :P";
 
-            // 2 - Fields
+            // 2º - Fields
 
             public static readonly int[] STATIC_WITH_READONLY_TABLE = new int[] {1,1,2,3,5,8};
 
@@ -399,7 +442,7 @@ namespace CodeConventions
             // *************************
 
 
-            // 3 - Constructors 
+            // 3º - Constructors 
 
             // **** UNITY SPECIFICS ****
             // If your class is inheriting from Monobehaviour, you should know that the default constructor (constructor without parameters)
@@ -411,20 +454,20 @@ namespace CodeConventions
             
             }
 
-            // 4 - Destructors 
+            // 4º - Destructors 
             ~ClassConventions()
             {
             
             }
 
-            // 5 - Delegates
+            // 5º - Delegates
             public delegate void ButtonClickHandler(GameObject _target);
             public delegate void WindowClosedHandler(MonoBehaviour _window);
 
-            // 6 - Events
+            // 6º - Events
             public event ButtonClickHandler OnClicked;
 
-            // 7 - Enums
+            // 7º - Enums
             public enum ExampleEnum
             {
                 None    = 0,
@@ -432,17 +475,17 @@ namespace CodeConventions
                 Enum2   = 2,
             }
 
-            // 8 - Properties
+            // 8º - Properties
             public int ExampleProperty { get; private set; }
 
-            // 9 - Indexers
+            // 9º - Indexers
             public int this[int _index]
             {
                 get { return privateArray[_index]; }
                 set { privateArray[_index] = value; }
             }
 
-            // 10 - Methods
+            // 10º - Methods
 
             // 10.1 - Unity Methods
 
@@ -486,19 +529,23 @@ namespace CodeConventions
 
             }
 
-            // 11 - Structs
+            // 11º - Structs
 
             public struct NestedStruct
             {
                 public int exampleInt;
             }
 
-            // 12 - Classes
+            // 12º - Classes
 
             private class NestedClass
             {
                 public int exampleInt = 0;
             }
+
+            // =============================
+            // 3.2 - Class Names
+            // =============================
 
             private void ClassNames()
             {
@@ -513,6 +560,10 @@ namespace CodeConventions
                 // Use reasonable judgment in applying this rule. For example, Button is an appropriate name for a class derived from Control. 
                 // Although a button is a kind of control, making Control a part of the class name would lengthen the name unnecessarily.
             }
+
+            // =============================
+            // 3.3 - Class Considerations
+            // =============================
 
             private class ClassConsiderations
             {
@@ -574,12 +625,314 @@ namespace CodeConventions
         }
 
         // ###################################################################
-        // Variable Conventions
+        // 4 - Event Conventions
+        // ###################################################################
+
+        private class EventConventions
+        {
+            // DO: Because the events always refer to some action, use verbs to name events. 
+            // Use the verb tense to indicate the time the event is raised
+
+            // GOOD:
+            // Clicked, Painting, DroppedDown
+            public Action Click;
+            public Action Clicked;
+            public Action Closed;
+
+            // BAD:
+            public Action BeforeClose;
+            public Action AfterClose;
+
+
+            // DO: Call event handlers with the "EventHandler" suffix
+
+            // GOOD;
+            public delegate void ClickEventHandler(Button _button);
+        }
+
+        // ###################################################################
+        // 5 - Properties Conventions
+        // ###################################################################
+
+        private class PropertiesConventions
+        {
+            // DO: Because properties refers to data, we should use noun phrase or adjective names
+
+            // GOOD: 
+            public System.Object PlayerData {get; private set;}
+
+            // BAD: 
+            public System.Object GetPlayerData {get; private set;}
+
+            // DO: Use plural if the property refers to a collection 
+
+            // GOOD: 
+            public System.Object[] TeamMembers { get; private set; }
+
+
+            // DO: Name boolean properties with affirmative phrases or add a prefix as "Is", "Can" or "Has"
+
+            // GOOD:
+            public bool HasConnection {get; private set;}
+            public bool CanJump {get; private set;}
+        }
+
+        // ###################################################################
+        // 6 - Methods Conventions
+        // ###################################################################
+
+        private class MethodsConventions
+        {
+            Example examples = new Example();
+            Example.MethodExamples examples2 = new Example.MethodExamples();
+
+            // ================================
+            // 6.1 Methods Naming Conventions
+            // ================================
+
+            // DO: A routine name must describe everything the routine does
+
+            // GOOD
+            void ComputeGameOverScoreAndUploadToServer()
+            {
+
+            }
+
+            // BAD
+            void GameOverScore()
+            {
+
+            }
+
+            // DO NOT: Use meaningless, vague or wishy-washy verbs
+
+            // GOOD:
+            void UploadGameResults()
+            {
+
+            }
+
+            // BAD:
+            void Upload()
+            {
+
+            }
+
+            // DO NOT: Don't use numbers to differentiate routine names
+
+            // GOOD:
+            void PlaySound(AudioClip _clip)
+            {
+
+            }
+
+
+            void PlaySound(AudioClip _clip,float _volume)
+            {
+
+            }
+
+            // BAD:
+            void PlaySound1(AudioClip _clip)
+            {
+
+            }
+
+            void PlaySound2(AudioClip _clip, float _volume)
+            {
+
+
+            }
+
+            // DO: Make names of routines as long as neccesary 
+
+            // DO: Use verbs for routine names
+
+            // DO: If the function returns a value, to name a function use a description of the value (only when it returns a single value)
+
+            // DO: Stablish conventions for common operations
+
+            // BAD:
+
+            int GetId()
+            {
+                return 0;
+            }
+
+            int Id()
+            {
+                return 0;
+            }
+
+            // ================================
+            // 6.2 - Routine Parameters Conventions
+            // ================================
+
+            private void RoutineParametersOrder()
+            {
+                // DO: Put parameters in input-modify-output-
+                // in the output parameters, put error/status order last
+
+                // GOOD
+                GameObject mainWeapon = null;
+                GameObject instantiatedPlayer = null;
+                bool skinConfigurationError = false;
+                examples2.ConfigurePlayerSkin(true, ref instantiatedPlayer, out mainWeapon, out skinConfigurationError);
+            }
+
+            // DO: Routine parameters start with a underscore '_'
+
+            // GOOD:
+            void ExampleRoutine(int _parameter)
+            {
+
+            }
+
+            // DO: If similar routines use similar parameters, put the similar parameters in a consistent order
+
+            // DO: Use all the parameters, remove unused parameters
+
+            // DO NOT: Don't use routine parameters as working variables, use local variables instead
+
+            // BAD:
+            int MathOperationExampleBad(int _value)
+            {
+                _value *= 5;
+
+                return _value;
+            }
+
+            // GOOD:
+            int MathOperationExampleGood(int _value)
+            {
+                int result = _value * 5;
+
+                return _value;
+            }
+
+            // DO: Limit the number of routine's parameters to about seven. If you need more parameters probably you need
+            // a new class/struct to represent that data
+
+            // EXAMPLE:
+            public void RoutineParametersLimit(int value1, int value2, int value3, int value4, int value5, int value6, int value7)
+            {
+
+            }
+
+            // DO: Pass the variables or objects that the routine needs to maintain its interface abstraction
+
+            void ParatemersAbstractionExample()
+            {
+                // GOOD:
+                examples2.MethodWithGoodParameters(examples.dummyInt, examples.dummyString);
+
+                // BAD:
+                examples2.MethodWithBadParameters(examples.DummyObject); // <- this method doesn't need to receive the whole object, only needs the int and string
+            }
+
+            // DO: Use named parameters in lambda expresions and auto-generated delegates
+
+            void LambdaExpressionExample()
+            {
+                List<int> example = new List<int> ();
+
+                // GOOD:
+                example.FindAll(delegate (int _index)
+                {
+                    return _index > 2;
+                });
+
+                // BAD:
+                example.FindAll(delegate (int _x)
+                {
+                    return _x > 2;
+                });
+            }
+
+            // DO: Check input paramaters before assignation. Make sure that the values are reasonable
+            // You can use asserts if you don't want this checks in your release versions in situations where you need performance
+            void RoutineParametersCheck(Example _exampleObject)
+            {
+                if(_exampleObject == null)
+                {
+                    Debug.LogError("The parameter _exampleObject can't be null");
+                    return;
+                }
+
+                Debug.LogFormat("Status: {0}",_exampleObject.Status);
+            }
+
+            // ================================
+            // 6.3 - Methods return value conventions
+            // ================================
+
+            // DO: Have a single return point in your method, this will help to maintain and debug your code
+
+            // GOOD:
+            public int ExampleMethod1()
+            {
+                // DO: Initialize the return value at the beggining of the function to a default value
+                int returnValueExample = 0;
+
+                bool condition1 = false;
+                bool condition2 = false;
+
+                if (condition1)
+                {
+                    returnValueExample = 1;
+                }
+                else if (condition2)
+                {
+                    returnValueExample = 2;
+                }
+
+                return returnValueExample;
+            }
+
+            // BAD:
+            public int ExampleMethod2()
+            {
+                bool condition1 = false;
+                bool condition2 = false;
+
+                if (condition1)
+                {
+                    return 1;
+                }
+                else if (condition2)
+                {
+                    return 2;
+                }
+
+                return 0;
+            }
+
+            // ================================
+            // 6.4 Method considerations
+            // ================================
+
+            private void MethodsConsiderations()
+            {
+                // DO: Routines must have a single purpose
+
+                // DO: Try to avoid routines over 200 lines of code (comments and blank lines are excluded). There are a lot of studies with different results 
+                // so there is not an official standard in the industry. Try to avoid large routines because usually, they are consequences of bad programming practices
+                // but you can always write routines over 200 lines if you need it and they are simple enough to be readable, maintenable and undertestanable.
+            }
+
+        }
+
+        // ###################################################################
+        // 7 - Variable Conventions
         // ###################################################################
 
         private class VariableConventions
         {
-            private Example example = new Example();
+            // ================================
+            // 7.1 Variable Declarations
+            // ================================
+
+                // TODO: CONTINUAR AQUI
 
             private void VariableDeclarations()
             {
@@ -599,7 +952,7 @@ namespace CodeConventions
 
                 // GOOD:
                 string id = example.DummyObject.ID;
-                Debug.LogFormat("Id: {0}",id);
+                Debug.LogFormat("Id: {0}", id);
 
                 string secondID = example.DummyObject.ID;
                 Debug.LogFormat("secondID: {0}", secondID);
@@ -624,17 +977,17 @@ namespace CodeConventions
                 // DO: Group related statements
 
                 // GOOD:
-                var dummyObject             = example.DummyObject; // <-- Dummy Object
-                bool dummyObjectOK          = example.DoOperations(dummyObject); // <-- Operate over Dummy Object
-                var oldDummyObject          = example.OldDummyObject; // <-- Old Dummy Object
-                bool oldDummyObjectOK       = example.DoOperations(oldDummyObject); // <-- Operate over Old dummy object
+                var dummyObject = example.DummyObject; // <-- Dummy Object
+                bool dummyObjectOK = example.DoOperations(dummyObject); // <-- Operate over Dummy Object
+                var oldDummyObject = example.OldDummyObject; // <-- Old Dummy Object
+                bool oldDummyObjectOK = example.DoOperations(oldDummyObject); // <-- Operate over Old dummy object
 
 
                 // DO NOT:
-                var dummyObject1             = example.DummyObject; // <-- Dummy Object
-                var oldDummyObject1          = example.OldDummyObject; // <-- Old Dummy Object
-                bool oldDummyObjectOK1       = example.DoOperations(oldDummyObject1); // <-- Operate over Old dummy object
-                bool dummyObjectOK1          = example.DoOperations(dummyObject1); // <-- Operate over Dummy Object
+                var dummyObject1 = example.DummyObject; // <-- Dummy Object
+                var oldDummyObject1 = example.OldDummyObject; // <-- Old Dummy Object
+                bool oldDummyObjectOK1 = example.DoOperations(oldDummyObject1); // <-- Operate over Old dummy object
+                bool dummyObjectOK1 = example.DoOperations(dummyObject1); // <-- Operate over Dummy Object
 
                 // DO: Use each variable for one purpose only to improve readibility
 
@@ -657,7 +1010,7 @@ namespace CodeConventions
 
                 // GOOD:
                 var status = example.Status;
-                if(status == Example.StatusEnum.Ok)
+                if (status == Example.StatusEnum.Ok)
                 {
                     int finalScore = example.CalculateScore();
                 }
@@ -668,7 +1021,7 @@ namespace CodeConventions
 
                 // BAD:
                 int gameOverScore = example.CalculateScore();
-                if(gameOverScore == -1) // Two meanings for gameOverScore: game score & error 
+                if (gameOverScore == -1) // Two meanings for gameOverScore: game score & error 
                 {
                     Debug.LogError("Some error occured. The game doesn't ended well");
                 }
@@ -692,9 +1045,9 @@ namespace CodeConventions
                 // With numeric values:
 
                 // BAD:
-                var totalPlays      = 5;
-                var totalScore      = example.CalculateScore();
-                var averageScore    = totalScore / totalPlays; // <-- we can have errors because we don't know the type of the variables (float, int, etc)
+                var totalPlays = 5;
+                var totalScore = example.CalculateScore();
+                var averageScore = totalScore / totalPlays; // <-- we can have errors because we don't know the type of the variables (float, int, etc)
 
 
                 // Note (1): If you are concerned about performance, you can use Assertions (Unity Debug.Assert)
@@ -743,14 +1096,14 @@ namespace CodeConventions
                 // DO: Use more detailed index names for nested loops to avoid index corss-talk errors (saying i when you mean j and vice versa)
 
                 // GOOD:
-                int[,] scores = new int[5,5];
+                int[,] scores = new int[5, 5];
                 int teamCount = 5;
                 int eventCount = 5;
                 for (int teamIndex = 0; teamIndex < teamCount; teamIndex++)
                 {
                     for (int eventIndex = 0; eventIndex < eventCount; eventIndex++)
                     {
-                        scores[teamIndex,eventIndex] = 0;
+                        scores[teamIndex, eventIndex] = 0;
                     }
                 }
 
@@ -804,9 +1157,9 @@ namespace CodeConventions
                 // DO: Avoid magic numbers
 
                 // GOOD:
-                float initialSpeed  = 10f;
+                float initialSpeed = 10f;
                 float timeInSeconds = 60f;
-                float fallSpeed     = initialSpeed + Example.GRAVITY_ACCELERATION * timeInSeconds;
+                float fallSpeed = initialSpeed + Example.GRAVITY_ACCELERATION * timeInSeconds;
 
                 // BAD:
                 float fallSpeed1 = initialSpeed + 9.8f * timeInSeconds;
@@ -817,7 +1170,7 @@ namespace CodeConventions
 
                 // GOOD:
                 float x = 0f;
-                int i   = 0;
+                int i = 0;
                 float y = x + (float)i;
 
                 // BAD:
@@ -832,7 +1185,7 @@ namespace CodeConventions
                 }
 
                 // BAD:
-                if(i == x)
+                if (i == x)
                 {
 
                 }
@@ -856,7 +1209,7 @@ namespace CodeConventions
                 }
 
                 // BAD:
-                if(speed == maximumSpeed)
+                if (speed == maximumSpeed)
                 {
 
                 }
@@ -876,10 +1229,10 @@ namespace CodeConventions
 
                 // GOOD:
                 int score = 0;
-                string finalText1 = string.Format("You have won {0} points",score);
+                string finalText1 = string.Format("You have won {0} points", score);
 
                 // BAD:
-                string finalText2 = "You have won " +score+" points";
+                string finalText2 = "You have won " + score + " points";
 
                 // **** UNITY SPECIFICS ****
 
@@ -891,19 +1244,19 @@ namespace CodeConventions
 
                 // GOOD:
                 string userName = "";
-                if(string.IsNullOrEmpty(userName))
+                if (string.IsNullOrEmpty(userName))
                 {
 
                 }
 
                 // BAD:
-                if(userName == null || userName == "")
+                if (userName == null || userName == "")
                 {
 
                 }
 
                 // DO: Consider using the StringBuilder class if you need to work with long strings to reduce the impact on performance
-                
+
                 // GOOD:
                 string text = null;
                 System.Text.StringBuilder sb = new System.Text.StringBuilder();
@@ -924,11 +1277,11 @@ namespace CodeConventions
                 // DO: Use boolean variables to increase readibility and maintenance in logic expressions 
 
                 // GOOD:
-                int elementIndex        = 0;
-                int lastElementIndex    = 0;
+                int elementIndex = 0;
+                int lastElementIndex = 0;
 
-                bool finished        = ((elementIndex < 0) || (Example.MAX_ELEMENTS < elementIndex));
-                bool repeatedEntry   = (elementIndex == lastElementIndex);
+                bool finished = ((elementIndex < 0) || (Example.MAX_ELEMENTS < elementIndex));
+                bool repeatedEntry = (elementIndex == lastElementIndex);
 
                 if (finished || repeatedEntry)
                 {
@@ -991,9 +1344,9 @@ namespace CodeConventions
                 // DO: Try to use the same enum values in external services to avoid name conversions
 
                 // GOOD: 
-                string gameModeString           = example.GetGameModeFromServer();
-                GameModes gameModeFromServer    = (GameModes)Enum.Parse(typeof(GameModes), gameModeString);
-                if(gameModeFromServer == GameModes.DeathMatch)
+                string gameModeString = example.GetGameModeFromServer();
+                GameModes gameModeFromServer = (GameModes)Enum.Parse(typeof(GameModes), gameModeString);
+                if (gameModeFromServer == GameModes.DeathMatch)
                 {
 
                 }
@@ -1001,7 +1354,7 @@ namespace CodeConventions
                 // BAD:
                 string gameModeString1 = example.GetGameModeFromServer();
 
-                if(gameModeString1 == "DEATH_MATCH")
+                if (gameModeString1 == "DEATH_MATCH")
                 {
                     gameModeFromServer = GameModes.DeathMatch;
                 }
@@ -1016,210 +1369,19 @@ namespace CodeConventions
                 int index = 0;
                 int maxLength = exampleArray.Length;
 
-                if(index >= maxLength)
+                if (index >= maxLength)
                 {
-                    Debug.LogErrorFormat("Array out of range. Index: {0} Max: {1}",index,maxLength);
+                    Debug.LogErrorFormat("Array out of range. Index: {0} Max: {1}", index, maxLength);
                     index = maxLength;
                 }
 
                 // DO: Use lists if you don't know the size of the array, in other case, use arrays
             }
+
+            private Example example = new Example();
         }
-
         // ###################################################################
-        // Event Conventions
-        // ###################################################################
-
-        public class EventConventions
-        {
-            // 1 - Because the events always refer to some action, use verbs to name events. You should use the verb tense to indicate the time the event is raised. PascalCasing
-
-            // DO:
-            // Clicked, Painting, DroppedDown
-
-            // DO:
-            // Closing (before the window is closed)
-            // Closed (the window is already closed)
-
-            // DO NOT:
-            // Close
-            // BeforeClose
-            // AfterClose
-
-            // 2 - Call event handlers with the "EventHandler" suffix
-
-            // DO: 
-            // public delegate void ClickedEventHandler
-        }
-
-        // ###################################################################
-        // Properties Conventions
-        // ###################################################################
-
-        public class PropertiesConventions
-        {
-            // 1 - Because properties refers to data, we should use noun phrase or adjective names, use PascalCasing
-
-            // DO: 
-            // public Player PlayerData {get; private set;}
-
-            // DO NOT: 
-            // public Player GetPlayerData {get; private set;}
-
-            // 2 - Use plural if the property refers to a collection 
-
-            // DO:
-            // public List<Color> HairColors {get; set;}
-
-            // 3 - Name boolean properties with affirmative phrases or add a prefix as "Is", "Can" or "Has"
-
-            // DO:
-            // public bool HasConnection {get; private set;}
-            // public bool CanJump {get; private set;}
-        }
-
-        // ###################################################################
-        // Methods Conventions
-        // ###################################################################
-
-        private class MethodsConventions
-        {
-            // Pagina 161
-            Example examples = new Example();
-            Example.MethodExamples examples2 = new Example.MethodExamples();
-
-            private void MethodsConsiderations()
-            {
-                // DO: Routines must have a single purpose
-
-                // DO: Try to avoid routines over 200 lines of code (comments and blank lines are excluded). There are a lot of studies with different results 
-                // so there is not an official standard in the industry. Try to avoid large routines because usually, they are consequences of bad programming practices
-                // but you can always write routines over 200 lines if you need it and they are simple enough to be readable, maintenable and undertestanable.
-            }
-
-            private void MethodsNamesConsiderations()
-            {
-                // DO: A routine name must describe everything the routine does
-
-                // DO NOT: Use meaningless, vague or wishy-washy verbs
-
-                // BAD
-                examples2.ComputeScore();
-
-                // GOOD
-                examples2.ComputeGameOverScore();
-
-                // DO NOT: Don't use numbers to differentiate routine names
-
-                // DO: Make names of routines as long as neccesary 
-
-                // DO: If the function returns a value, to name a function use a description of the value (only when it returns a single value)
-
-                // DO: Use verbs for routine names
-
-                // BAD
-                examples2.Score();
-
-                // GOOD
-                examples2.GetScore();
-
-                // DO: Stablish conventions for common operations
-
-                // BAD:
-                examples2.GetId();
-                examples2.Id();
-                var id = examples2.ID;
-            }
-
-            private void RoutineParameters()
-            {
-                // DO: Put parameters in input-modify-output-
-                // in the output parameters, put error/status order last
-
-                // GOOD
-                GameObject mainWeapon = null;
-                GameObject instantiatedPlayer = null;
-                bool skinConfigurationError = false;
-                examples2.ConfigurePlayerSkin(true, ref instantiatedPlayer, out mainWeapon, out skinConfigurationError);
-
-                // DO: If similar routines use similar parameters, put the similar parameters in a consistent order
-
-                // DO: Use all the parameters, remove unused parameters
-
-                // DO NOT: Don't use routine parameters as working variables, use local variables instead
-
-                // BAD
-                // void MathOperationExample(int _value)
-                // {
-                //      _value *= CONST;
-
-                //      return _value;
-                // }
-
-                // DO: Limit the number of routine's parameters to about seven. If you need more parameters probably you need
-                // a new class/struct to represent that data
-
-                // DO: Pass the variables or objects that the routine needs to maintain its interface abstraction
-
-                // GOOD:
-                examples2.MethodWithGoodParameters(examples.dummyInt, examples.dummyString);
-
-                // BAD:
-                examples2.MethodWithBadParameters(examples.DummyObject);
-
-                // DO: Use named parameters in lambda expresions and auto-generated delegates
-
-                // DO: Check input paramaters before assignation. Make sure that the values are reasonable (1)
-            }
-
-            // ###################################################################
-            // METHODS RETURN VALUE
-            // ###################################################################
-
-            // DO: Have a single return point in your method, this will help to maintain and debug your code
-
-            // GOOD:
-            public int ExampleMethod1()
-            {
-                // DO: Initialize the return value at the beggining of the function to a default value
-                int returnValueExample = 0;
-
-                bool condition1 = false;
-                bool condition2 = false;
-
-                if (condition1)
-                {
-                    returnValueExample = 1;
-                }
-                else if (condition2)
-                {
-                    returnValueExample = 2;
-                }
-
-                return returnValueExample;
-            }
-
-            // BAD:
-            public int ExampleMethod2()
-            {
-                bool condition1 = false;
-                bool condition2 = false;
-
-                if (condition1)
-                {
-                    return 1;
-                }
-                else if (condition2)
-                {
-                    return 2;
-                }
-
-                return 0;
-            }
-        }
-
-        // ###################################################################
-        // STATEMENTS
+        // 8 - Statements Conventions
         // ###################################################################
 
         private class StatementsConventions
@@ -1287,7 +1449,7 @@ namespace CodeConventions
                     // Normal case
                 }
 
-                // CONSIDER: Consider to weite the else clause to make clear to other programmers that you have considered that case
+                // CONSIDER: Consider to write the else clause to make clear to other programmers that you have considered that case
 
                 // GOOD: 
                 bool validID = !string.IsNullOrEmpty(example.DummyObject.ID);
@@ -1297,7 +1459,7 @@ namespace CodeConventions
                 }
                 else
                 {
-                    // If the id is not valid, do nothing
+                    // If the id is not valid nothing happens here
                 }
 
                 // BAD: 
@@ -1312,7 +1474,7 @@ namespace CodeConventions
                 bool statusIsOk = example.Status == Example.StatusEnum.Ok;
                 if(validID && statusIsOk)
                 {
-                    // Do somethinf
+                    // Do something
                 }
 
                 // BAD:
@@ -1349,16 +1511,42 @@ namespace CodeConventions
 
             public void Loops()
             {
+                List<string> exampleNames = new List<string>();
+
                 // DO: Put initialization code directly before the loop
 
+                // EXAMPLE:
+                bool enc    = false;
+                int index   = 0;
+                while (!enc)
+                {
+                    enc = exampleNames[index] == "Unnamed";
+                    index++;
+                }
+
+                // **** UNITY SPECIFICS ****
                 // DO: Prefer for loops instead of foreach loops if possible. For loops ar faster in Unity that foreach loops
 
-                // DO NOT: Use a for loop when a while loop is more appropriate
+                // GOOD:
+                for (int i = 0; i < exampleNames.Count; i++)
+                {
+                    Debug.Log(exampleNames[i]);
+                }
+
+                // BAD:
+                foreach(var name in exampleNames)
+                {
+                    Debug.Log(name);
+                }
+
+                // *************************
+
+                // DO: When the number of iterations is indefinite, use a whille loop
 
                 // DO: Use { and } to enclose statements in a loop always to prevent errors when code is modified.
 
                 // GOOD:
-                for(int i = 0; i < 100; i++)
+                for (int i = 0; i < 100; i++)
                 {
                     Debug.Log(i);
                 }
@@ -1436,7 +1624,7 @@ namespace CodeConventions
             private MonoBehaviour dummyComponent = null;
 
             // ###################################################################
-            // Loops
+            // Coroutines
             // ###################################################################
 
             // DO: If you have to wait for one frame, and you are not working with graphic stuff, use "yield return null" instead of "yield return new WaitForEndOfFrame()"
@@ -1465,6 +1653,7 @@ namespace CodeConventions
 
             // DO: Be aware of living coroutines when you exit from a scene or a game section
 
+            // EXAMPLE:
             void Open()
             {
                 example.DummyGameObject.GetComponent<MonoBehaviour>().StartCoroutine(LivingCoroutine());
@@ -1478,7 +1667,7 @@ namespace CodeConventions
 
             IEnumerator LivingCoroutine()
             {
-                // IF Close is called this coroutine will keep being called because it was launched in another GameObject (can happen with a singleton for example)
+                // If Close is called this coroutine will keep being called because it was launched in another GameObject (can happen with a singleton for example)
                 while(true)
                 {
                     // CRASH!! This will crash after Close() was called
@@ -1543,11 +1732,11 @@ namespace CodeConventions
             private Example example = new Example();
 
             // DO: Write code that is enough clear to be a "self-documenting" code. If you have to write a comment just because the code is so complicated, 
-            // it is better to improve the code that write the comment
+            // it is better to improve the code that to write the comment
 
             // DO NOT: Write comments that repeats what the code does
 
-            // DO: Do write comments that summary the code to help other programmers at reading the code
+            // DO: Write comments that summary the code to help other programmers at reading the code
 
             // DO: Write comments to describe the code's intent. Use always vocabulary in the domain of the problem instead of triying to describe the solution
 
@@ -1555,12 +1744,12 @@ namespace CodeConventions
             // get current employee information
 
             // BAD:
-            // update employeeRecord object
+            // get employee object from database query
 
             // DO NOT: Leave big regions of code commented when you commit to developer. Use the version repository to see old code.
 
             // DO NOT: Leave code until the end. You need to integrate commenting into your development style. This will help others in code reviews and also will help you
-            // to think more about the problem you are triying yo solve
+            // to think more about the problem you are triying to solve
 
             // DO NOT: Use endline comments (except for data declarations or end of blocks)
 
@@ -1607,21 +1796,21 @@ namespace CodeConventions
 
             // DO: Use comments to explain optimizations or to explain why you have used a more complicated approach to solve a problem instead of a more straighforward one
 
-            // DO: Comment units of numeric data (no matter if the unity of the data form part of the variable name)
-
-            // DO: Comment the gange of allowable numeric values
+            // DO: Comment units of numeric data (no matter if the unit of the data form part of the variable name)
 
             // GOOD:
 
-            /// <summary>
-            /// Player normalized progress in this level between 0 and 1
-            /// </summary>
-            public float normalizedProgress = 0f;
+            public Vector3 spaceshipVelocity = Vector3.zero; // Spaceship velocity vector in meters per second
+
+            // DO: Comment the range of allowable numeric values
+
+            // GOOD:
+
+            public float normalizedProgress = 0f; // Player normalized progress in this level between 0 and 1
 
             // CONSIDER: Commenting enums values if they are not obvious
 
-
-            // DO: When commenting class members as methods, fields and properties, use the default format in c# (automatically generated if you write ///)
+            // DO: When commenting class members as methods and properties, use the default format in c# (automatically generated if you write ///)
 
             // GOOD:
 
@@ -1643,7 +1832,6 @@ namespace CodeConventions
             // Private methods/properties: They only should be commented if their purpose isn't clear
 
             // DO: Comment classes describing their design approach, limitations, usage assumptions and so on
-
         }
 
     }
@@ -1733,6 +1921,12 @@ namespace CodeConventions
 
             // Good routine name
             public void ComputeGameOverScore()
+            {
+
+            }
+
+            // Good routine name
+            public void ComputeGameOverScoreAndUploadToServer()
             {
 
             }
