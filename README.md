@@ -8,7 +8,6 @@
 The file has a top-down organization from more general to more concrete things
 
 1 - General conventions
-
 	1.1 - Naming Conventions
 	1.2 - Class order
 	1.3 - Valid Opposites
