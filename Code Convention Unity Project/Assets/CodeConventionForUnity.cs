@@ -7,9 +7,9 @@ using UnityEngine.UI;
 #pragma warning disable
 
 // Author: Adrian Mesa Pachon 
-// ContactInfo: 
+// ContactInfo: https://www.linkedin.com/in/adrianmesa/
 
-// Summary:
+// -- Summary:
 // This file is organized in different classes, each class is a collection of guidelines with examples.
 // Some guidelines are more concrete and other are general ideas that improve code quality.
 
@@ -57,13 +57,7 @@ using UnityEngine.UI;
 // 10 - Unity Special Conventions
 //  10.1 - Coroutines
 
-// How to use it:
-// The idea is to include this file and the example file in your Unity project
-// so you can open it quickly in order to check anything.
-// Discuss with your team this guide and modify it so that everyone feels happy with the result before start to code
-
-// In order to work with Unity, some special considerations are present in this guide.
-
+// -- Why i need it?
 // As stated in "Code Complete Second Editions" the purpose of this convention is the following:
 // https://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670
 
@@ -85,7 +79,17 @@ using UnityEngine.UI;
 // you write the code, but it can be enormously confusing to a new programmer
 // who reads it later.
 
+// -- How to use it:
+// The idea is to include this file and the example file in your Unity project
+// so you can open it quickly in order to check anything.
+// Discuss with your team this guide and modify it so that everyone feels happy with the result before starting to code
+
+// Because this guide has been designed to work with Unity projects, i have included some specific conventions.
 // Feel free to share this file with your team-mates 
+
+// -- Expected feedback
+// Any kind of feedback is welcome, i would like to improve this guide and make it a standard
+
 
 namespace CodeConventions
 { 
