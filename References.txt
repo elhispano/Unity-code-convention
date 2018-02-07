@@ -1,0 +1,12 @@
+https://msdn.microsoft.com/en-us/library/4xhs4564(v=vs.71).aspx
+Code Complete Second Edition
+http://stylecop.soyuz5.com/SA1201.html
+https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/names-of-type-members
+https://es.wikipedia.org/wiki/Ley_de_Demeter
+https://msdn.microsoft.com/en-us/library/x2dbyw72(v=vs.71).aspx
+https://docs.unity3d.com/ScriptReference/Assertions.Assert.html
+https://softwareengineering.stackexchange.com/questions/327723/what-should-be-the-ideal-length-of-a-variable-name-in-java
+https://docs.microsoft.com/es-es/dotnet/csharp/programming-guide/strings/how-to-concatenate-multiple-strings
+https://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two
+https://unity3d.com/es/learn/tutorials/topics/performance-optimization/optimizing-garbage-collection-unity-games?playlist=44069
+https://answers.unity.com/questions/862032/c-constructor-in-monobehaviour.html
