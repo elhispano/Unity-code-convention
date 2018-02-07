@@ -40,9 +40,22 @@ using UnityEngine.UI;
 
 
 // 7 - Variables conventions
+//  7.1 Variable Declarations
+//  7.2 Variable Names
+//  7.3 Numbers
+//  7.4 Characters And Strings
+//  7.5 Booleans
+//  7.6 Enums
+//  7.7 Arrays
 
-// 8 - Statements conventions 
+// 8 - Statements Conventions
+//  8.1 - Conditionals
+//  8.2 - Loops
+
 // 9 - Commenting conventions
+
+// 10 - Unity Special Conventions
+//  10.1 - Coroutines
 
 // How to use it:
 // The idea is to include this file and the example file in your Unity project
@@ -925,14 +938,12 @@ namespace CodeConventions
         // ###################################################################
         // 7 - Variable Conventions
         // ###################################################################
-
+        
         private class VariableConventions
         {
             // ================================
             // 7.1 Variable Declarations
             // ================================
-
-                // TODO: CONTINUAR AQUI
 
             private void VariableDeclarations()
             {
@@ -1053,6 +1064,10 @@ namespace CodeConventions
                 // Note (1): If you are concerned about performance, you can use Assertions (Unity Debug.Assert)
             }
 
+            // ================================
+            // 7.2 Variable Names
+            // ================================
+
             private void VariableNames()
             {
                 // DO: Try to avoid computer related terms and use problem domain terms.
@@ -1152,7 +1167,11 @@ namespace CodeConventions
                 GameObject itemSlot2 = null;
             }
 
-            private void NumericVariablesConsiderations()
+            // ================================
+            // 7.3 Numbers
+            // ================================
+
+            private void NumericVariables()
             {
                 // DO: Avoid magic numbers
 
@@ -1215,7 +1234,11 @@ namespace CodeConventions
                 }
             }
 
-            private void CharacterAndStringsConsiderations()
+            // ================================
+            // 7.4 Characters And Strings
+            // ================================
+
+            private void CharacterAndStrings()
             {
                 // DO: Avoid magic strings
 
@@ -1272,7 +1295,11 @@ namespace CodeConventions
                 }
             }
 
-            private void BooleansConsiderations()
+            // ================================
+            // 7.5 Booleans
+            // ================================
+
+            private void Booleans()
             {
                 // DO: Use boolean variables to increase readibility and maintenance in logic expressions 
 
@@ -1295,9 +1322,9 @@ namespace CodeConventions
                 }
             }
 
-            // ###################################################################
-            // Enumerated Types Considerations
-            // ###################################################################
+            // ================================
+            // 7.6 Enums
+            // ================================
 
             // DO: Define always the first value in an enum for an "invalid" value and the last value to use it to iterate over all enum values
 
@@ -1339,7 +1366,8 @@ namespace CodeConventions
 
             // *************************
 
-            private void EnumeratedTypesConsiderations()
+            
+            private void UsingEnums()
             {
                 // DO: Try to use the same enum values in external services to avoid name conversions
 
@@ -1360,7 +1388,12 @@ namespace CodeConventions
                 }
             }
 
-            public void ArraysConsiderations()
+            // ================================
+            // 7.7 Arrays
+            // ================================
+
+
+            public void Arrays()
             {
                 // DO: Check that array indexes are within the bounds of the array
 
@@ -1380,15 +1413,16 @@ namespace CodeConventions
 
             private Example example = new Example();
         }
+
         // ###################################################################
         // 8 - Statements Conventions
         // ###################################################################
-
+       
         private class StatementsConventions
         {
-            // ###################################################################
-            // Conditionals
-            // ###################################################################
+            // ===========================
+            // 8.1 - Conditionals
+            // ===========================
 
             private Example example = new Example();
 
@@ -1505,9 +1539,9 @@ namespace CodeConventions
                 }
             }
 
-            // ###################################################################
-            // Loops
-            // ###################################################################
+            // ===========================
+            // 8.2 - Loops
+            // ===========================
 
             public void Loops()
             {
@@ -1617,114 +1651,8 @@ namespace CodeConventions
             }
         }
 
-        private class UnityConventions
-        {
-            Example example = new Example();
-
-            private MonoBehaviour dummyComponent = null;
-
-            // ###################################################################
-            // Coroutines
-            // ###################################################################
-
-            // DO: If you have to wait for one frame, and you are not working with graphic stuff, use "yield return null" instead of "yield return new WaitForEndOfFrame()"
-            // doing this you will avoid memory allocation in each execution of the loop
-
-            // Note: It's important to know that  yield return null is not evaluated in the same moment than WaitForEndOfFrame(); 
-            // https://answers.unity.com/questions/755196/yield-return-null-vs-yield-return-waitforendoffram.html
-
-            // GOOD:
-            IEnumerator WaitOneFrameGood()
-            {
-                while(true)
-                {
-                    yield return null;
-                }
-            }
-
-            // BAD:
-            IEnumerator WaitOneFrameBad()
-            {
-                while (true)
-                {
-                    yield return new WaitForEndOfFrame();
-                }
-            }
-
-            // DO: Be aware of living coroutines when you exit from a scene or a game section
-
-            // EXAMPLE:
-            void Open()
-            {
-                example.DummyGameObject.GetComponent<MonoBehaviour>().StartCoroutine(LivingCoroutine());
-            }
-
-            void Close()
-            {
-                // NOTE that the LivingCoroutine is using this.example object
-                this.example = null;
-            }
-
-            IEnumerator LivingCoroutine()
-            {
-                // If Close is called this coroutine will keep being called because it was launched in another GameObject (can happen with a singleton for example)
-                while(true)
-                {
-                    // CRASH!! This will crash after Close() was called
-                    Debug.Log(this.example.DummyGameObject.name);
-                }
-            }
-
-            // DO: Launch coroutines using method references instead of method names so we can always search for refences
-
-            void LaunchCoroutineExample()
-            {
-                // GOOD:
-                dummyComponent.StartCoroutine(CoroutineExample());
-
-                // BAD:
-                dummyComponent.StartCoroutine("CoroutineExample");
-            }
-
-
-            IEnumerator CoroutineExample()
-            {
-                yield return null;
-            }
-
-            // DO: Stop coroutines using the coroutine reference not the coroutine name
-
-            void StopCoroutineExample()
-            {
-                var dummyCoroutine = dummyComponent.StartCoroutine(CoroutineExample());
-
-                // GOOD:
-                dummyComponent.StopCoroutine(dummyCoroutine);
-
-                // BAD:
-                dummyComponent.StopCoroutine("CoroutineExample");
-            }
-
-            // DO: If your project rely on a heavy use of coroutines, consider doing a coroutine manager 
-            // Here is one example: https://assetstore.unity.com/packages/tools/coroutine-manager-pro-53120
-
-            // DO: If you have to start a coroutine frome more than one place or from other class, create a private method to start the coroutine
-            // doing this we avoid calling by accident the coroutine method WITHOUT StartCoroutine which causes a silent error in Unity
-
-            // GOOD:
-            public void RequestDataFromServer()
-            {
-                dummyComponent.StartCoroutine(RequestDataFromServerCoroutine());
-            }
-
-            IEnumerator RequestDataFromServerCoroutine()
-            {
-                yield return null;
-            }
-        }
-
         // ###################################################################
-        // Comments conventions
+        // 9 - Comments conventions
         // ###################################################################
 
         private class CommentsConventions
@@ -1834,6 +1762,115 @@ namespace CodeConventions
             // DO: Comment classes describing their design approach, limitations, usage assumptions and so on
         }
 
+        // ###################################################################
+        // 10 - Unity Special Conventions
+        // ###################################################################
+
+        private class UnityConventions
+        {
+            Example example = new Example();
+
+            private MonoBehaviour dummyComponent = null;
+
+            // =================================
+            // 10.1 - Coroutines
+            // =================================
+
+            // DO: If you have to wait for one frame, and you are not working with graphic stuff, use "yield return null" instead of "yield return new WaitForEndOfFrame()"
+            // doing this you will avoid memory allocation in each execution of the loop
+
+            // Note: It's important to know that  yield return null is not evaluated in the same moment than WaitForEndOfFrame(); 
+            // https://answers.unity.com/questions/755196/yield-return-null-vs-yield-return-waitforendoffram.html
+
+            // GOOD:
+            IEnumerator WaitOneFrameGood()
+            {
+                while (true)
+                {
+                    yield return null;
+                }
+            }
+
+            // BAD:
+            IEnumerator WaitOneFrameBad()
+            {
+                while (true)
+                {
+                    yield return new WaitForEndOfFrame();
+                }
+            }
+
+            // DO: Be aware of living coroutines when you exit from a scene or a game section
+
+            // EXAMPLE:
+            void Open()
+            {
+                example.DummyGameObject.GetComponent<MonoBehaviour>().StartCoroutine(LivingCoroutine());
+            }
+
+            void Close()
+            {
+                // NOTE that the LivingCoroutine is using this.example object
+                this.example = null;
+            }
+
+            IEnumerator LivingCoroutine()
+            {
+                // If Close is called this coroutine will keep being called because it was launched in another GameObject (can happen with a singleton for example)
+                while (true)
+                {
+                    // CRASH!! This will crash after Close() was called
+                    Debug.Log(this.example.DummyGameObject.name);
+                }
+            }
+
+            // DO: Launch coroutines using method references instead of method names so we can always search for refences
+
+            void LaunchCoroutineExample()
+            {
+                // GOOD:
+                dummyComponent.StartCoroutine(CoroutineExample());
+
+                // BAD:
+                dummyComponent.StartCoroutine("CoroutineExample");
+            }
+
+
+            IEnumerator CoroutineExample()
+            {
+                yield return null;
+            }
+
+            // DO: Stop coroutines using the coroutine reference not the coroutine name
+
+            void StopCoroutineExample()
+            {
+                var dummyCoroutine = dummyComponent.StartCoroutine(CoroutineExample());
+
+                // GOOD:
+                dummyComponent.StopCoroutine(dummyCoroutine);
+
+                // BAD:
+                dummyComponent.StopCoroutine("CoroutineExample");
+            }
+
+            // DO: If your project rely on a heavy use of coroutines, consider doing a coroutine manager 
+            // Here is one example: https://assetstore.unity.com/packages/tools/coroutine-manager-pro-53120
+
+            // DO: If you have to start a coroutine frome more than one place or from other class, create a private method to start the coroutine
+            // doing this we avoid calling by accident the coroutine method WITHOUT StartCoroutine which causes a silent error in Unity
+
+            // GOOD:
+            public void RequestDataFromServer()
+            {
+                dummyComponent.StartCoroutine(RequestDataFromServerCoroutine());
+            }
+
+            IEnumerator RequestDataFromServerCoroutine()
+            {
+                yield return null;
+            }
+        }
     }
 
     #region Example class, ignore it
