@@ -5,8 +5,7 @@ Contact Info: [Adrián Mesa Pachón](https://www.linkedin.com/in/adrianmesa/)
  Some guidelines are more concrete and other are general ideas that improve code quality.
 The file has a top-down organization from more general to more concrete things
 
-1. General conventions
-
+1. General conventions  
 a Naming Conventions
 b Class order
 c Valid Opposites
