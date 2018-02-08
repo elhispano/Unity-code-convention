@@ -6,45 +6,45 @@ Contact Info: [Adrián Mesa Pachón](https://www.linkedin.com/in/adrianmesa/)
 The file has a top-down organization from more general to more concrete things
 
 1. General conventions  
-a Naming Conventions
-b Class order
-c Valid Opposites
-d Project Abrevations
+1.1 - Naming Conventions  
+1.2 - Class order  
+1.3 - Valid Opposites  
+1.3 - Project Abrevations
 
 2. Layout and Style
 
-3. Classes conventions
-3.1 - Class Order
-3.2 - Class Names
-3.3 - Class Considerations
+3. Classes conventions  
+3.1 - Class Order  
+3.2 - Class Names  
+3.3 - Class Considerations  
 
 4. Events conventions
 
 5. Properties conventions
 
-6. Methods/Properties conventions
-6.1 Methods Naming Conventions
-6.2 - Routine Parameters Conventions
-6.3 - Methods return value conventions
+6. Methods/Properties conventions  
+6.1 Methods Naming Conventions  
+6.2 - Routine Parameters Conventions  
+6.3 - Methods return value conventions  
 6.4 - Methods considerations
 
 
-7. Variables conventions
-7.1 Variable Declarations
-7.2 Variable Names
-7.3 Numbers
-7.4 Characters And Strings
-7.5 Booleans
-7.6 Enums
-7.7 Arrays
+7. Variables conventions  
+7.1 Variable Declarations  
+7.2 Variable Names  
+7.3 Numbers  
+7.4 Characters And Strings  
+7.5 Booleans  
+7.6 Enums  
+7.7 Arrays  
 
-8. Statements Conventions
-8.1 - Conditionals
+8. Statements Conventions  
+8.1 - Conditionals  
 8.2 - Loops
 
 9. Commenting conventions
 
-10. Unity Special Conventions
+10. Unity Special Conventions  
 10.1 - Coroutines
 
 # Why i need it?
