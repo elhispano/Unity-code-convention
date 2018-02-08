@@ -6,6 +6,7 @@ Contact Info: [Adrián Mesa Pachón](https://www.linkedin.com/in/adrianmesa/)
 The file has a top-down organization from more general to more concrete things
 
 1. General conventions
+
 a Naming Conventions
 b Class order
 c Valid Opposites
