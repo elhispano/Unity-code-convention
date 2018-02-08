@@ -14,42 +14,42 @@ The file has a top-down organization from more general to more concrete things
 2. Layout and Style
 
 3. Classes conventions
-* 3.1 - Class Order
-* 3.2 - Class Names
-* 3.3 - Class Considerations
+3.1 - Class Order
+3.2 - Class Names
+3.3 - Class Considerations
 
-4 - Events conventions
+4. Events conventions
 
-5 - Properties conventions
+5. Properties conventions
 
-6 - Methods/Properties conventions
-  6.1 Methods Naming Conventions
-  6.2 - Routine Parameters Conventions
-  6.3 - Methods return value conventions
-  6.4 - Methods considerations
+6. Methods/Properties conventions
+6.1 Methods Naming Conventions
+6.2 - Routine Parameters Conventions
+6.3 - Methods return value conventions
+6.4 - Methods considerations
 
 
-7 - Variables conventions
-  7.1 Variable Declarations
-  7.2 Variable Names
-  7.3 Numbers
-  7.4 Characters And Strings
-  7.5 Booleans
-  7.6 Enums
-  7.7 Arrays
+7. Variables conventions
+7.1 Variable Declarations
+7.2 Variable Names
+7.3 Numbers
+7.4 Characters And Strings
+7.5 Booleans
+7.6 Enums
+7.7 Arrays
 
-8 - Statements Conventions
-  8.1 - Conditionals
-  8.2 - Loops
+8. Statements Conventions
+8.1 - Conditionals
+8.2 - Loops
 
-9 - Commenting conventions
+9. Commenting conventions
 
-10 - Unity Special Conventions
-  10.1 - Coroutines
+10. Unity Special Conventions
+10.1 - Coroutines
 
 # Why i need it?
 As stated in "Code Complete Second Editions" the purpose of this convention is the following:
-https://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670
+[Code Complete Second Edition](https://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670)
 
  ■ They let you take more for granted.By making one global decision rather than
  many local ones, you can concentrate on the more important characteristics of
@@ -70,12 +70,11 @@ https://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/07356196
  who reads it later.
 
 # How to use it:
-The idea is to include this file and the example file in your Unity project
-so you can open it quickly in order to check anything.
+The idea is to include this file and the example file in your Unity project so you can open it quickly in order to check anything.
 Discuss with your team this guide and modify it so that everyone feels happy with the result before starting to code
 
 Because this guide has been designed to work with Unity projects, i have included some specific conventions.
-Feel free to share this file with your team-mates 
+Feel free to share this file with your team-mates .
 
 # Expected feedback
 Any kind of feedback is welcome, i would like to improve this guide and make it a standard
