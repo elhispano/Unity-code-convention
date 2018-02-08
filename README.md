@@ -1,14 +1,14 @@
  Author: Adrian Mesa Pachon 
  ContactInfo: https://www.linkedin.com/in/adrianmesa/
-
+http://commonmark.org/help/tutorial/10-nestedLists.html
 # Summary:
  This file is organized in different classes, each class is a collection of guidelines with examples.
  Some guidelines are more concrete and other are general ideas that improve code quality.
 
 The file has a top-down organization from more general to more concrete things
 
-1 - General conventions
-	1.1 - Naming Conventions
+1. General conventions
+	1.1)  Naming Conventions
 	1.2 - Class order
 	1.3 - Valid Opposites
 	1.4 - Project Abrevations
