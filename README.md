@@ -8,17 +8,17 @@ http://commonmark.org/help/tutorial/10-nestedLists.html
 The file has a top-down organization from more general to more concrete things
 
 1. General conventions
-	1.1)  Naming Conventions
-	1.2 - Class order
-	1.3 - Valid Opposites
-	1.4 - Project Abrevations
+> 1.1  Naming Conventions
+> 1.2 - Class order
+> 1.3 - Valid Opposites
+> 1.4 - Project Abrevations
 
-2 - Layout and Style
+2. Layout and Style
 
-3 - Classes conventions
-  3.1 - Class Order
-  3.2 - Class Names
-  3.3 - Class Considerations
+3. Classes conventions
+* 3.1 - Class Order
+* 3.2 - Class Names
+* 3.3 - Class Considerations
 
 4 - Events conventions
 
