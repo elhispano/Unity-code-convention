@@ -82,3 +82,4 @@ Any kind of feedback is welcome, i would like to improve this guide and make it 
 
 # Special Thanks
 @Ruben Algora Morilla
+@Kiwasi (Unity forum user)
