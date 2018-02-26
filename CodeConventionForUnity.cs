@@ -457,6 +457,10 @@ namespace CodeConventions
             // If you need a field to the Unity inspector and avoid the violation of the encapsulation principle we can use [SerializeField] attribute:
             [SerializeField]
             private int thisIntMustBeSerializable = 0;
+
+            // These should always be private and marked with the [SerialiseField] attribute. If needed, these can be exposed
+            // to other scripts via public properties. Avoid changing inspector fields via script, as this can lead to unexpected behavior. 
+            // Inspector fields should not be used to provide debug information to developers.
             // *************************
 
 
@@ -464,7 +468,8 @@ namespace CodeConventions
 
             // **** UNITY SPECIFICS ****
             // If your class is inheriting from Monobehaviour, you should know that the default constructor (constructor without parameters)
-            // is used by the Unity serializer and you can't acces Unity objects from this constructor. Consider using Awake/Start for initialization purposes
+            // is used by the Unity serializer and you can't acces Unity objects from this constructor. 
+            // DO NOT: Do not use a constructor in classes that inherit from MonoBehaviour. Instead use Awake for internal initialization, and start for external initialization
             // *************************
 
             public ClassConventions()
@@ -522,6 +527,8 @@ namespace CodeConventions
             {
                 OnClicked -= ClassConventions_OnClicked;
             }
+
+            // DO NOT: Leave blank Unity methods, delete them.
 
             // 10.2 - Handlers
 
@@ -1516,7 +1523,7 @@ namespace CodeConventions
                 // DO: Simplify complicated tests with boolean functions calls
 
                 // GOOD:
-                bool statusIsOk = example.Status == Example.StatusEnum.Ok;
+                bool statusIsOk = (example.Status == Example.StatusEnum.Ok);
                 if(validID && statusIsOk)
                 {
                     // Do something
@@ -1723,7 +1730,7 @@ namespace CodeConventions
             public float maximumHealthClamp = 1f;
             // *********************
 
-            // DO: Use endline comments to mark end of blocks
+            // CONSIDER: Using endline comments to mark end of blocks in complex if/else nested blocks. By default, you should use your IDE matching brackets tool.
 
             // GOOD
 
