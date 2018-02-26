@@ -34,7 +34,7 @@ using UnityEngine.UI;
 
 // 6 - Methods/Properties conventions
 //  6.1 Methods Naming Conventions
-//  6.2 - Routine Parameters Conventions
+//  6.2 - Methods Parameters Conventions
 //  6.3 - Methods return value conventions
 //  6.4 - Methods considerations
 
@@ -117,11 +117,11 @@ namespace CodeConventions
                 // localVariable: Local variables are in mixed uppercase and lowercase with an initial lowercase letter.The name should be independent
                 // of the underlying data type and should refer to whatever the variable represents. Use plural for collections.
 
-                // classVariable: Member variables that are available to multiple routines within a class (1). Use plural for collections.
+                // classVariable: Member variables that are available to multiple methods within a class (1). Use plural for collections.
 
-                // _routineParameter: Routine parameters are formatted the same as local variables but they are preceded with an under slash
+                // _methodParameter: MEthod parameters are formatted the same as local variables but they are preceded with an under slash
 
-                // RoutineName(): Routines are in mixed uppercase and lowercase. Use plural if the routine returns a collection.
+                // MethodName(): Methods are in mixed uppercase and lowercase. Use plural if the method returns a collection.
 
                 // CONSTANT_VAR: Named constants are in ALL_CAPS.
 
@@ -632,13 +632,13 @@ namespace CodeConventions
                 // GOOD:
                 [SerializeField]
                 private GameObject explosionPrefab = null;
-
+               
                 // BAD:
                 public GameObject deadParticlesPrefab = null;
 
                 // DO: Minimize accessibility of classes and members (hide as much information as possible)
 
-                // DO: Keep the number of routines in a class as small as possible. Consider creating new clasess to keep each class small
+                // DO: Keep the number of methods in a class as small as possible. Consider creating new clasess to keep each class small
 
                 // DO: Avoid deep inheritance trees
 
@@ -714,7 +714,7 @@ namespace CodeConventions
             // 6.1 Methods Naming Conventions
             // ================================
 
-            // DO: A routine name must describe everything the routine does
+            // DO: A method name must describe everything the method does
 
             // GOOD
             void ComputeGameOverScoreAndUploadToServer()
@@ -742,7 +742,7 @@ namespace CodeConventions
 
             }
 
-            // DO NOT: Don't use numbers to differentiate routine names
+            // DO NOT: Don't use numbers to differentiate method names
 
             // GOOD:
             void PlaySound(AudioClip _clip)
@@ -768,9 +768,9 @@ namespace CodeConventions
 
             }
 
-            // DO: Make names of routines as long as neccesary 
+            // DO: Make names of methods as long as neccesary 
 
-            // DO: Use verbs for routine names
+            // DO: Use verbs for method names
 
             // DO: If the function returns a value, to name a function use a description of the value (only when it returns a single value)
 
@@ -789,10 +789,10 @@ namespace CodeConventions
             }
 
             // ================================
-            // 6.2 - Routine Parameters Conventions
+            // 6.2 - method Parameters Conventions
             // ================================
 
-            private void RoutineParametersOrder()
+            private void MethodParametersOrder()
             {
                 // DO: Put parameters in input-modify-output-
                 // in the output parameters, put error/status order last
@@ -804,19 +804,19 @@ namespace CodeConventions
                 examples2.ConfigurePlayerSkin(true, ref instantiatedPlayer, out mainWeapon, out skinConfigurationError);
             }
 
-            // DO: Routine parameters start with a underscore '_'
+            // DO: method parameters start with a underscore '_'
 
             // GOOD:
-            void ExampleRoutine(int _parameter)
+            void ExampleMethod(int _parameter)
             {
 
             }
 
-            // DO: If similar routines use similar parameters, put the similar parameters in a consistent order
+            // DO: If similar methods use similar parameters, put the similar parameters in a consistent order
 
             // DO: Use all the parameters, remove unused parameters
 
-            // DO NOT: Don't use routine parameters as working variables, use local variables instead
+            // DO NOT: Don't use method parameters as working variables, use local variables instead
 
             // BAD:
             int MathOperationExampleBad(int _value)
@@ -834,16 +834,16 @@ namespace CodeConventions
                 return _value;
             }
 
-            // DO: Limit the number of routine's parameters to about seven. If you need more parameters probably you need
+            // DO: Limit the number of method's parameters to about seven. If you need more parameters probably you need
             // a new class/struct to represent that data
 
             // EXAMPLE:
-            public void RoutineParametersLimit(int value1, int value2, int value3, int value4, int value5, int value6, int value7)
+            public void MethodParametersLimit(int value1, int value2, int value3, int value4, int value5, int value6, int value7)
             {
 
             }
 
-            // DO: Pass the variables or objects that the routine needs to maintain its interface abstraction
+            // DO: Pass the variables or objects that the method needs to maintain its interface abstraction
 
             void ParatemersAbstractionExample()
             {
@@ -875,7 +875,7 @@ namespace CodeConventions
 
             // DO: Check input paramaters before assignation. Make sure that the values are reasonable
             // You can use asserts if you don't want this checks in your release versions in situations where you need performance
-            void RoutineParametersCheck(Example _exampleObject)
+            void MethodParametersCheck(Example _exampleObject)
             {
                 if(_exampleObject == null)
                 {
@@ -937,11 +937,11 @@ namespace CodeConventions
 
             private void MethodsConsiderations()
             {
-                // DO: Routines must have a single purpose
+                // DO: methods must have a single purpose
 
-                // DO: Try to avoid routines over 200 lines of code (comments and blank lines are excluded). There are a lot of studies with different results 
-                // so there is not an official standard in the industry. Try to avoid large routines because usually, they are consequences of bad programming practices
-                // but you can always write routines over 200 lines if you need it and they are simple enough to be readable, maintenable and undertestanable.
+                // DO: Try to avoid methods over 200 lines of code (comments and blank lines are excluded). There are a lot of studies with different results 
+                // so there is not an official standard in the industry. Try to avoid large methods because usually, they are consequences of bad programming practices
+                // but you can always write methods over 200 lines if you need it and they are simple enough to be readable, maintenable and undertestanable.
             }
 
         }
@@ -1602,7 +1602,7 @@ namespace CodeConventions
 
                 // DO: Keep loop-housekeeping chores at either the beginning or the end of the loop
 
-                // DO: Make each loop perform only one function. Loops should be like routines. 
+                // DO: Make each loop perform only one function. Loops should be like methods. 
                 // An exception of this rule it is in places where performance is critical
 
                 // DO: Make sure the loop ends. This is specially important in some while loops that are potentially dangerous as infinite loops
@@ -1656,7 +1656,7 @@ namespace CodeConventions
                     }
                 }
 
-                // DO: Limit nesting of loop to three levels. Break the loops into routines if you need it to avoid this
+                // DO: Limit nesting of loop to three levels. Break the loops into methods if you need it to avoid this
 
                 // DO: Make long loops specially clear
             }
@@ -1983,25 +1983,25 @@ namespace CodeConventions
 
         public class MethodExamples
         {
-            // Vague routine name
+            // Vague method name
             public void ComputeScore()
             {
 
             }
 
-            // Good routine name
+            // Good method name
             public void ComputeGameOverScore()
             {
 
             }
 
-            // Good routine name
+            // Good method name
             public void ComputeGameOverScoreAndUploadToServer()
             {
 
             }
 
-            // Routine name without verb
+            // method name without verb
             public void Score()
             {
 
