@@ -78,3 +78,7 @@ Feel free to share this file with your team-mates .
 
 # Expected feedback
 Any kind of feedback is welcome, i would like to improve this guide and make it a standard
+[Feedback in Unity Forum](https://forum.unity.com/threads/unity-code-convention-proposal.516649/#post-3385545)
+
+# Special Thanks
+@Ruben Algora Morilla

@@ -52,10 +52,11 @@ using UnityEngine.UI;
 //  8.1 - Conditionals
 //  8.2 - Loops
 
-// 9 - Commenting conventions
+// 9 - Comments conventions
 
 // 10 - Unity Special Conventions
 //  10.1 - Coroutines
+//  10.2 - Field attributes
 
 // -- Why i need it?
 // As stated in "Code Complete Second Editions" the purpose of this convention is the following:
@@ -576,6 +577,12 @@ namespace CodeConventions
                 // For example, ApplicationException is an appropriate name for a class derived from a class named Exception, because ApplicationException is a kind of Exception. 
                 // Use reasonable judgment in applying this rule. For example, Button is an appropriate name for a class derived from Control. 
                 // Although a button is a kind of control, making Control a part of the class name would lengthen the name unnecessarily.
+
+                // DO: Use the preffix I to naming Interfaces
+
+                // DO NOT: Use Abstract or Base as prefix of Abstract Classes. You should regular name conventions to define the name of abstract classes.
+                // GOOD:
+                // Shape (abstract class) Square (child class), Circle (child class)
             }
 
             // =============================
@@ -1680,7 +1687,7 @@ namespace CodeConventions
 
             // DO NOT: Leave big regions of code commented when you commit to developer. Use the version repository to see old code.
 
-            // DO NOT: Leave code until the end. You need to integrate commenting into your development style. This will help others in code reviews and also will help you
+            // DO NOT: Leave comments until the end. You need to integrate commenting into your development style. This will help others in code reviews and also will help you
             // to think more about the problem you are triying to solve
 
             // DO NOT: Use endline comments (except for data declarations or end of blocks)
@@ -1705,6 +1712,16 @@ namespace CodeConventions
 
             // GOOD
             private int playerIndex = 0; // Index of the player in the list of players of this lobby
+
+            // **** UNITY SPECIFICS ****
+            // CONSIDER: Using Unity Tooltip atribute instead of comments to describe a variable if this variable is going to be modified in the editor and its meaning
+            // isn't clear with the name.
+            // This will replace the regular commenting style
+            // GOOD
+            [Tooltip("Use this variable to declare the maximum value of the player health. Useful when implementing penalties")]
+            [SerializeField]
+            public float maximumHealthClamp = 1f;
+            // *********************
 
             // DO: Use endline comments to mark end of blocks
 
@@ -1874,6 +1891,18 @@ namespace CodeConventions
             {
                 yield return null;
             }
+
+            // =================================
+            // 10.2 - Field attributes
+            // =================================
+
+            // CONSIDER: When declaring variables that can be accesed from the Unity inspector, don't forget about Unity attributes. 
+            // This attributes will improve the inspector readibility.
+
+            // [Header("Header")] Useful to group related fields
+            // [Space()] Useful to add extra space between groups of fields
+            // [Range(min,max)]  Use this in floats, specially when you want a normalized value between 0 and 1f
+            // [Tooltip("Tooltip description")] Can replace fields comments, this is also described in section 9 - Comments Conventions
         }
     }
 
