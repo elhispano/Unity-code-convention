@@ -108,28 +108,31 @@ namespace CodeConventions
 
             public void NamingConvention()
             {
-                // ClassName: Class names are in mixed uppercase and lowercase with an initial capital letter. Never use plural in class names.  
+                // ClassName: PascalCase. Never use plural in class names.  
 
-                // TypeName: Type definitions, including enumerated types, use mixed uppercase and lowercase with an initial capital letter.
+                // TypeName: Type definitions, including enumerated types in PascalCase.
 
                 // EnumeratedTypes: In addition to the rule above, enumerated types are always stated in the plural form.
 
-                // localVariable: Local variables are in mixed uppercase and lowercase with an initial lowercase letter.The name should be independent
+                // localVariable: Local variables are in camelCase.The name should be independent
                 // of the underlying data type and should refer to whatever the variable represents. Use plural for collections.
 
-                // classVariable: Member variables that are available to multiple methods within a class (1). Use plural for collections.
+                // classVariable: Member variables that are available to multiple methods within a class are in camelCase(1). Use plural for collections.
 
-                // _methodParameter: MEthod parameters are formatted the same as local variables but they are preceded with an under slash
+                // methodParameter: Use camelCase, use plural for collections.
 
-                // MethodName(): Methods are in mixed uppercase and lowercase. Use plural if the method returns a collection.
+                // MethodName(): Methods are PascalCase. Use plural if the method returns a collection.
 
                 // CONSTANT_VAR: Named constants are in ALL_CAPS.
 
-                // STATIC_VAR: Named statics are in ALL_CAPS.
+                // static readonly STATIC_VAR: Use ALL_CAPS. We use this readoonly static var as const so we use the same naming rules.
 
-                // PropertyName: Because properties are indeed methods, we use the same convention as methods.
+                // static varName: For a regular static var we use the same style as classVariable: camelCase.
 
-                // OnEventTriggered: Events names are in mixed uppercase and lowecase with an initial capital letter. All events should have a verb or verb phrase.
+                // PropertyName: Because properties are indeed methods, we use the same convention as methods. This will help to understand that calling a
+                // property can have a cost. 
+
+                // OnEventTrigger: Events names are in mixed uppercase and lowecase with an initial capital letter. All events should have a verb or verb phrase.
 
                 // **** UNITY SPECIFICS ****
 
@@ -158,11 +161,11 @@ namespace CodeConventions
             
                 1 - Constant Fields
                 2 - Fields
-                3 - Constructors
-                4 - Finalizers (Destructors)
-                5 - Delegates
-                6 - Events
-                7 - Enums
+                3 - Delegate declarations
+                4 - Events
+                5 - Enums
+                6 - Constructors
+                7 - Finalizers (Destructors)
                 8 - Properties
                 9 - Indexers
                 10 - Methods
@@ -255,10 +258,10 @@ namespace CodeConventions
         {
             public void Parentheses()
             {
-                // DO: Use parentheses to clarify expresions that involve more than two terms
+                // DO: Use parentheses to make clear expresions that involve more than two terms
 
                 // GOOD:
-                int result1 = 5 * (6 + 4);
+                int result1 = (5 * 6) + 4;
 
                 // BAD:
                 int result2 = 5 * 6 + 4;
@@ -299,9 +302,9 @@ namespace CodeConventions
 
                 // GOOD:
                 char inputChar = ' ';
-                if ((('0' <= inputChar) && (inputChar <= '9'))
-                    || (('a' <= inputChar && inputChar <= 'z'))
-                    || (('A' <= inputChar && inputChar <= 'Z')))
+                if (('0' <= inputChar && inputChar <= '9')
+                    || ('a' <= inputChar && inputChar <= 'z')
+                    || ('A' <= inputChar && inputChar <= 'Z'))
                 {
 
                 }
@@ -435,10 +438,9 @@ namespace CodeConventions
 
             // 2º - Fields
 
-            public static readonly int[] STATIC_WITH_READONLY_TABLE = new int[] {1,1,2,3,5,8};
+            public static readonly int[] STATIC_WITH_READONLY_TABLE = new int[] {1,1,2,3,5,8}; // Note that we are using ALL_CAPS because the static var is readonly (is used as a const)
 
-
-            public static string STATIC_STRING = "";
+            public static string staticString = "";
 
             // NOTE: As you already know ;), is not a good practice to use public fields, you must use accesor methods (get/set)
             public int examplePublicField = 0;
@@ -463,8 +465,22 @@ namespace CodeConventions
             // Inspector fields should not be used to provide debug information to developers.
             // *************************
 
+            // 3º - Delegates
+            public delegate void ButtonClickHandler(GameObject _target);
+            public delegate void WindowClosedHandler(MonoBehaviour _window);
 
-            // 3º - Constructors 
+            // 4º - Events
+            public event ButtonClickHandler OnClicked;
+
+            // 5º - Enums
+            public enum ExampleEnum
+            {
+                None = 0,
+                Enum1 = 1,
+                Enum2 = 2,
+            }
+
+            // 6º - Constructors 
 
             // **** UNITY SPECIFICS ****
             // If your class is inheriting from Monobehaviour, you should know that the default constructor (constructor without parameters)
@@ -477,26 +493,12 @@ namespace CodeConventions
             
             }
 
-            // 4º - Destructors 
+            // 7º - Destructors 
             ~ClassConventions()
             {
             
             }
 
-            // 5º - Delegates
-            public delegate void ButtonClickHandler(GameObject _target);
-            public delegate void WindowClosedHandler(MonoBehaviour _window);
-
-            // 6º - Events
-            public event ButtonClickHandler OnClicked;
-
-            // 7º - Enums
-            public enum ExampleEnum
-            {
-                None    = 0,
-                Enum1   = 1,
-                Enum2   = 2,
-            }
 
             // 8º - Properties
             public int ExampleProperty { get; private set; }
@@ -558,7 +560,7 @@ namespace CodeConventions
 
             public struct NestedStruct
             {
-                public int exampleInt;
+                public int exampleInt = 0;
             }
 
             // 12º - Classes
@@ -666,19 +668,32 @@ namespace CodeConventions
 
             // GOOD:
             // Clicked, Painting, DroppedDown
-            public Action Click;
-            public Action Clicked;
-            public Action Closed;
+            public event Action Click;
+            public event Action Clicked;
+            public event Action Closed;
 
             // BAD:
-            public Action BeforeClose;
-            public Action AfterClose;
+            public event Action BeforeClose;
+            public event Action AfterClose;
 
 
             // DO: Call event handlers with the "EventHandler" suffix
 
-            // GOOD;
+            // GOOD:
             public delegate void ClickEventHandler(Button _button);
+
+            // CONSIDER: When the handler of an event have recognozible parameters, you can use Action, when this
+            // paramater aren't clear, declare a delegate with the name of the parameters
+
+            // Example:
+            // GOOD:
+            public event Action<Example.StatusEnum> StatusChanged; // There is no doubt with the parameter of this event
+
+            // BAD:
+            public event Action<int, int, int> ScoreChanged; // In this case, the parameters aren't clear
+
+            // GOOD
+            public delegate void ScoreChangeHandler(int newScore, int previousScore, int bestScore);
         }
 
         // ###################################################################
@@ -749,7 +764,7 @@ namespace CodeConventions
 
             }
 
-            // DO NOT: Don't use numbers to differentiate method names
+            // DO NOT: Don't use numbers to differentiate method names unless those numbers have a logical meaning in that context.
 
             // GOOD:
             void PlaySound(AudioClip _clip)
@@ -775,7 +790,7 @@ namespace CodeConventions
 
             }
 
-            // DO: Make names of methods as long as neccesary 
+            // DO: Make names of methods as long as neccesary. If the method name get too long, consider this as a signal to split the method in two methods.
 
             // DO: Use verbs for method names
 
@@ -784,6 +799,8 @@ namespace CodeConventions
             // DO: Stablish conventions for common operations
 
             // BAD:
+
+            // You are using two different method names to get an Id, choose one form and stick to it.
 
             int GetId()
             {
@@ -821,7 +838,7 @@ namespace CodeConventions
 
             // DO: If similar methods use similar parameters, put the similar parameters in a consistent order
 
-            // DO: Use all the parameters, remove unused parameters
+            // DO: Use all the parameters, remove unused parameters. If you need to keep compatibility for legacy code, make use of [Obsolete] attribute
 
             // DO NOT: Don't use method parameters as working variables, use local variables instead
 
@@ -850,7 +867,8 @@ namespace CodeConventions
 
             }
 
-            // DO: Pass the variables or objects that the method needs to maintain its interface abstraction
+            // DO: Pass the variables or objects that the method needs to maintain its interface abstraction. Note that this can be subtle 
+            // and in some cases, passing the entire object as parameter is OK if the two clases are coupled.
 
             void ParatemersAbstractionExample()
             {
@@ -858,10 +876,10 @@ namespace CodeConventions
                 examples2.MethodWithGoodParameters(examples.dummyInt, examples.dummyString);
 
                 // BAD:
-                examples2.MethodWithBadParameters(examples.DummyObject); // <- this method doesn't need to receive the whole object, only needs the int and string
+                examples2.MethodWithBadParameters(examples.DummyObject); // <- this method doesn't need to know anything about DummyObject, only needs the int and string
             }
 
-            // DO: Use named parameters in lambda expresions and auto-generated delegates
+            // DO: Follow the regular naming guidelines in lambda expresions and auto-generated delegates
 
             void LambdaExpressionExample()
             {
@@ -880,8 +898,8 @@ namespace CodeConventions
                 });
             }
 
-            // DO: Check input paramaters before assignation. Make sure that the values are reasonable
-            // You can use asserts if you don't want this checks in your release versions in situations where you need performance
+            // DO: Check input paramaters before assignment. Make sure that the values are reasonable
+            // You can use asserts if you don't want this checks in your release versions in scenarios where performance is the priority
             void MethodParametersCheck(Example _exampleObject)
             {
                 if(_exampleObject == null)
@@ -897,7 +915,8 @@ namespace CodeConventions
             // 6.3 - Methods return value conventions
             // ================================
 
-            // DO: Have a single return point in your method, this will help to maintain and debug your code
+            // DO: Have a single return point in your method, this will help to maintain and debug your code.
+            // An exception of this rule is when doing error handling at the beggining of a method
 
             // GOOD:
             public int ExampleMethod1()
@@ -1060,7 +1079,8 @@ namespace CodeConventions
                 // You can see Warnings in the console to remove unused variables.
 
 
-                // DO: Use 'var' keyword in variable declarations except for numeric variables
+                // DO: Use 'var' keyword in variable declarations where the type is obvious or isn't relevant. For example, with numeric variables
+                // you CAN'T user var because it is important to know if you are working with ints or floats
                 // - Code maintenance is improved
                 // - Code readability is improved 
                 // TODO: Discuss this with the team
@@ -1110,22 +1130,6 @@ namespace CodeConventions
                 float healthAverage = 0;
                 Text titleLabel = null;
 
-                // CONSIDER: Using more descriptive names for loops indexs to improve readibility
-
-                // GOOD:
-                System.Object[] clamMembers = new System.Object[10];
-
-                for (int clanMemberIdx = 0; clanMemberIdx < clamMembers.Length; clanMemberIdx++)
-                {
-
-                }
-
-                // BAD:
-                for (int i = 0; i < clamMembers.Length; i++)
-                {
-
-                }
-
                 // DO: Use more detailed index names for nested loops to avoid index corss-talk errors (saying i when you mean j and vice versa)
 
                 // GOOD:
@@ -1152,15 +1156,19 @@ namespace CodeConventions
                 bool notFound = true;
 
 
-                // DO NOT: Use names with similar meanings
+                // DO NOT: Use names with ambiguous meanings
 
                 // GOOD:
-                int fileCount = 0;
-                int fileIndex = 1;
+                {
+                    int fileCount = 0;
+                    int fileIndex = 1;
+                }
 
                 // BAD:
-                int fileNumber = 0;
-                int fileIndex1 = 0;
+                {
+                    int fileNumber = 0;
+                    int fileIndex = 0;
+                }
 
 
                 // DO NOT: Use similar names in variables with different meaning
@@ -1235,7 +1243,7 @@ namespace CodeConventions
                 // DO NOT: add/substract on numbers that have greatly different magnitudes with float numbers
                 float result1 = 1000000.00f + 0.1f; // <--  can have a result of 1,000,000.00
 
-                // DO NOT: Use equality comparisons in floating-point numbers
+                // CONSIDER: The presence of accuracy errors in comparisons with floating-point numbers
 
                 // GOOD:
                 float maximumSpeed = 0f;
@@ -1344,7 +1352,8 @@ namespace CodeConventions
             // 7.6 Enums
             // ================================
 
-            // DO: Define always the first value in an enum for an "invalid" value and the last value to use it to iterate over all enum values
+            // CONSIDER: Defining  the first value in an enum for an "invalid" value if it has sense with the purpose of the enum.
+            // CONSIDER: Defining the last value of an enum if you are going to use it in iterations
 
             // GOOD:
             public enum GameModes
@@ -1416,14 +1425,29 @@ namespace CodeConventions
                 // DO: Check that array indexes are within the bounds of the array
 
                 // GOOD:
-                GameObject[] exampleArray = new GameObject[5];
-                int index = 0;
-                int maxLength = exampleArray.Length;
-
-                if (index >= maxLength)
                 {
-                    Debug.LogErrorFormat("Array out of range. Index: {0} Max: {1}", index, maxLength);
-                    index = maxLength;
+                    GameObject[] exampleArray = new GameObject[5];
+                    int index = 0;
+                    // index = NextIndex();
+                    int maxLength = exampleArray.Length;
+
+                    if (index >= maxLength)
+                    {
+                        Debug.LogErrorFormat("Array out of range. Index: {0} Max: {1}", index, maxLength);
+                        index = maxLength - 1;
+                    }
+
+                    var myGameObject = exampleArray[index];
+                }
+
+                // BAD:
+                {
+                    GameObject[] exampleArray = new GameObject[5];
+                    int index = 0;
+                    // index = NextIndex();
+                    int maxLength = exampleArray.Length;
+
+                    var myGameObject = exampleArray[index];
                 }
 
                 // DO: Use lists if you don't know the size of the array, in other case, use arrays
@@ -1612,7 +1636,8 @@ namespace CodeConventions
                 // DO: Make each loop perform only one function. Loops should be like methods. 
                 // An exception of this rule it is in places where performance is critical
 
-                // DO: Make sure the loop ends. This is specially important in some while loops that are potentially dangerous as infinite loops
+                // DO: Make sure that a loop ends. This is specially important in some while loops that are potentially dangerous as infinite loops. 
+                // Add maximum iterations counters or timers to avoid this problem.
 
                 // GOOD:
                 float securityTimer = 0f;
@@ -1644,9 +1669,10 @@ namespace CodeConventions
                 }
 
                 // DO: Use meaningful variable names to make nested loops readable
+                // Note: this is already seen in the section: 7.2 Variable Names
 
                 // GOOD:
-                for(int month = 0; month < 12; month++)
+                for (int month = 0; month < 12; month++)
                 {
                     for(int day = 0; day < 31; day++)
                     {
@@ -1664,8 +1690,6 @@ namespace CodeConventions
                 }
 
                 // DO: Limit nesting of loop to three levels. Break the loops into methods if you need it to avoid this
-
-                // DO: Make long loops specially clear
             }
         }
 
@@ -1697,12 +1721,13 @@ namespace CodeConventions
             // DO NOT: Leave comments until the end. You need to integrate commenting into your development style. This will help others in code reviews and also will help you
             // to think more about the problem you are triying to solve
 
-            // DO NOT: Use endline comments (except for data declarations or end of blocks)
+            // DO: Use XML comments because the will be showed in the Intellisense.
+            // DO NOT: Use endline comments.
 
             // GOOD
 
             /// <summary>
-            /// Explain what this method does
+            /// Explain what this method does 
             /// </summary>
             private void ExampleMetho1d()
             {
@@ -1712,13 +1737,16 @@ namespace CodeConventions
             // BAD
             private void ExampleMethod2() // Explain what this method does
             {
+            }
+
+
+            // BAD
+            // Explain what this method does
+            private void ExampleMethod3()
+            {
 
             }
 
-            // DO: Use endline comment to annotate data declarations
-
-            // GOOD
-            private int playerIndex = 0; // Index of the player in the list of players of this lobby
 
             // **** UNITY SPECIFICS ****
             // CONSIDER: Using Unity Tooltip atribute instead of comments to describe a variable if this variable is going to be modified in the editor and its meaning
