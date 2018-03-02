@@ -79,6 +79,9 @@ Feel free to share this file with your team-mates .
 # Expected feedback
 Any kind of feedback is welcome, i would like to improve this guide and make it a standard
 [Feedback in Unity Forum](https://forum.unity.com/threads/unity-code-convention-proposal.516649/#post-3385545)
+[Feedback in Reddit](https://www.reddit.com/r/Unity3D/comments/7w6p5c/unity_code_convention_guide/?st=je4lkazz&sh=dece8a52)
 
 # Special Thanks
 @Ruben Algora Morilla
+@Kiwasi (Unity forum user)
+@SilentSin26 (Reddit user)
