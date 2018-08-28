@@ -112,12 +112,12 @@ namespace CodeConventions
 
                 // TypeName: Type definitions, including enumerated types in PascalCase.
 
-                // EnumeratedTypes: In addition to the rule above, enumerated types are always stated in the plural form.
+                // EnumeratedTypes: PascalCase, enumerated types are always stated in the plural form.
 
                 // localVariable: Local variables are in camelCase.The name should be independent
                 // of the underlying data type and should refer to whatever the variable represents. Use plural for collections.
 
-                // classVariable: Member variables that are available to multiple methods within a class are in camelCase(1). Use plural for collections.
+                // m_classVariable: We concat m_ in each class variable. Use camelCase. Use Plural for collections
 
                 // methodParameter: Use camelCase, use plural for collections.
 
@@ -125,14 +125,14 @@ namespace CodeConventions
 
                 // CONSTANT_VAR: Named constants are in ALL_CAPS.
 
-                // static readonly STATIC_VAR: Use ALL_CAPS. We use this readoonly static var as const so we use the same naming rules.
+                // static readonly STATIC_VAR: Use ALL_CAPS. We use this kind of variables 'static readonly' consts so we use the same naming rules.
 
                 // static varName: For a regular static var we use the same style as classVariable: camelCase.
 
                 // PropertyName: Because properties are indeed methods, we use the same convention as methods. This will help to understand that calling a
                 // property can have a cost. 
 
-                // OnEventTrigger: Events names are in mixed uppercase and lowecase with an initial capital letter. All events should have a verb or verb phrase.
+                // EventTrigger: Events names are in mixed uppercase and lowecase with an initial capital letter. All events should have a verb or verb phrase.
 
                 // **** UNITY SPECIFICS ****
 
@@ -145,10 +145,6 @@ namespace CodeConventions
                 // cachedComponentName: Use this to cached Unity components like cachedTransform, cachedAnimator, etc.  
 
                 // *************************
-
-                // NOTES:
-                // (1) We don't need to differentiate between local vars and class vars because we usually has different names. You can always can use this.varName 
-                // to differentiate between two vars with the same name is needed
             }
 
             // =============================
@@ -158,22 +154,22 @@ namespace CodeConventions
             public void ClassOrder()
             {
                 /* Within a class, struct, or interface, elements must be positioned in the following order:
-            
-                1 - Constant Fields
-                2 - Fields
-                3 - Delegate declarations
-                4 - Events
-                5 - Enums
-                6 - Constructors
-                7 - Finalizers (Destructors)
-                8 - Properties
+
+                1 - Enum
+                2 - Constant Fields
+                3 - Fields
+                4 - Properties
+                5 - Delegate declarations
+                6 - Events
+                7 - Constructor
+                8 - Fianlizers
                 9 - Indexers
                 10 - Methods
                     10.1 - Unity Methods
                     10.2 - Handlers
                     10.3 - Class methods
                 11 - Structs
-                12 - Classes 
+                12 - Classes
 
                 Within each of these groups order by access:
 
@@ -206,6 +202,12 @@ namespace CodeConventions
                 private methods
 
                 */
+
+                #region ClassOrder
+                // Add an order style convention using REGIONS
+                // - We need a region for private fields that have the SerializeField attribute
+                // - We need a region to separate public methods of private ones
+                #endregion
             }
 
             // =============================
@@ -233,6 +235,8 @@ namespace CodeConventions
                 //up - down
                 //get - set
                 //old - new
+
+				// TODO: Add more per project
             }
 
             // =============================
@@ -246,6 +250,9 @@ namespace CodeConventions
                 // Idx for Index
                 // SO for ScriptableObject: buildingSO, levelRewardsSO
                 // SZ for classes that are serializable in Unity: buildingSZ, levelRewardsSZ
+                // UI for classes that work with Unity UI
+
+                // TODO: Add more per project
             }
         }
 
@@ -259,6 +266,8 @@ namespace CodeConventions
             public void Parentheses()
             {
                 // DO: Use parentheses to make clear expresions that involve more than two terms
+                // Exception: An exception of this rule is when you work with complex mathematic operations
+                // where to many nested parentheses make less readable the expression
 
                 // GOOD:
                 int result1 = (5 * 6) + 4;
@@ -335,8 +344,8 @@ namespace CodeConventions
 
                 }
 
-                // DO: Break methods with lot of parameters in several lines
-                // TODO: Decide with the team the limit of parameters to use line breaks
+                // DO: Break methods with lot of parameters in several lines if the length of the method call
+                // is bigger than the rest of your code 
                 Vector3 rayOrigin       = Vector3.zero;
                 Vector3 direction       = Vector3.up;
                 RaycastHit raycastHit   = new RaycastHit();
@@ -344,20 +353,16 @@ namespace CodeConventions
                 int layerMask           = LayerMask.GetMask("Default");
 
                 // GOOD: 
-                bool hit = Physics.Raycast(rayOrigin,
-                    direction,
-                    out raycastHit,
-                    maxDistance,
-                    layerMask);
-
+                bool hit = Physics.Raycast (rayOrigin, direction, out raycastHit,
+                    maxDistance, layerMask);
+                
                 // BAD: 
-                bool hit1 = Physics.Raycast(rayOrigin, direction, out raycastHit, maxDistance, layerMask);
+                bool hit1 = Physics.Raycast (rayOrigin, direction, out raycastHit, maxDistance, layerMask);
 
                 // DO: Align right sides of assigment statements that belong to a same code block (1*)
-                // TODO: Discuss this with the team to decide if we keep doing this or not
 
                 // GOOD: 
-                int variableName1               = 0;
+                int variableName1				= 0;
                 int variableNameWithMoreLength  = 0;
 
                 OnExampleEvent1                 += LayoutConventions_OnExampleEvent1;
@@ -390,6 +395,7 @@ namespace CodeConventions
                 // i beleieve that the advantages of improved readibility and the slightly chance of catching some errors make this rule worth it.
             }
 
+			#region For examples
             private void LayoutConventions_OnExampleEvent1()
             {
                 throw new System.NotImplementedException();
@@ -404,8 +410,7 @@ namespace CodeConventions
             {
                 throw new System.NotImplementedException();
             }
-
-            #region For examples
+				
             private const int END_VALUE = 99;
 
             private delegate void ExampleHandlerEvent();
@@ -430,30 +435,43 @@ namespace CodeConventions
 
             // DO: Use the same order of class members in every class
 
-            // 1º - Constatns
+            // 1º - Enums
+            public enum EnumTypes
+            {
+                None = 0,
+                Enum1 = 1,
+                Enum2 = 2,
+            }
+
+            // 2º - Constatns
             public const string CONSTANT_FIELD = "All constants go first";
 
 
             private const string CONSTANT_FIELD_PRIVATE = "Private goes always after public :P";
 
-            // 2º - Fields
+            // 3º - Fields
 
-            public static readonly int[] STATIC_WITH_READONLY_TABLE = new int[] {1,1,2,3,5,8}; // Note that we are using ALL_CAPS because the static var is readonly (is used as a const)
+            public static readonly int[] STATIC_WITH_READONLY_TABLE = new int[] { 1, 1, 2, 3, 5, 8 }; // Note that we are using ALL_CAPS because the static var is readonly (is used as a const)
 
             public static string staticString = "";
+
+            private static string HIDDEN_STATIC_STRING = "";
+
+            #region Public Vars 
 
             // NOTE: As you already know ;), is not a good practice to use public fields, you must use accesor methods (get/set)
             public int examplePublicField = 0;
 
+            #endregion
+
+
+            #region Protected Vars
 
             protected int protectedField = 0;
 
+            #endregion
 
-            private static string HIDDEN_STATIC_STRING = "";
-
-
-            private int[] privateArray = new int[] { 0, 1, 2, 3, 4 };
-
+            #region Inspector Vars
 
             // **** UNITY SPECIFICS ****
             // If you need a field to the Unity inspector and avoid the violation of the encapsulation principle we can use [SerializeField] attribute:
@@ -463,24 +481,28 @@ namespace CodeConventions
             // These should always be private and marked with the [SerialiseField] attribute. If needed, these can be exposed
             // to other scripts via public properties. Avoid changing inspector fields via script, as this can lead to unexpected behavior. 
             // Inspector fields should not be used to provide debug information to developers.
-            // *************************
 
-            // 3º - Delegates
+            // *************************
+            #endregion
+
+            #region Private Vars
+
+            private int[] privateArray = new int[] { 0, 1, 2, 3, 4 };
+
+            #endregion
+
+             // 4º - Properties
+            public int ExampleProperty { get; private set; }
+
+            // 5º - Delegates
             public delegate void ButtonClickHandler(GameObject _target);
             public delegate void WindowClosedHandler(MonoBehaviour _window);
 
-            // 4º - Events
+            // 6º - Events
             public event ButtonClickHandler OnClicked;
 
-            // 5º - Enums
-            public enum ExampleEnum
-            {
-                None = 0,
-                Enum1 = 1,
-                Enum2 = 2,
-            }
 
-            // 6º - Constructors 
+            // 7º - Constructors 
 
             // **** UNITY SPECIFICS ****
             // If your class is inheriting from Monobehaviour, you should know that the default constructor (constructor without parameters)
@@ -493,15 +515,12 @@ namespace CodeConventions
             
             }
 
-            // 7º - Destructors 
+            // 8º - Destructors /Finalizers
             ~ClassConventions()
             {
             
             }
 
-
-            // 8º - Properties
-            public int ExampleProperty { get; private set; }
 
             // 9º - Indexers
             public int this[int _index]
@@ -513,6 +532,7 @@ namespace CodeConventions
             // 10º - Methods
 
             // 10.1 - Unity Methods
+            #region Unity Methods
 
             void Awake()
             {
@@ -530,17 +550,21 @@ namespace CodeConventions
                 OnClicked -= ClassConventions_OnClicked;
             }
 
+            #endregion
+
             // DO NOT: Leave blank Unity methods, delete them.
 
             // 10.2 - Handlers
-
+            #region Handlers
             private void ClassConventions_OnClicked(GameObject _target)
             {
                 throw new System.NotImplementedException();
             }
+            #endregion
 
             // 10.3 - Class methods
 
+            #region Class Methods
             public void Open()
             {
 
@@ -555,6 +579,7 @@ namespace CodeConventions
             {
 
             }
+            #endregion
 
             // 11º - Structs
 
@@ -670,17 +695,19 @@ namespace CodeConventions
             // Clicked, Painting, DroppedDown
             public event Action Click;
             public event Action Clicked;
+            public event Action Closing;
             public event Action Closed;
+
 
             // BAD:
             public event Action BeforeClose;
             public event Action AfterClose;
 
 
-            // DO: Call event handlers with the "EventHandler" suffix
+            // DO: Declare event handlers names with the "EventHandler" suffix
 
             // GOOD:
-            public delegate void ClickEventHandler(Button _button);
+            public delegate void ClickEventHandler(Button button);
 
             // CONSIDER: When the handler of an event have recognozible parameters, you can use Action, when this
             // paramater aren't clear, declare a delegate with the name of the parameters
@@ -767,26 +794,25 @@ namespace CodeConventions
             // DO NOT: Don't use numbers to differentiate method names unless those numbers have a logical meaning in that context.
 
             // GOOD:
-            void PlaySound(AudioClip _clip)
+            void PlaySound(AudioClip clip)
             {
 
             }
 
 
-            void PlaySound(AudioClip _clip,float _volume)
+            void PlaySound(AudioClip clip,float volume)
             {
 
             }
 
             // BAD:
-            void PlaySound1(AudioClip _clip)
+            void PlaySound1(AudioClip clip)
             {
 
             }
 
-            void PlaySound2(AudioClip _clip, float _volume)
+            void PlaySound2(AudioClip clip, float volume)
             {
-
 
             }
 
@@ -796,7 +822,7 @@ namespace CodeConventions
 
             // DO: If the function returns a value, to name a function use a description of the value (only when it returns a single value)
 
-            // DO: Stablish conventions for common operations
+            // DO: Establish conventions for common operations
 
             // BAD:
 
@@ -818,7 +844,7 @@ namespace CodeConventions
 
             private void MethodParametersOrder()
             {
-                // DO: Put parameters in input-modify-output-
+                // DO: Put parameters in input-modify-output-default parameters
                 // in the output parameters, put error/status order last
 
                 // GOOD
@@ -828,14 +854,6 @@ namespace CodeConventions
                 examples2.ConfigurePlayerSkin(true, ref instantiatedPlayer, out mainWeapon, out skinConfigurationError);
             }
 
-            // DO: method parameters start with a underscore '_'
-
-            // GOOD:
-            void ExampleMethod(int _parameter)
-            {
-
-            }
-
             // DO: If similar methods use similar parameters, put the similar parameters in a consistent order
 
             // DO: Use all the parameters, remove unused parameters. If you need to keep compatibility for legacy code, make use of [Obsolete] attribute
@@ -843,22 +861,22 @@ namespace CodeConventions
             // DO NOT: Don't use method parameters as working variables, use local variables instead
 
             // BAD:
-            int MathOperationExampleBad(int _value)
+            int MathOperationExampleBad(int value)
             {
-                _value *= 5;
+                value *= 5;
 
-                return _value;
+                return value;
             }
 
             // GOOD:
-            int MathOperationExampleGood(int _value)
-            {
-                int result = _value * 5;
+            int MathOperationExampleBad(int value)
+			{
+                int result = value * 5;
 
-                return _value;
-            }
+				return value;
+			}
 
-            // DO: Limit the number of method's parameters to about seven. If you need more parameters probably you need
+            // DO: Limit the number of method's parameters to about seven 7. If you need more parameters probably you need
             // a new class/struct to represent that data
 
             // EXAMPLE:
@@ -879,36 +897,39 @@ namespace CodeConventions
                 examples2.MethodWithBadParameters(examples.DummyObject); // <- this method doesn't need to know anything about DummyObject, only needs the int and string
             }
 
-            // DO: Follow the regular naming guidelines in lambda expresions and auto-generated delegates
+
+            // CONSIDER: Follow the regular naming guidelines in lambda expresions and auto-generated delegates
+            // if doing this increases readability. For example, with a Sort lambda expresion you can work perfectly with 
+            // default parameter names
 
             void LambdaExpressionExample()
             {
                 List<int> example = new List<int> ();
 
                 // GOOD:
-                example.FindAll(delegate (int _index)
+                example.FindAll(delegate (int index)
                 {
-                    return _index > 2;
+                    return index > 2;
                 });
 
                 // BAD:
-                example.FindAll(delegate (int _x)
+                example.FindAll(delegate (int x)
                 {
-                    return _x > 2;
+                    return x > 2;
                 });
             }
 
             // DO: Check input paramaters before assignment. Make sure that the values are reasonable
             // You can use asserts if you don't want this checks in your release versions in scenarios where performance is the priority
-            void MethodParametersCheck(Example _exampleObject)
+            void MethodParametersCheck(Example exampleObject)
             {
-                if(_exampleObject == null)
+                if(exampleObject == null)
                 {
-                    Debug.LogError("The parameter _exampleObject can't be null");
+                    Debug.LogError("The parameter exampleObject can't be null");
                     return;
                 }
 
-                Debug.LogFormat("Status: {0}",_exampleObject.Status);
+                Debug.LogFormat("Status: {0}",exampleObject.Status);
             }
 
             // ================================
@@ -1074,22 +1095,17 @@ namespace CodeConventions
                     Debug.LogError("Some error occured. The game doesn't ended well");
                 }
 
-
                 // DO: Make sure all declared variables are used.
                 // You can see Warnings in the console to remove unused variables.
 
 
-                // DO: Use 'var' keyword in variable declarations where the type is obvious or isn't relevant. For example, with numeric variables
-                // you CAN'T user var because it is important to know if you are working with ints or floats
-                // - Code maintenance is improved
-                // - Code readability is improved 
-                // TODO: Discuss this with the team
+                // DO NOT: Use 'var' keyword in variable declarations.
 
                 // GOOD:
-                var target = example.DummyGameObject;
+				GameObject source = example.DummyGameObject;
 
                 // BAD:
-                GameObject source = example.DummyGameObject;
+                var target = example.DummyGameObject;
 
                 // With numeric values:
 
@@ -1535,7 +1551,7 @@ namespace CodeConventions
                 }
                 else
                 {
-                    // If the id is not valid nothing happens here
+                    // If the id is not valid thos methoud should fail silently. 
                 }
 
                 // BAD: 
@@ -1801,9 +1817,9 @@ namespace CodeConventions
             /// <summary>
             /// Summary of the method here
             /// </summary>
-            /// <param name="_param1"> Describe the parameter, describe expected values, units, etc</param>
+            /// <param name="param1"> Describe the parameter, describe expected values, units, etc</param>
             /// <returns> Describe the return value </returns>
-            public int Method1(int _param1)
+            public int Method1(int param1)
             {
                 return 0;
             }
@@ -1972,7 +1988,7 @@ namespace CodeConventions
 
         public string dummyString;
 
-        public bool DoOperations(DummyClass _dummyObject)
+        public bool DoOperations(DummyClass dummyObject)
         {
             return true;
         }
@@ -1987,21 +2003,21 @@ namespace CodeConventions
             return 0;
         }
 
-        public bool IsLetter(char _char)
+        public bool IsLetter(char char)
         {
             return true;
         }
 
-        public bool IsNumber(char _char)
+        public bool IsNumber(char char)
         {
             return true;
         }
-        public bool IsPunctiation(char _char)
+        public bool IsPunctiation(char char)
         {
             return true;
         }
 
-        public string GetLocalizedText(string _textKey)
+        public string GetLocalizedText(string textKey)
         {
             return "";
         }
@@ -2062,19 +2078,19 @@ namespace CodeConventions
 
             // Parameters order
 
-            public void ConfigurePlayerSkin(bool _premiumSkins, ref GameObject _instantiatedPlayer, out GameObject _mainWeapon, out bool _error)
+            public void ConfigurePlayerSkin(bool premiumSkins, ref GameObject instantiatedPlayer, out GameObject mainWeapon, out bool error)
             {
-                _error = false;
-                _mainWeapon = new GameObject();
+                error = false;
+                mainWeapon = new GameObject();
             }
 
             // Examples of methods to pass variables to maintain interface abstraction
-            public void MethodWithGoodParameters(int _intParameter, string _stringParameter)
+            public void MethodWithGoodParameters(int intParameter, string stringParameter)
             {
 
             }
 
-            public void MethodWithBadParameters(DummyClass _dummyObject)
+            public void MethodWithBadParameters(DummyClass dummyObject)
             {
 
             }
